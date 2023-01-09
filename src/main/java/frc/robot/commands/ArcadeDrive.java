@@ -6,33 +6,23 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.utils.NavX;
 
-public class Balance extends CommandBase {
-  /** Creates a new balance. */
+public class ArcadeDrive extends CommandBase {
+  /** Creates a new ArcadeDrive. */
   DriveTrain driveTrain;
-  NavX navX;
-  private double error;
-  private double goal = 0;
-
-  public Balance(DriveTrain driveTrain, NavX navX) {
+  public ArcadeDrive(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
-    this.navX = navX;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
