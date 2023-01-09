@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.NavX;
+import frc.robot.utils.PID;
 
 public class Balance extends CommandBase {
   /** Creates a new balance. */
@@ -14,6 +15,9 @@ public class Balance extends CommandBase {
   NavX navX;
   private double error;
   private double goal = 0;
+  //PID Values need to be tuned
+  //Might need to create two pid values for both sides of the drivetrain
+  PID balancePID = new PID(0.05, 0, 0);
 
   public Balance(DriveTrain driveTrain, NavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,13 +29,16 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    navX.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    //Error is equal to the NavX getYaw
+    balancePID.calculate(0, error);
+    driveTrain.setLeftSpeed(balancePID.getOutput());
+    driveTrain.setRightSpeed(balancePID.getOutput());
   }
 
   // Called once the command ends or is interrupted.

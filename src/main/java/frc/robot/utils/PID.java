@@ -9,11 +9,11 @@ public class PID {
 
 	double P, I, D;
 	double previous_error, integral = 0;
-	double setpoint = 0;
+	double setpoint;
 	double error;
 	private double output;
 
-	public void calculate(double actual) {
+	public void calculate(double actual, double setpoint) {
 		error = setpoint - actual; // Error = Target - Actual
 		this.integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal
 		final double derivative = (error - this.previous_error) / .02;

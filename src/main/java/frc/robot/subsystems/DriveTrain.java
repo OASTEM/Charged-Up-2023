@@ -86,18 +86,6 @@ public class DriveTrain extends SubsystemBase {
     slowModeOn = true;
   }
 
-  public void climbingFalse(){
-    climbing = false;
-  }
-
-  public void climbingTrue(){
-    climbing = true;
-  }
-
-  public boolean getClimbing(){
-    return climbing;
-  }
-
   public void setSlowMode(boolean slowMode) {
     slowModeOn = slowMode;
   }
@@ -105,6 +93,14 @@ public class DriveTrain extends SubsystemBase {
   public void tankDrive(double left, double right) {
     frontL.set(ControlMode.PercentOutput, left);
     frontR.set(ControlMode.PercentOutput, right);
+  }
+
+  public void setLeftSpeed(double speed){
+    frontL.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setRightSpeed(double speed){
+    frontR.set(ControlMode.PercentOutput, speed);
   }
 
   public void stop() {
