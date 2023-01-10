@@ -22,7 +22,7 @@ public class NavX {
     }
 
     public double getYAngle(){
-        return navX.getYaw();
+        return navX.getPitch();
     }
     
     public void reset() {

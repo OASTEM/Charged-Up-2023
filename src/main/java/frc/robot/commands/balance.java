@@ -14,7 +14,7 @@ public class Balance extends CommandBase {
   DriveTrain driveTrain;
   NavX navX;
   private double error;
-  private double goal = 0;
+  private final double goal = 0;
   //PID Values need to be tuned
   //Might need to create two pid values for both sides of the drivetrain
   PID balancePID = new PID(0.05, 0, 0);
@@ -36,7 +36,8 @@ public class Balance extends CommandBase {
   @Override
   public void execute() {
     //Error is equal to the NavX getYaw
-    balancePID.calculate(0, error);
+    this.error = navX.getYAngle();
+    balancePID.calculate(this.goal, this.error);
     driveTrain.setLeftSpeed(balancePID.getOutput());
     driveTrain.setRightSpeed(balancePID.getOutput());
   }

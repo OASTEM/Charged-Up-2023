@@ -39,7 +39,7 @@ public class RobotContainer {
   private final JoystickButton padA = new JoystickButton(pad, 1);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    padA.whileTrue(new Balance(driveTrain, navX));
+    
     // Configure the trigger bindings
     configureBindings();
   }
@@ -54,6 +54,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    padA.whileTrue(new Balance(driveTrain, navX));
     // Configure your button bindings here
   }
 
