@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -22,6 +23,12 @@ public class DriveTrain extends SubsystemBase {
     backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = false;
     climbing = false; 
+
+    frontR.setNeutralMode(NeutralMode.Brake);
+    frontL.setNeutralMode(NeutralMode.Brake);
+    backR.setNeutralMode(NeutralMode.Brake);
+    backL.setNeutralMode(NeutralMode.Brake);
+
 
     backL.follow(frontL);
     backR.follow(frontR);
@@ -118,6 +125,9 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
+  // public void setBackLeftSpeed() {
+  //   backL.set(ControlMode.PercentOutput, 0.6);
+  // }
 //   public double getNativeUnitsFromInches(double inches) {
 //     return inches * Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION / (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
 //         * Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;

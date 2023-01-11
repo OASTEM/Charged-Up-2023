@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.NavX;
@@ -14,10 +16,11 @@ public class Balance extends CommandBase {
   DriveTrain driveTrain;
   NavX navX;
   private double error;
-  private final double goal = 0;
+  private final double goal = -1;
+  private final double maxEffort = 0.3;
   //PID Values need to be tuned
   //Might need to create two pid values for both sides of the drivetrain
-  PID balancePID = new PID(0.05, 0, 0);
+  PID balancePID = new PID(0.025, 0, 0);
 
   public Balance(DriveTrain driveTrain, NavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,22 +32,41 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    driveTrain.stop();
     navX.reset();
+    System.out.println("autdoaiuad");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Error is equal to the NavX getYaw
-    this.error = navX.getYAngle();
+    //Error is equal to the NavX getYaw (using getRoll)
+    // driveTrain.setLeftSpeed(0.3);
+    // driveTrain.setBackLeftSpeed();
+    // driveTrain.setRightSpeed(0.3);
+    this.error = navX.getXAngle();
+
+    
     balancePID.calculate(this.goal, this.error);
-    driveTrain.setLeftSpeed(balancePID.getOutput());
-    driveTrain.setRightSpeed(balancePID.getOutput());
+    double effort = balancePID.getOutput();
+    if (effort < -maxEffort) {
+      effort = -maxEffort;
+    } else if (effort > maxEffort) {
+      effort = maxEffort;
+    }
+
+    driveTrain.setLeftSpeed(effort);
+    driveTrain.setRightSpeed(effort);
+
+    SmartDashboard.putNumber("navXYError", this.error);
+    SmartDashboard.putNumber("PID Speed", effort);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveTrain.stop();
+  }
 
   // Returns true when the command should end.
   @Override

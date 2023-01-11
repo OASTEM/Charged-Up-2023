@@ -13,12 +13,13 @@ public class PID {
 	double error;
 	private double output;
 
-	public void calculate(double actual, double setpoint) {
+	public double calculate(double actual, double setpoint) {
 		error = setpoint - actual; // Error = Target - Actual
 		this.integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal
 		final double derivative = (error - this.previous_error) / .02;
 		this.output = P * error + I * this.integral + D * derivative;
 		this.previous_error = error;
+		return output;
 	}
 
 	public void setSetpoint(double setpoint) {

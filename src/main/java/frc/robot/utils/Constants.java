@@ -14,9 +14,9 @@ package frc.robot.utils;
  */
 public final class Constants {
   public static class CANIDS{
-    public static final int DRIVETRAIN_FRONT_RIGHT = 1;
-    public static final int DRIVETRAIN_BACK_RIGHT = 2;
-    public static final int DRIVETRAIN_FRONT_LEFT = 3;
-    public static final int DRIVETRAIN_BACK_LEFT = 4;
+    public static final int DRIVETRAIN_FRONT_RIGHT = 0;
+    public static final int DRIVETRAIN_BACK_RIGHT = 1;
+    public static final int DRIVETRAIN_FRONT_LEFT = 2;
+    public static final int DRIVETRAIN_BACK_LEFT = 3;
   }
 }
