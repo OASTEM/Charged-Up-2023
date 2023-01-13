@@ -18,5 +18,27 @@ public final class Constants {
     public static final int DRIVETRAIN_BACK_RIGHT = 1;
     public static final int DRIVETRAIN_FRONT_LEFT = 2;
     public static final int DRIVETRAIN_BACK_LEFT = 3;
+    
   }
+
+  public final static class DriveTrain {
+    public static final double SLOW_MODE_TURN = 0.3;
+    public static final double SLOW_MODE = 0.3;
+    public static final double SUPER_SLOW_MODE = 0.1;
+    public static final double REGULAR_MODE = 0.6;
+    public static final double REGULAR_MODE_TURN = 0.3;
+    public static final double MOTOR_TO_WHEEL_REVOLUTION = 10.71;
+    public static final int SENSOR_UNITS_PER_ROTATION = 2048;
+    public static final double TURN_CONSTANT = 240;
+    public static final int DRIVE_WHEEL_DIAMETER_INCHES = 6;
+    //public static final PID PID = new PID(0.1, 0.01, 0.05, 0.05, 0);
+    public static final int CRUISE_VELOCITY = 7000; // max is around 21500
+    public static final int ACCELERATION = 3500;
+    public static final int ERROR_THRESHOLD = 500;
+    public static final double OPEN_LOOP_RAMP = .5;
+    public static final double CLOSED_LOOP_RAMP = 0;
+    public static final double ANGLE_TOLERANCE = .5;
+    public static final boolean DEBUG = false;
+  }
+
 }

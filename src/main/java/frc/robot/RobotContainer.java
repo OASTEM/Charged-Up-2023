@@ -39,7 +39,7 @@ public class RobotContainer {
   private final JoystickButton padA = new JoystickButton(pad, 1);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
+    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     // Configure the trigger bindings
     configureBindings();
   }

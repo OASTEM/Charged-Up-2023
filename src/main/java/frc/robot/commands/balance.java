@@ -15,16 +15,27 @@ public class Balance extends CommandBase {
   /** Creates a new balance. */
   DriveTrain driveTrain;
   NavX navX;
-  private double error;
-  private final double goal = -1;
-  private final double maxEffort = 0.3;
+  private double error;                                                                 
+  private final double goal = 0;
+  private final double maxEffort = 1;
+ 
+  private double p, i, d;
   //PID Values need to be tuned
   //Might need to create two pid values for both sides of the drivetrain
-  PID balancePID = new PID(0.025, 0, 0);
+  //PID balancePID = new PID(0.023, 0.002, 0.002);
+  PID balancePID;
 
   public Balance(DriveTrain driveTrain, NavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
+    p = SmartDashboard.getNumber("P", 0.023);
+    i = SmartDashboard.getNumber("I", 0.002);
+    d = SmartDashboard.getNumber("D", 0.002);
+    SmartDashboard.putNumber("P", p);
+    SmartDashboard.putNumber("I", i);
+    SmartDashboard.putNumber("D", d);
+                                                                              
+    balancePID = new PID(p, i, d);
     this.driveTrain = driveTrain;
     this.navX = navX;
   }
@@ -46,9 +57,7 @@ public class Balance extends CommandBase {
     // driveTrain.setRightSpeed(0.3);
     this.error = navX.getXAngle();
 
-    
-    balancePID.calculate(this.goal, this.error);
-    double effort = balancePID.getOutput();
+    double effort = balancePID.calculate(this.goal, this.error);
     if (effort < -maxEffort) {
       effort = -maxEffort;
     } else if (effort > maxEffort) {
@@ -66,6 +75,10 @@ public class Balance extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     driveTrain.stop();
+    p = SmartDashboard.getNumber("P", 0.023);
+    i = SmartDashboard.getNumber("I", 0.002);
+    d = SmartDashboard.getNumber("D", 0.002);
+    balancePID = new PID(p, i, d);
   }
 
   // Returns true when the command should end.
