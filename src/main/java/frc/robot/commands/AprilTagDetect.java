@@ -14,6 +14,7 @@ public class AprilTagDetect extends CommandBase {
   public AprilTagDetect(Limelight limelight) {
     addRequirements(limelight);
     this.limelight = limelight;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -23,7 +24,9 @@ public class AprilTagDetect extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override

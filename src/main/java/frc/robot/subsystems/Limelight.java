@@ -20,10 +20,17 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry ty; 
   private NetworkTableEntry ta;
   private NetworkTableEntry tv;
+  private NetworkTableEntry fid;
+  private NetworkTableEntry fam;
+  private NetworkTableEntry t6c_ts;
+  private double id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
   private double x;
   private double y;
   private double a;
   private double v;
+  private String family;
+
+  private String test;
   
   /** Creates a new Limelight. */
   public Limelight() {
@@ -31,20 +38,25 @@ public class Limelight extends SubsystemBase {
     this.ty = table.getEntry("ty");
     this.ta = table.getEntry("ta");
     this.tv = table.getEntry("tv");
+    this.fam = table.getEntry("fam");
+    this.t6c_ts = table.getEntry("tid");
 
   }
 
   @Override
   public void periodic() {
+
     this.x = tx.getDouble(0.0);
     this.y = ty.getDouble(0.0);
     this.a = ta.getDouble(0.0);
     this.v = tv.getDouble(0.0);
 
+    this.id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
     SmartDashboard.putNumber("tx", x);
     SmartDashboard.putNumber("ty", y);
     SmartDashboard.putNumber("ta", a);
     SmartDashboard.putNumber("tv", v);
+    SmartDashboard.putNumber("id", id);
     // This method will be called once per scheduler run
   }
 }
