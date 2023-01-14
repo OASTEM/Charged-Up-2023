@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Balance;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
@@ -32,7 +33,7 @@ public class RobotContainer {
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  //private final NavX navX = new NavX();
+  private final NavX navX = new NavX();
   private final Limelight limelight = new Limelight();
   //Commands
 
@@ -57,8 +58,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //padA.whileTrue(new Balance(driveTrain, navX));
-    padA.whileTrue(new AprilTagDetect(limelight));
+    padA.whileTrue(new Balance(driveTrain, navX));
+    //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
 
