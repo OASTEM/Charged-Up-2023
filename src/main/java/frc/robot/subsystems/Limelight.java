@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.reflect.Array;
+import org.json.*;
 
 //import javax.swing.text.StyleContext.SmallAttributeSet;
 
@@ -16,47 +18,54 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase {
   private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  private NetworkTableEntry tx; 
-  private NetworkTableEntry ty; 
-  private NetworkTableEntry ta;
-  private NetworkTableEntry tv;
-  private NetworkTableEntry fid;
-  private NetworkTableEntry fam;
   private NetworkTableEntry t6c_ts;
   private double id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
-  private double x;
-  private double y;
-  private double a;
-  private double v;
-  private String family;
+  private double x = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  private double y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+  private double a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+  private double v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+  String fID;
+  //private double t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getDouble(0.0);;
 
-  private String test;
-  
+  String jsonString;
   /** Creates a new Limelight. */
   public Limelight() {
-    this.tx = table.getEntry("tx");
-    this.ty = table.getEntry("ty");
-    this.ta = table.getEntry("ta");
-    this.tv = table.getEntry("tv");
-    this.fam = table.getEntry("fam");
-    this.t6c_ts = table.getEntry("tid");
 
   }
 
   @Override
   public void periodic() {
-
-    this.x = tx.getDouble(0.0);
-    this.y = ty.getDouble(0.0);
-    this.a = ta.getDouble(0.0);
-    this.v = tv.getDouble(0.0);
+    //System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None"));
+    jsonString = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None");
+    // System.out.println(jsonString);
+    JSONObject obj = new JSONObject(jsonString);
+    JSONArray pageName = obj.getJSONObject("Results").getJSONArray("Fiducial");
+    JSONObject arrayID = pageName.getJSONObject(0);
+    System.out.println(arrayID);
+    // JSONArray arr = obj.getJSONArray("fID"); // notice that `"posts": [...]`
+    // for (int i = 0; i < arr.length(); i++)
+    // {
+    //     fID = arr.getJSONObject(i).getString("fID");
+    // }
+    // System.out.println(fID);
+    
 
     this.id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
+    this.x = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+    this.y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+    this.a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+    this.v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+    //this.t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("t6r_fs").getDouble(0.0);;
     SmartDashboard.putNumber("tx", x);
     SmartDashboard.putNumber("ty", y);
     SmartDashboard.putNumber("ta", a);
     SmartDashboard.putNumber("tv", v);
     SmartDashboard.putNumber("id", id);
+    //SmartDashboard.putNumber("field", t6r_fs);
     // This method will be called once per scheduler run
+  }
+
+  public String getJson(){
+    return jsonString;
   }
 }
