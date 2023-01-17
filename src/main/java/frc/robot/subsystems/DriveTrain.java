@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
@@ -16,6 +17,11 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX frontL;
   private TalonFX backR;
   private TalonFX backL;
+<<<<<<< HEAD
+=======
+
+  Orchestra orchestra;
+>>>>>>> 9bb1392458d9e8f87a16e1345ce81c251f978f26
 
   public DriveTrain() {
     frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
@@ -24,6 +30,8 @@ public class DriveTrain extends SubsystemBase {
     backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = false;
     climbing = false; 
+
+    orchestra = new Orchestra();
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
@@ -187,4 +195,21 @@ public class DriveTrain extends SubsystemBase {
 //     frontR.config_kD(pid.s, pid.d);
 //     frontR.config_kF(pid.s, pid.f);
 //   }
+
+  public void loadMusic(){
+    orchestra.loadMusic("sound.chrp");
+  }
+
+  public void addInsturments(){
+    orchestra.addInstrument(frontL);
+    orchestra.addInstrument(backL);
+    orchestra.addInstrument(frontR);
+    orchestra.addInstrument(backR);
+  }
+
+  public void playMusic(){
+    System.out.println(orchestra.play());
+  }
+
+
 }
