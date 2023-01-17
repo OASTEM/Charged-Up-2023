@@ -8,11 +8,13 @@ package frc.robot;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.Music;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
@@ -41,6 +43,8 @@ public class RobotContainer {
   //Buttons
 
   private final JoystickButton padA = new JoystickButton(pad, 1);
+  private final JoystickButton padB = new JoystickButton(pad, 2);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
@@ -59,6 +63,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain, navX));
+    padB.whileTrue(new Music(driveTrain));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
@@ -73,4 +78,9 @@ public class RobotContainer {
   //   // An example command will be run in autonomous
   //   return Autos.exampleAuto(m_exampleSubsystem);
   // }
+
+  public Command Music(){
+    return new Music(driveTrain);
+  }
+
 }

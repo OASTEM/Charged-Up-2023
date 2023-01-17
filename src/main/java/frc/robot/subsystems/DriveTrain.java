@@ -28,13 +28,7 @@ public class DriveTrain extends SubsystemBase {
     slowModeOn = false;
     climbing = false; 
 
-    // orchestra = new Orchestra();
-    // orchestra.addInstrument(frontR);
-    // orchestra.addInstrument(backR);
-    // orchestra.addInstrument(frontL);
-    // orchestra.addInstrument(backL);
-    // orchestra.loadMusic("lonely.chrp");
-    // orchestra.play();
+    orchestra = new Orchestra();
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
@@ -198,4 +192,21 @@ public class DriveTrain extends SubsystemBase {
 //     frontR.config_kD(pid.s, pid.d);
 //     frontR.config_kF(pid.s, pid.f);
 //   }
+
+  public void loadMusic(){
+    orchestra.loadMusic("sound.chrp");
+  }
+
+  public void addInsturments(){
+    orchestra.addInstrument(frontL);
+    orchestra.addInstrument(backL);
+    orchestra.addInstrument(frontR);
+    orchestra.addInstrument(backR);
+  }
+
+  public void playMusic(){
+    System.out.println(orchestra.play());
+  }
+
+
 }
