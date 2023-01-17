@@ -17,11 +17,8 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX frontL;
   private TalonFX backR;
   private TalonFX backL;
-<<<<<<< HEAD
-=======
 
   Orchestra orchestra;
->>>>>>> 9bb1392458d9e8f87a16e1345ce81c251f978f26
 
   public DriveTrain() {
     frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
