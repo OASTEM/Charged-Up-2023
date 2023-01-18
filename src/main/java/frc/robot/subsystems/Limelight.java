@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.lang.reflect.Array;
+import java.math.BigInteger;
+
 import org.json.*;
 
 //import javax.swing.text.StyleContext.SmallAttributeSet;
@@ -24,10 +26,11 @@ public class Limelight extends SubsystemBase {
   private double y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
   private double a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
   private double v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-  String fID;
+ // String fID;
   //private double t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getDouble(0.0);;
 
   String jsonString;
+  int fID;
   /** Creates a new Limelight. */
   public Limelight() {
 
@@ -39,9 +42,16 @@ public class Limelight extends SubsystemBase {
     jsonString = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None");
     // System.out.println(jsonString);
     JSONObject obj = new JSONObject(jsonString);
-    JSONArray pageName = obj.getJSONObject("Results").getJSONArray("Fiducial");
-    JSONObject arrayID = pageName.getJSONObject(0);
-    System.out.println(arrayID);
+    JSONArray fiducial = obj.getJSONObject("Results").getJSONArray("Fiducial");
+    try {
+      JSONObject arrayID = fiducial.getJSONObject(0);
+      fID = arrayID.getInt("fID");
+    } catch (Exception e) {
+      fID = -1;
+      System.out.println("error with fID");
+    }
+    
+    System.out.println(fID);
     // JSONArray arr = obj.getJSONArray("fID"); // notice that `"posts": [...]`
     // for (int i = 0; i < arr.length(); i++)
     // {
