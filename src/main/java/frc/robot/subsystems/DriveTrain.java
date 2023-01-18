@@ -18,7 +18,10 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX backR;
   private TalonFX backL;
 
-  Orchestra orchestra;
+  Orchestra orchestra1;
+  Orchestra orchestra2;
+  Orchestra orchestra3;
+  Orchestra orchestra4;
 
   public DriveTrain() {
     frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
@@ -28,7 +31,10 @@ public class DriveTrain extends SubsystemBase {
     slowModeOn = false;
     climbing = false; 
 
-    orchestra = new Orchestra();
+    orchestra1 = new Orchestra();
+    orchestra2 = new Orchestra();
+    orchestra3 = new Orchestra();
+    orchestra4 = new Orchestra();
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
@@ -194,18 +200,24 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void loadMusic(){
-    orchestra.loadMusic("sound.chrp");
+    orchestra1.loadMusic("megalovania.chrp");
+    orchestra2.loadMusic("megalovania.chrp");
+    orchestra3.loadMusic("megalovania.chrp");
+    orchestra4.loadMusic("megalovania.chrp");
   }
 
-  public void addInsturments(){
-    orchestra.addInstrument(frontL);
-    orchestra.addInstrument(backL);
-    orchestra.addInstrument(frontR);
-    orchestra.addInstrument(backR);
+  public void addInstruments(){
+    orchestra1.addInstrument(frontL);
+    orchestra2.addInstrument(backL);
+    orchestra3.addInstrument(frontR);
+    orchestra4.addInstrument(backR);
   }
 
   public void playMusic(){
-    System.out.println(orchestra.play());
+    orchestra1.play();
+    orchestra2.play();
+    orchestra3.play();
+    orchestra4.play();
   }
 
 
