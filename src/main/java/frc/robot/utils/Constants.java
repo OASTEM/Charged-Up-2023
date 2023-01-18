@@ -23,7 +23,7 @@ public final class Constants {
 
   public final static class DriveTrain {
     public static final double SLOW_MODE_TURN = 0.3;
-    public static final double SLOW_MODE = 0.3;
+    public static final double SLOW_MODE = 0.2;
     public static final double SUPER_SLOW_MODE = 0.1;
     public static final double REGULAR_MODE = 0.6;
     public static final double REGULAR_MODE_TURN = 0.3;

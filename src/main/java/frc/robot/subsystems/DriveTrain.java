@@ -220,5 +220,12 @@ public class DriveTrain extends SubsystemBase {
     orchestra4.play();
   }
 
+  public void stopMusic(){
+    orchestra1.stop();
+    orchestra2.stop();
+    orchestra3.stop();
+    orchestra4.stop();
+  }
+
 
 }
