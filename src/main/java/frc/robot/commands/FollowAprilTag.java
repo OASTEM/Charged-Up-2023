@@ -27,7 +27,8 @@ public class FollowAprilTag extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    distanceError = limelight.getDistance();
+    angleError = limelight.getXAngle();
 
   }
 
@@ -42,7 +43,7 @@ public class FollowAprilTag extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    
+
   }
 
   // Returns true when the command should end.

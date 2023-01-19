@@ -107,4 +107,7 @@ public class Limelight extends SubsystemBase {
     return angle;
   }
 
+  public double getXAngle(){
+    return x;
+  }
 }
