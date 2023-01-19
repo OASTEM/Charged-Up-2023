@@ -9,6 +9,7 @@ package frc.robot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
@@ -36,7 +37,7 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final NavX navX = new NavX();
-  private final Limelight limelight = new Limelight();
+  //private final Limelight limelight = new Limelight();
   //Commands
 
 
@@ -44,6 +45,7 @@ public class RobotContainer {
 
   private final JoystickButton padA = new JoystickButton(pad, 1);
   private final JoystickButton padB = new JoystickButton(pad, 2);
+  private final JoystickButton padX = new JoystickButton(pad, 3);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,6 +66,7 @@ public class RobotContainer {
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain, navX));
     padB.whileTrue(new Music(driveTrain));
+    padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
