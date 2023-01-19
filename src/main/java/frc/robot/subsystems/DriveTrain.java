@@ -200,10 +200,10 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void loadMusic(){
-    orchestra1.loadMusic("megalovania.chrp");
-    orchestra2.loadMusic("megalovania.chrp");
-    orchestra3.loadMusic("megalovania.chrp");
-    orchestra4.loadMusic("megalovania.chrp");
+    orchestra1.loadMusic("fight song.chrp");
+    orchestra2.loadMusic("fight song.chrp");
+    orchestra3.loadMusic("fight song.chrp");
+    orchestra4.loadMusic("fight song.chrp");
   }
 
   public void addInstruments(){
