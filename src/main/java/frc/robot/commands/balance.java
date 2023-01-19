@@ -27,9 +27,9 @@ public class Balance extends CommandBase {
   public Balance(DriveTrain driveTrain, NavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
-    p = SmartDashboard.getNumber("P", 0.02);
-    i = SmartDashboard.getNumber("I", 0.0001);
-    d = SmartDashboard.getNumber("D", 0.0001);
+    p = SmartDashboard.getNumber("P", 0.015);
+    i = SmartDashboard.getNumber("I", 0);
+    d = SmartDashboard.getNumber("D", 0.001);
     SmartDashboard.putNumber("P", p);
     SmartDashboard.putNumber("I", i);
     SmartDashboard.putNumber("D", d);

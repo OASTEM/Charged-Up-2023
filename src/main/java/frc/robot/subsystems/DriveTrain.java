@@ -28,7 +28,7 @@ public class DriveTrain extends SubsystemBase {
     frontL = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
     backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
     backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
-    slowModeOn = false;
+    slowModeOn = true;
     climbing = false; 
 
     orchestra1 = new Orchestra();
