@@ -28,6 +28,13 @@ public class Limelight extends SubsystemBase {
   private double v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
  // String fID;
   //private double t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getDouble(0.0);;
+  private double limelightHeight;
+  private double goalHeight;
+  private double limelightMountDegree;
+
+  private double angleToGoalDegrees;
+  private double angleToGoalInRadians;
+  private double distance;
 
   String jsonString;
   int fID;
@@ -78,4 +85,26 @@ public class Limelight extends SubsystemBase {
   public String getJson(){
     return jsonString;
   }
+
+  public double getDistance(){
+    angleToGoalDegrees = limelightMountDegree +  y;
+    angleToGoalInRadians = Math.toRadians(angleToGoalDegrees);
+    distance = (goalHeight - limelightHeight)/Math.tan(angleToGoalInRadians);
+    return distance;
+  }
+
+  public double getLimelightAngle(){
+    double length = 119;
+    // In inches adjacent
+    double angle = (goalHeight - limelightHeight) / length;
+    // Gets the ratio of opp and adj
+    angle = Math.atan(angle);
+    // Takes this ratio and returns the angle
+    angle = Math.abs(angle - Math.toRadians(y));
+    // Accounts for any off center
+    angle = Math.toDegrees(angle);
+    // Converts it to degrees
+    return angle;
+  }
+
 }
