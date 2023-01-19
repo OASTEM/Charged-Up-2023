@@ -44,7 +44,6 @@ public class Balance extends CommandBase {
   public void initialize() {
     driveTrain.stop();
     navX.reset();
-    System.out.println("autdoaiuad");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
