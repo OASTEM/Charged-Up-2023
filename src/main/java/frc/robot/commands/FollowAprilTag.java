@@ -29,6 +29,7 @@ public class FollowAprilTag extends CommandBase {
   public void initialize() {
     distanceError = limelight.getDistance();
     angleError = limelight.getXAngle();
+    
 
   }
 
