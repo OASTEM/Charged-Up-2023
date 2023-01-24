@@ -9,18 +9,12 @@ package frc.robot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.AutoTest;
 import frc.robot.commands.Balance;
 import frc.robot.commands.Music;
 // import frc.robot.commands.Balance;
@@ -85,11 +79,7 @@ public class RobotContainer {
    */
   //TODO AutoCommand to be returned
   public Command getAutonomousCommand() {
-    PathPlannerTrajectory examplePath = PathPlanner.loadPath("Averi's Test.path", new PathConstraints(2, 1), true);
-    PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
-    System.out.println(exampleState.velocityMetersPerSecond);
-    // An example command will be run in autonomous
-    return new AutoTest();
+    return null;
   }
 
   public Command Music(){
