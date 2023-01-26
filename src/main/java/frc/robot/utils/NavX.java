@@ -29,6 +29,3 @@ public class NavX {
         navX.reset();
       }
 }
-
-
-//TODO Figure out which function to implent for tilt

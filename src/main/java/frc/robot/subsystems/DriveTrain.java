@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -129,12 +128,15 @@ public class DriveTrain extends SubsystemBase {
 
   public double getLeftEncoderCount() {
     return frontL.getSelectedSensorPosition();
-
   }
 
   public double getRightEncoderCount() {
     return frontR.getSelectedSensorPosition();
+  }
 
+  public void resetEncoders() {
+    frontL.setSelectedSensorPosition(0);
+    frontR.setSelectedSensorPosition(0);
   }
 
   // public void setBackLeftSpeed() {
@@ -180,6 +182,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+
   }
 
   public void setPosition(double pos) {
