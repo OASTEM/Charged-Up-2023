@@ -18,6 +18,10 @@ public final class Constants {
     public static final int DRIVETRAIN_BACK_RIGHT = 9;
     public static final int DRIVETRAIN_FRONT_LEFT = 7;
     public static final int DRIVETRAIN_BACK_LEFT = 6;
+    public static final int ARM_ID = 1;
+    public static final int LEFTGRABBER_ID = 2;
+    public static final int RIGHTGRABBER_ID = 3;
+    public static final int OPENCLOSE_ID = 4;
     
   }
 
@@ -41,6 +45,12 @@ public final class Constants {
     public static final boolean DEBUG = false;
   }
 
-  
+  public final static class Arm {
+    public static final PID PID = new PID(0, 0, 0);
+  }
+
+  public final static class Grabber {
+    public static final PID PID = new PID(0,0,0);
+  }
 
 }

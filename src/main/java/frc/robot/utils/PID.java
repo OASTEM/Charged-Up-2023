@@ -7,7 +7,7 @@ public class PID {
 		this.D = D;
 	}
 
-	double P, I, D;
+	public double P, I, D;
 	double previous_error, integral = 0;
 	double setpoint;
 	double error;
@@ -33,4 +33,5 @@ public class PID {
 	public void resetI() {
 		this.integral = 0;
 	}
+
 }
