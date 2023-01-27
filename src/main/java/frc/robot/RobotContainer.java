@@ -16,10 +16,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.MoveArm;
 import frc.robot.commands.Music;
+import frc.robot.subsystems.Arm;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Manipulator;
 
 
 
@@ -38,6 +41,8 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final NavX navX = new NavX();
+  private final Arm arm = new Arm();
+  private final Manipulator manipulator = new Manipulator();
   //private final Limelight limelight = new Limelight();
   //Commands
 
@@ -47,7 +52,7 @@ public class RobotContainer {
   private final JoystickButton padA = new JoystickButton(pad, 1);
   private final JoystickButton padB = new JoystickButton(pad, 2);
   private final JoystickButton padX = new JoystickButton(pad, 3);
-
+  private final JoystickButton padY = new JoystickButton(pad, 4);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
@@ -68,6 +73,7 @@ public class RobotContainer {
     padA.whileTrue(new Balance(driveTrain, navX));
     padB.whileTrue(new Music(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
+    padY.whileTrue(new MoveArm(arm));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }

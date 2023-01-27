@@ -34,7 +34,7 @@ public class Balance extends CommandBase {
     SmartDashboard.putNumber("I", i);
     SmartDashboard.putNumber("D", d);
                                                                               
-    balancePID = new PID(p, i, d);
+    balancePID = new PID(p, i, d, 0);
     this.driveTrain = driveTrain;
     this.navX = navX;
   }
@@ -76,7 +76,7 @@ public class Balance extends CommandBase {
     p = SmartDashboard.getNumber("P", 0.021);
     i = SmartDashboard.getNumber("I", 0.002);
     d = SmartDashboard.getNumber("D", 0.002);
-    balancePID = new PID(p, i, d);
+    balancePID = new PID(p, i, d,0);
   }
 
   // Returns true when the command should end.

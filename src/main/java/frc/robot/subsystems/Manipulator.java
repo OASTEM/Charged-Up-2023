@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
+import frc.robot.utils.PID;
 
 public class Manipulator extends SubsystemBase {
   /** Creates a new Manipulator. */
@@ -28,12 +29,13 @@ public class Manipulator extends SubsystemBase {
   private SparkMaxPIDController openCloseMotorPIDController;
   private RelativeEncoder openCloseMotorEncoder;
 
-
-
   public Manipulator() {
     leftMotor = new CANSparkMax(Constants.CANIDS.LEFTGRABBER_ID, MotorType.kBrushless);
     rightMotor = new CANSparkMax(Constants.CANIDS.RIGHTGRABBER_ID, MotorType.kBrushless);
     openCloseMotor = new CANSparkMax(Constants.CANIDS.OPENCLOSE_ID, MotorType.kBrushless);
+
+    leftMotor.setInverted(true);
+    rightMotor.setInverted(false);
 
     // leftMotorPIDController = leftMotor.getPIDController();
     // leftMotorEncoder = leftMotor.getEncoder();
@@ -52,9 +54,9 @@ public class Manipulator extends SubsystemBase {
     openCloseMotorPIDController = openCloseMotor.getPIDController();
     openCloseMotorEncoder = openCloseMotor.getEncoder();
 
-    openCloseMotorPIDController.setP(Constants.Grabber.PID.P);
-    openCloseMotorPIDController.setI(Constants.Grabber.PID.I);
-    openCloseMotorPIDController.setD(Constants.Grabber.PID.D);
+    openCloseMotorPIDController.setP(Constants.Grabber.PID.p);
+    openCloseMotorPIDController.setI(Constants.Grabber.PID.i);
+    openCloseMotorPIDController.setD(Constants.Grabber.PID.d);
     
   }
 
@@ -70,6 +72,13 @@ public class Manipulator extends SubsystemBase {
   public void close(){
     openCloseMotorEncoder.setPosition(1);
   }
+  public void setPID(PID pid){
+    openCloseMotorPIDController.setP(pid.p);
+    openCloseMotorPIDController.setI(pid.i);
+    openCloseMotorPIDController.setD(pid.d);
+  }
+
+  
 
   @Override
   public void periodic() {

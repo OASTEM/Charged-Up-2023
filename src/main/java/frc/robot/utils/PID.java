@@ -1,13 +1,50 @@
 package frc.robot.utils;
 
 public class PID {
-    public PID(double P, double I, double D) {
-		this.P = P;
-		this.I = I;
-		this.D = D;
-	}
+	public double p;
+    public double i;
+    public double d;
+    public double f;
+    public int s;
 
-	public double P, I, D;
+    public PID(double p, double i, double d, double f, int s) {
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.s = s;
+    }
+    public PID(double p, double i, double d, double f) {
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.s = -1;
+    }
+
+    public void updatePID(double p, double i, double d, double f, int s) {
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.s = s;
+    }
+
+    public void updatePID(double p, double i, double d, double f) {
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.s = -1;
+    }
+
+	public void updatePID(double p, double i, double d) {
+		this.p = p;
+		this.i = i;
+		this.d = d;
+		this.f = 0;
+		this.s = -1;
+	}
 	double previous_error, integral = 0;
 	double setpoint;
 	double error;
@@ -17,7 +54,7 @@ public class PID {
 		error = setpoint - actual; // Error = Target - Actual
 		this.integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal
 		final double derivative = (error - this.previous_error) / .02;
-		this.output = P * error + I * this.integral + D * derivative;
+		this.output = p * error + i * this.integral + d * derivative;
 		this.previous_error = error;
 		return output;
 	}

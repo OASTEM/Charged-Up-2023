@@ -183,7 +183,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
   }
-
+  
   public void setPosition(double pos) {
     frontL.set(ControlMode.MotionMagic, pos);
     frontR.set(ControlMode.MotionMagic, pos);
