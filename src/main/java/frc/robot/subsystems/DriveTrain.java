@@ -13,10 +13,10 @@ import frc.robot.utils.Constants;
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
   private boolean climbing;
-  private TalonFX frontR;
-  private TalonFX frontL;
-  private TalonFX backR;
-  private TalonFX backL;
+  private TalonSRX frontR;
+  private TalonSRX frontL;
+  private TalonSRX backR;
+  private TalonSRX backL;
 
   Orchestra orchestra1;
   Orchestra orchestra2;
@@ -24,10 +24,10 @@ public class DriveTrain extends SubsystemBase {
   Orchestra orchestra4;
 
   public DriveTrain() {
-    frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-    frontL = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-    backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-    backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
+    frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
+    frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
+    backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
+    backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
     climbing = false; 
 
@@ -137,7 +137,7 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-  
+
 
   // public void setBackLeftSpeed() {
   //   backL.set(ControlMode.PercentOutput, 0.6);
@@ -208,12 +208,12 @@ public class DriveTrain extends SubsystemBase {
     orchestra4.loadMusic("fight song.chrp");
   }
 
-  public void addInstruments(){
-    orchestra1.addInstrument(frontL);
-    orchestra2.addInstrument(backL);
-    orchestra3.addInstrument(frontR);
-    orchestra4.addInstrument(backR);
-  }
+  // public void addInstruments(){
+  //   orchestra1.addInstrument(frontL);
+  //   orchestra2.addInstrument(backL);
+  //   orchestra3.addInstrument(frontR);
+  //   orchestra4.addInstrument(backR);
+  // }
 
   public void playMusic(){
     orchestra1.play();

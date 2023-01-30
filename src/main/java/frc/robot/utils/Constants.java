@@ -14,11 +14,11 @@ package frc.robot.utils;
  */
 public final class Constants {
   public static class CANIDS{
-    public static final int DRIVETRAIN_FRONT_RIGHT = 8;
-    public static final int DRIVETRAIN_BACK_RIGHT = 9;
-    public static final int DRIVETRAIN_FRONT_LEFT = 7;
-    public static final int DRIVETRAIN_BACK_LEFT = 6;
-    public static final int ARM_ID = 1;
+    public static final int DRIVETRAIN_FRONT_RIGHT = 3; //8
+    public static final int DRIVETRAIN_BACK_RIGHT = 2; //9
+    public static final int DRIVETRAIN_FRONT_LEFT = 1; // 7
+    public static final int DRIVETRAIN_BACK_LEFT = 0; //6
+    public static final int ARM_ID = 13;
     public static final int SIDEARM_ID = 5;
     public static final int LEFTGRABBER_ID = 2;
     public static final int RIGHTGRABBER_ID = 3;
@@ -47,7 +47,7 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID PID = new PID(0, 0, 0,0);
+    public static final PID PID = new PID(0.05, 0.002, 0.02,0);
   }
 
   public final static class Grabber {

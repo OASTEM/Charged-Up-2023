@@ -27,14 +27,7 @@ public class Balance extends CommandBase {
   public Balance(DriveTrain driveTrain, NavX navX) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
-    p = SmartDashboard.getNumber("P", 0.015);
-    i = SmartDashboard.getNumber("I", 0);
-    d = SmartDashboard.getNumber("D", 0.001);
-    SmartDashboard.putNumber("P", p);
-    SmartDashboard.putNumber("I", i);
-    SmartDashboard.putNumber("D", d);
-                                                                              
-    balancePID = new PID(p, i, d, 0);
+
     this.driveTrain = driveTrain;
     this.navX = navX;
   }
@@ -42,6 +35,14 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    p = SmartDashboard.getNumber("P", 0.015);
+    i = SmartDashboard.getNumber("I", 0.00015);
+    d = SmartDashboard.getNumber("D", 0.0008);
+    SmartDashboard.putNumber("P", p);
+    SmartDashboard.putNumber("I", i);
+    SmartDashboard.putNumber("D", d);
+                                                                              
+    balancePID = new PID(p, i, d, 0);
     driveTrain.stop();
     navX.reset();
   }
@@ -62,8 +63,8 @@ public class Balance extends CommandBase {
       effort = maxEffort;
     }
 
-    driveTrain.setLeftSpeed(effort);
-    driveTrain.setRightSpeed(effort);
+    driveTrain.setLeftSpeed(-effort); //effort
+    driveTrain.setRightSpeed(-effort); //effort
 
     SmartDashboard.putNumber("navXYError", this.error);
     SmartDashboard.putNumber("PID Speed", effort);
