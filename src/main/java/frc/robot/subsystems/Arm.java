@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
 import frc.robot.utils.PID;
@@ -60,9 +61,10 @@ public class Arm extends SubsystemBase {
     armMotor.set(speed);
   }
 
-  public void setVelocity(int velocity) {
+  public void setVelocity(double velocity) {
     armMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
+
   public void setPID(PID pid){
     armMotorPIDController.setP(pid.p);
     armMotorPIDController.setI(pid.i);
@@ -100,5 +102,9 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    //System.out.println(armMotorEncoder.getPosition());
+    System.out.println(armMotor.getAppliedOutput());
+    // System.out.println(armMotorEncoder.getVelocity());
+    SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
   }
 }
