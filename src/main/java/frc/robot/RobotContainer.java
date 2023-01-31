@@ -7,9 +7,17 @@ package frc.robot;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
-import frc.robot.utils.NavX;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -19,7 +27,9 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.Music;
+//import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
+
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
@@ -41,7 +51,6 @@ public class RobotContainer {
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  private final NavX navX = new NavX();
   //private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   //private final Limelight limelight = new Limelight();
@@ -72,7 +81,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    padA.whileTrue(new Balance(driveTrain, navX));
+    padA.whileTrue(new Balance(driveTrain));
     padB.whileTrue(new Music(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
     //padY.whileTrue(new MoveArm(arm));
@@ -87,11 +96,15 @@ public class RobotContainer {
    */
   //TODO AutoCommand to be returned
   public Command getAutonomousCommand() {
-    return new SequentialCommandGroup(
-        
+    // List<PathPlannerTrajectory> trajectories = PathPlanner.loadPathGroup("New Path", 2, 2);
 
+    // Command autoTest = Commands.sequence(
+    //   new FollowPathWithEvents(
+    //     // new FollowPath(trajectories.get(0), driveTrain, true), 
 
-    );
+    //   )
+    // );
+    return null;
   }
 
   public Command Music(){

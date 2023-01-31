@@ -6,7 +6,12 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
 
@@ -23,6 +28,8 @@ public class DriveTrain extends SubsystemBase {
   Orchestra orchestra3;
   Orchestra orchestra4;
 
+  private final AHRS navX;
+
   public DriveTrain() {
     frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
     frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
@@ -30,6 +37,9 @@ public class DriveTrain extends SubsystemBase {
     backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
     climbing = false; 
+
+    DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrain.TRACK_WIDTH);
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(kinematics, getHeading());
 
     orchestra1 = new Orchestra();
     orchestra2 = new Orchestra();
@@ -78,6 +88,9 @@ public class DriveTrain extends SubsystemBase {
     // frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // this.setPID(Constants.DriveTrain.PID);
+
+
+    navX = new AHRS(Port.kMXP, (byte) 50);
   }
 
   public void arcadeDrive(double x, double y) {
@@ -229,5 +242,23 @@ public class DriveTrain extends SubsystemBase {
     orchestra4.stop();
   }
 
+  public double getZAngle() {
+    return navX.getAngle();
+  }
 
+  public double getXAngle(){
+    return navX.getRoll();
+}
+
+  public double getYAngle(){
+    return navX.getPitch();
+}
+
+  public void reset() {
+    navX.reset();
+  }
+
+  public Rotation2d getHeading() {
+    return Rotation2d.fromDegrees(-navX.getAngle());
+  }
 }

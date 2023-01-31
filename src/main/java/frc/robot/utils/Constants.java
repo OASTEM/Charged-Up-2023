@@ -4,6 +4,10 @@
 
 package frc.robot.utils;
 
+import java.util.HashMap;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -44,6 +48,9 @@ public final class Constants {
     public static final double CLOSED_LOOP_RAMP = 0;
     public static final double ANGLE_TOLERANCE = .5;
     public static final boolean DEBUG = false;
+    public static final double TRACK_WIDTH = 0.5;
+
+    public static final HashMap<String, Command> AUTO_EVENT_MAP = new HashMap<>();
   }
 
   public final static class Arm {
