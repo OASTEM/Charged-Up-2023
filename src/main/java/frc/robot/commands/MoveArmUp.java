@@ -10,7 +10,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.PID;
 
-public class MoveArm extends CommandBase {
+public class MoveArmUp extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
   private double p, i, d;
@@ -21,7 +21,7 @@ public class MoveArm extends CommandBase {
   //   this.arm = arm;
   //   this.drivePad = drivePad;
   // }
-  public MoveArm(Arm arm) {
+  public MoveArmUp(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     this.arm = arm;
@@ -33,15 +33,15 @@ public class MoveArm extends CommandBase {
   public void initialize() {
     arm.resetEncoders();
     //arm.setArmMotorPosition(100);
-    p = SmartDashboard.getNumber("PArm", 0.001); 
-    i = SmartDashboard.getNumber("IArm", 0.00000001);
-    d = SmartDashboard.getNumber("DArm", 0.008);
-    SmartDashboard.putNumber("PArm", p);
-    SmartDashboard.putNumber("IArm", i);
-    SmartDashboard.putNumber("DArm", d);
+    p = SmartDashboard.getNumber("PArmUp", 0.001); //0.0001
+    i = SmartDashboard.getNumber("IArmUp", 0.00000001);
+    d = SmartDashboard.getNumber("DArmUp", 0.008);
+    SmartDashboard.putNumber("PArmUp", p);
+    SmartDashboard.putNumber("IArmUp", i);
+    SmartDashboard.putNumber("DArmUp", d);
     PID pid = new PID(p, i, d,0);
     arm.setPID(pid);
-    arm.setVelocity(1920);
+    arm.setVelocity(-1920);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

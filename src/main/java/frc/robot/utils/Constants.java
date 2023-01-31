@@ -47,7 +47,7 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID PID = new PID(0.05, 0.002, 0.02,0);
+    public static final PID PID = new PID(0.0001, 0.00001, 0.08,0);
   }
 
   public final static class Grabber {

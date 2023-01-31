@@ -71,6 +71,10 @@ public class Arm extends SubsystemBase {
     armMotorPIDController.setD(pid.d);
   }
 
+  public void set(double speed){
+    armMotor.set(speed);
+  }
+
 
 
   //Side Arm
@@ -91,6 +95,13 @@ public class Arm extends SubsystemBase {
     sideMotorPIDController.setI(pid.i);
     sideMotorPIDController.setD(pid.d);
   }
+  public double getArmCurrent(){
+    return Math.abs(armMotor.getOutputCurrent());
+  }
+
+  public double getSideCurrent(){
+    return Math.abs(sideMotor.getOutputCurrent());
+  }
 
   //Stop
   public void stop(){
@@ -103,8 +114,9 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //System.out.println(armMotorEncoder.getPosition());
-    System.out.println(armMotor.getAppliedOutput());
-    // System.out.println(armMotorEncoder.getVelocity());
+    //System.out.println(armMotor.getAppliedOutput());
+    //System.out.println(armMotorEncoder.getVelocity());
+    System.out.println(getArmCurrent());
     SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
   }
 }

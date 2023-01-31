@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.Calibration;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
 import frc.robot.subsystems.Arm;
 // import frc.robot.commands.Balance;
@@ -41,7 +43,7 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final NavX navX = new NavX();
-  //private final Arm arm = new Arm();
+  private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   //private final Limelight limelight = new Limelight();
   //Commands
@@ -55,7 +57,7 @@ public class RobotContainer {
   private final JoystickButton padY = new JoystickButton(pad, 4);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-   driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+   //driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
    //arm.setDefaultCommand(new MoveArm(arm, pad));
     // Configure the trigger bindings
     configureBindings();
@@ -72,9 +74,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain, navX));
-    padB.whileTrue(new Music(driveTrain));
-    padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    //padY.whileTrue(new MoveArm(arm));
+    //padB.whileTrue(new Music(driveTrain));
+    padB.whileTrue(new MoveArmUp(arm));
+    //padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
+    padX.whileTrue(new MoveArm(arm));
+    padY.whileTrue(new Calibration(arm));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
