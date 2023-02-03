@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.PID;
+import frc.robot.utils.ShuffleBoard;
 
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
   private double p, i, d;
+  private ShuffleBoard shuffleboard;
   //private LogitechGamingPad drivePad;
 
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
@@ -21,10 +23,11 @@ public class MoveArm extends CommandBase {
   //   this.arm = arm;
   //   this.drivePad = drivePad;
   // }
-  public MoveArm(Arm arm) {
+  public MoveArm(Arm arm, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     this.arm = arm;
+    this.shuffleboard = shuffleboard;
 
   }
 
@@ -33,14 +36,14 @@ public class MoveArm extends CommandBase {
   public void initialize() {
     arm.resetEncoders();
     //arm.setArmMotorPosition(100);
-    p = SmartDashboard.getNumber("PArm", 0.001); 
-    i = SmartDashboard.getNumber("IArm", 0.00000001);
-    d = SmartDashboard.getNumber("DArm", 0.008);
-    SmartDashboard.putNumber("PArm", p);
-    SmartDashboard.putNumber("IArm", i);
-    SmartDashboard.putNumber("DArm", d);
-    PID pid = new PID(p, i, d,0);
-    arm.setPID(pid);
+    // p = SmartDashboard.getNumber("PArm", 0.0002); 
+    // i = SmartDashboard.getNumber("IArm", 0.000001);
+    // d = SmartDashboard.getNumber("DArm", 0.000021);
+    // SmartDashboard.putNumber("PArm", p);
+    // SmartDashboard.putNumber("IArm", i);
+    // SmartDashboard.putNumber("DArm", d);
+    // PID pid = new PID(p, i, d,0);
+    arm.setPID(shuffleboard.getArmDownPID());
     arm.setVelocity(1920);
   }
 

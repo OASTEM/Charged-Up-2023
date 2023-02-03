@@ -8,7 +8,7 @@ package frc.robot;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
-
+import frc.robot.utils.ShuffleBoard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -45,6 +45,7 @@ public class RobotContainer {
   private final NavX navX = new NavX();
   private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
+  private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
   //Commands
 
@@ -75,9 +76,9 @@ public class RobotContainer {
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain, navX));
     //padB.whileTrue(new Music(driveTrain));
-    padB.whileTrue(new MoveArmUp(arm));
+    padB.whileTrue(new MoveArmUp(arm, shuffleboard));
     //padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    padX.whileTrue(new MoveArm(arm));
+    padX.whileTrue(new MoveArm(arm, shuffleboard));
     padY.whileTrue(new Calibration(arm));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
@@ -96,5 +97,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
-
+  public Command Calibrate(){
+    return new Calibration(arm);
+  }
 }

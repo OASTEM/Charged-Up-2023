@@ -37,16 +37,16 @@ public class Arm extends SubsystemBase {
 
 
 
-    armMotorPIDController.setP(Constants.Arm.PID.p);
-    armMotorPIDController.setI(Constants.Arm.PID.i);
-    armMotorPIDController.setD(Constants.Arm.PID.d);
+    armMotorPIDController.setP(Constants.Arm.upPID.p);
+    armMotorPIDController.setI(Constants.Arm.upPID.i);
+    armMotorPIDController.setD(Constants.Arm.upPID.d);
 
     sideMotorPIDController = sideMotor.getPIDController();
     sideMotorEncoder = sideMotor.getEncoder();
 
-    sideMotorPIDController.setP(Constants.Arm.PID.p);
-    sideMotorPIDController.setI(Constants.Arm.PID.i);
-    sideMotorPIDController.setD(Constants.Arm.PID.d);
+    sideMotorPIDController.setP(Constants.Arm.sidePID.p);
+    sideMotorPIDController.setI(Constants.Arm.sidePID.i);
+    sideMotorPIDController.setD(Constants.Arm.sidePID.d);
   }
 
   //Not Side Arm
@@ -120,3 +120,4 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
   }
 }
+
