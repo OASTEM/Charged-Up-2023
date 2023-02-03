@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().enable();
     //CommandScheduler.getInstance().schedule(m_robotContainer.Music());
-    CommandScheduler.getInstance().schedule(m_robotContainer.Calibrate());
+    CommandScheduler.getInstance().schedule(container.Calibrate());
   }
 
   /** This function is called periodically during test mode. */

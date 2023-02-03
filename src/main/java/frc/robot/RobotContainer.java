@@ -8,7 +8,17 @@ package frc.robot;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
+import frc.robot.utils.ShuffleBoard;
 
+import java.util.Arrays;
+
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -47,7 +57,6 @@ public class RobotContainer {
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  private final NavX navX = new NavX();
   //private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
@@ -79,7 +88,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    padA.whileTrue(new Balance(driveTrain, navX));
+    padA.whileTrue(new Balance(driveTrain));
     padB.whileTrue(new Music(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
     //padY.whileTrue(new MoveArm(arm));
@@ -120,7 +129,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
-  public Command Calibrate(){
-    return new Calibration(arm);
-  }
+  // public Command Calibrate(){
+  //   return new Calibration(arm);
+  // }
 }
