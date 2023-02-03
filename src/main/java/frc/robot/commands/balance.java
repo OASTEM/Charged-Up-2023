@@ -7,13 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.utils.NavX;
 import frc.robot.utils.PID;
 
 public class Balance extends CommandBase {
   /** Creates a new balance. */
   DriveTrain driveTrain;
-  NavX navX;
   private double error;                                                                 
   private final double goal = 0;
   private final double maxEffort = 1;
@@ -24,12 +22,11 @@ public class Balance extends CommandBase {
   //PID balancePID = new PID(0.023, 0.002, 0.002);
   PID balancePID;
 
-  public Balance(DriveTrain driveTrain, NavX navX) {
+  public Balance(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
 
     this.driveTrain = driveTrain;
-    this.navX = navX;
   }
 
   // Called when the command is initially scheduled.
@@ -44,7 +41,7 @@ public class Balance extends CommandBase {
                                                                               
     balancePID = new PID(p, i, d, 0);
     driveTrain.stop();
-    navX.reset();
+    driveTrain.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,7 +51,7 @@ public class Balance extends CommandBase {
     // driveTrain.setLeftSpeed(0.3);
     // driveTrain.setBackLeftSpeed();
     // driveTrain.setRightSpeed(0.3);
-    this.error = navX.getXAngle();
+    this.error = driveTrain.getXAngle();
 
     double effort = balancePID.calculate(this.goal, this.error);
     if (effort < -maxEffort) {

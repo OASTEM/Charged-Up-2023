@@ -8,9 +8,12 @@ package frc.robot;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.NavX;
-import frc.robot.utils.ShuffleBoard;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
@@ -20,7 +23,9 @@ import frc.robot.commands.Calibration;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
+//import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
+
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
@@ -43,7 +48,7 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final NavX navX = new NavX();
-  private final Arm arm = new Arm();
+  //private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -75,11 +80,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain, navX));
-    //padB.whileTrue(new Music(driveTrain));
-    padB.whileTrue(new MoveArmUp(arm, shuffleboard));
-    //padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    padX.whileTrue(new MoveArm(arm, shuffleboard));
-    padY.whileTrue(new Calibration(arm));
+    padB.whileTrue(new Music(driveTrain));
+    padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
+    //padY.whileTrue(new MoveArm(arm));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
@@ -91,7 +94,27 @@ public class RobotContainer {
    */
   //TODO AutoCommand to be returned
   public Command getAutonomousCommand() {
-    return null;
+    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
+    config.setKinematics(driveTrain.getKinematics());
+    final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+      Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
+        config
+      );
+    
+    RamseteCommand command = new RamseteCommand(
+    trajectory,
+    driveTrain::getPose,
+    new RamseteController(2.0, 0.7),
+    driveTrain.getFeedForward(),
+    driveTrain.getKinematics(),
+    driveTrain::getSpeeds,
+    driveTrain.getLeftPIDController(),
+    driveTrain.getRightPIDController(),
+    driveTrain::setOutput, 
+    driveTrain
+    );
+
+    return command;
   }
 
   public Command Music(){

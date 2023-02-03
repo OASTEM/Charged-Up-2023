@@ -117,6 +117,7 @@ public class Arm extends SubsystemBase {
     //System.out.println(armMotor.getAppliedOutput());
     //System.out.println(armMotorEncoder.getVelocity());
     System.out.println(getArmCurrent());
+    // System.out.println(armMotorEncoder.getVelocity());
     SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
   }
 }
