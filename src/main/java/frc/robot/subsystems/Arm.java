@@ -103,7 +103,7 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //System.out.println(armMotorEncoder.getPosition());
-    System.out.println(armMotor.getAppliedOutput());
+    //System.out.println(armMotor.getAppliedOutput());
     // System.out.println(armMotorEncoder.getVelocity());
     SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
   }

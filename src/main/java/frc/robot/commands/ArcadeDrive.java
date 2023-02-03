@@ -10,6 +10,9 @@ public class ArcadeDrive extends CommandBase {
   DriveTrain driveTrain;
   LogitechGamingPad drivePad;
 
+  double leftPad;
+  double rightPad;
+
   public ArcadeDrive(DriveTrain driveTrain, LogitechGamingPad drivePad) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
@@ -23,17 +26,16 @@ public class ArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    if (driveTrain.climbing()) {
-      driveTrain.arcadeDrive((drivePad.getRightAnalogXAxis() * -Constants.DriveTrain.SUPER_SLOW_MODE),
-          (drivePad.getLeftAnalogYAxis() * -Constants.DriveTrain.SUPER_SLOW_MODE));
-      SmartDashboard.putBoolean("Slow Mode: ", true);
-    } else if (driveTrain.getSlowMode()){
-      driveTrain.arcadeDrive((drivePad.getRightAnalogXAxis() * -Constants.DriveTrain.SLOW_MODE),
-          (drivePad.getLeftAnalogYAxis() * -Constants.DriveTrain.SLOW_MODE));
+    leftPad = drivePad.getLeftAnalogYAxis();
+    rightPad = drivePad.getRightAnalogXAxis();
+
+    if (driveTrain.getSlowMode()){
+      driveTrain.arcadeDrive((rightPad * -Constants.DriveTrain.SLOW_MODE),
+          (leftPad * -Constants.DriveTrain.SLOW_MODE));
       SmartDashboard.putBoolean("Slow Mode: ", true);
     } else {
-      driveTrain.arcadeDrive((drivePad.getRightAnalogXAxis() * -Constants.DriveTrain.REGULAR_MODE_TURN),
-          (drivePad.getLeftAnalogYAxis() * -Constants.DriveTrain.REGULAR_MODE));
+      driveTrain.arcadeDrive((rightPad * -Constants.DriveTrain.REGULAR_MODE_TURN),
+          (leftPad * -Constants.DriveTrain.REGULAR_MODE));
       SmartDashboard.putBoolean("Slow Mode: ", false);
     }
 

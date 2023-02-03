@@ -7,13 +7,20 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
+import frc.robot.utils.PID;
 
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
@@ -28,18 +35,26 @@ public class DriveTrain extends SubsystemBase {
   Orchestra orchestra3;
   Orchestra orchestra4;
 
-  private final AHRS navX;
+  private final AHRS navX = new AHRS(Port.kMXP, (byte) 50);
+  Pose2d pose = new Pose2d();
+  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
+  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading(), getLeftEncoderCount(), getRightEncoderCount(), pose);
+
+  SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(0.5, 0.5);
+
+  PIDController leftPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD);
+  PIDController rightPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD);
+
 
   public DriveTrain() {
+
     frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
     frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
     backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
     backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
-    climbing = false; 
+    climbing = false;
 
-    DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrain.TRACK_WIDTH);
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(kinematics, getHeading());
 
     orchestra1 = new Orchestra();
     orchestra2 = new Orchestra();
@@ -89,9 +104,9 @@ public class DriveTrain extends SubsystemBase {
     // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // this.setPID(Constants.DriveTrain.PID);
 
-
-    navX = new AHRS(Port.kMXP, (byte) 50);
   }
+
+
 
   public void arcadeDrive(double x, double y) {
     frontL.set(ControlMode.PercentOutput, y - x);
@@ -192,10 +207,6 @@ public class DriveTrain extends SubsystemBase {
 //     frontL.set(ControlMode.MotionMagic, this.getLeftEncoderCount() + (degrees * Constants.DriveTrain.TURN_CONSTANT));
 //     frontR.set(ControlMode.MotionMagic, this.getRightEncoderCount() - (degrees * Constants.DriveTrain.TURN_CONSTANT));
 //   }
-
-  @Override
-  public void periodic() {
-  }
   
   public void setPosition(double pos) {
     frontL.set(ControlMode.MotionMagic, pos);
@@ -254,6 +265,16 @@ public class DriveTrain extends SubsystemBase {
     return navX.getPitch();
 }
 
+  public Pose2d getPose() {
+    return pose;
+  }
+
+  public void setOutput(double left, double right) {
+    System.out.println(left + "  " + right);
+    frontL.set(ControlMode.PercentOutput, left);
+    frontR.set(ControlMode.PercentOutput, right);
+  }
+
   public void reset() {
     navX.reset();
   }
@@ -261,4 +282,35 @@ public class DriveTrain extends SubsystemBase {
   public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
+
+  public DifferentialDriveWheelSpeeds getSpeeds(){
+    return new DifferentialDriveWheelSpeeds(
+      frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60, 
+      frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60
+      );
+  }
+
+
+
+  @Override
+  public void periodic(){
+    pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
+  }
+
+  public SimpleMotorFeedforward getFeedForward(){
+    return feedForward;
+  }
+
+  public PIDController getLeftPIDController(){
+    return leftPIDController;
+  }
+
+  public PIDController getRightPIDController(){
+    return rightPIDController;
+  }
+  
+  public DifferentialDriveKinematics getKinematics(){
+    return kinematics;
+  }
+
 }

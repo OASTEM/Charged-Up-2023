@@ -48,7 +48,11 @@ public final class Constants {
     public static final double CLOSED_LOOP_RAMP = 0;
     public static final double ANGLE_TOLERANCE = .5;
     public static final boolean DEBUG = false;
-    public static final double TRACK_WIDTH = 0.5;
+    public static final double TRACK_WIDTH = 20;
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
 
     public static final HashMap<String, Command> AUTO_EVENT_MAP = new HashMap<>();
   }
