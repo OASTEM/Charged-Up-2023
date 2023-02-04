@@ -129,6 +129,7 @@ public class RobotContainer {
     return new Music(driveTrain);
   }
   public Command Calibrate(){
+<<<<<<< HEAD
   return new Calibration(arm);
   }
 }
