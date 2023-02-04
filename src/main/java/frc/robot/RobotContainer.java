@@ -7,7 +7,6 @@ package frc.robot;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
-import frc.robot.utils.NavX;
 import frc.robot.utils.ShuffleBoard;
 
 import java.util.Arrays;
@@ -57,7 +56,7 @@ public class RobotContainer {
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  //private final Arm arm = new Arm();
+  private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -129,7 +128,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
-  // public Command Calibrate(){
-  //   return new Calibration(arm);
-  // }
+  public Command Calibrate(){
+    return new Calibration(arm);
+  }
 }
