@@ -25,10 +25,10 @@ import frc.robot.utils.PID;
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
   private boolean climbing;
-  private TalonSRX frontR;
-  private TalonSRX frontL;
-  private TalonSRX backR;
-  private TalonSRX backL;
+  private TalonSRX frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
+  private TalonSRX frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
+  private TalonSRX backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
+  private TalonSRX backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
 
   Orchestra orchestra1;
   Orchestra orchestra2;
@@ -48,10 +48,10 @@ public class DriveTrain extends SubsystemBase {
 
   public DriveTrain() {
 
-    frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-    frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-    backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-    backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
+    // frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
+    // frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
+    // backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
+    // backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
     climbing = false;
 
