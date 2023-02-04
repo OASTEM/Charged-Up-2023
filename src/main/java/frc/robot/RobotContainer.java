@@ -129,10 +129,6 @@ public class RobotContainer {
     return new Music(driveTrain);
   }
   public Command Calibrate(){
-<<<<<<< HEAD
-  return new Calibration(arm);
-=======
     return new Calibration(arm);
->>>>>>> 78f4fab4df9c2fcdec8ef287c28de3708494ffdd
   }
 }
