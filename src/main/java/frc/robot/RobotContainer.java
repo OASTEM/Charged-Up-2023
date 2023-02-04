@@ -7,15 +7,10 @@ package frc.robot;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
+import frc.robot.utils.NavX;
+import frc.robot.utils.ShuffleBoard;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,7 +29,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.Calibration;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
@@ -62,6 +59,7 @@ public class RobotContainer {
   private final DriveTrain driveTrain = new DriveTrain();
   //private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
+  private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
   //Commands
 
@@ -74,7 +72,7 @@ public class RobotContainer {
   private final JoystickButton padY = new JoystickButton(pad, 4);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-   driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+   //driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
    //arm.setDefaultCommand(new MoveArm(arm, pad));
     // Configure the trigger bindings
     configureBindings();
@@ -131,5 +129,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
-
+  // public Command Calibrate(){
+  //   return new Calibration(arm);
+  // }
 }
