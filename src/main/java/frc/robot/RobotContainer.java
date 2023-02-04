@@ -9,15 +9,21 @@ package frc.robot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -52,7 +58,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //Controllers
   LogitechGamingPad pad = new LogitechGamingPad(0);
-
+  String trajectoryJSON = "PathWeaver/output/Unnamed.wpilib.json";
+  Trajectory trajectory = new Trajectory();
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
@@ -71,7 +78,7 @@ public class RobotContainer {
   private final JoystickButton padY = new JoystickButton(pad, 4);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-   //driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+   driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
    //arm.setDefaultCommand(new MoveArm(arm, pad));
     // Configure the trigger bindings
     configureBindings();
@@ -104,10 +111,23 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
     config.setKinematics(driveTrain.getKinematics());
-    final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-      Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
+    // final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //   Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
+    //     config
+    //   );
+      final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0, 0, new Rotation2d(0)),
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        new Pose2d(3, 0, new Rotation2d(0)),
         config
-      );
+        );
+    // Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    // try{
+    // trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    // }
+    // catch(IOException ex){
+    //   System.out.println("ERROR!");
+    // }
     
     RamseteCommand command = new RamseteCommand(
     trajectory,
