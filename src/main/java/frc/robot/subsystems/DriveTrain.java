@@ -186,10 +186,12 @@ public class DriveTrain extends SubsystemBase {
 
 //   }
 
-  // public void resetEncoders() {
-  //   frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
-  //   frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
-  // }
+  public void resetEncoders() {
+    // frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    // frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    frontL.getSensorCollection().setQuadraturePosition(0, 0);
+    frontR.getSensorCollection().setQuadraturePosition(0, 0);
+  }
 
   public void printEncoders() {
     System.out.println("Left: " + getLeftEncoderCount());
@@ -296,6 +298,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic(){
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
+    printEncoders();
   }
 
   public SimpleMotorFeedforward getFeedForward(){
