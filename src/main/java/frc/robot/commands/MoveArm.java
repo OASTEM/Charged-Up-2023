@@ -44,7 +44,7 @@ public class MoveArm extends CommandBase {
     // SmartDashboard.putNumber("DArm", d);
     // PID pid = new PID(p, i, d,0);
     arm.setPID(shuffleboard.getArmDownPID());
-    arm.setVelocity(1920);
+    arm.setVelocity(1920); //1920
   }
 
   // Called every time the scheduler runs while the command is scheduled.
