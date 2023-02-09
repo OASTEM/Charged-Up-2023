@@ -14,6 +14,7 @@ public class ShuffleBoard {
     private Manipulator manipulator;
     private PID armUpPID = Constants.Arm.upPID;
     private PID armDownPID = Constants.Arm.downPID;
+    private PID armSidePID = Constants.Arm.sidePID;
 
     public void ShuffleBoard(Arm arm, Manipulator manipulator){
         this.arm = arm;
@@ -27,6 +28,11 @@ public class ShuffleBoard {
         SmartDashboard.putNumber("Arm Down I", armDownPID.i);
         SmartDashboard.putNumber("Arm Down D", armDownPID.d);
         SmartDashboard.putNumber("Arm Down F", armDownPID.f);
+
+        SmartDashboard.putNumber("Arm Side P", armSidePID.p); 
+        SmartDashboard.putNumber("Arm Side I", armSidePID.i);
+        SmartDashboard.putNumber("Arm Side D", armSidePID.d);
+        SmartDashboard.putNumber("Arm Side F", armSidePID.f);
     }
 
     public PID getArmUpPID(){
@@ -47,4 +53,13 @@ public class ShuffleBoard {
         return armDownPID;
     }
 
-}
+    public PID getArmSidePID(){
+        armSidePID.updatePID(
+            SmartDashboard.getNumber("Arm Side P", armSidePID.p), 
+            SmartDashboard.getNumber("Arm Side I", armSidePID.i),
+            SmartDashboard.getNumber("Arm Side D", armSidePID.d),
+            SmartDashboard.getNumber("Arm Side F", armSidePID.f));
+        return armSidePID;
+    }
+ }
+

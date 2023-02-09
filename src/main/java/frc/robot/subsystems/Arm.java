@@ -57,10 +57,6 @@ public class Arm extends SubsystemBase {
     armMotorEncoder.setPosition(0);
   }
 
-  public void moveArm(double speed){
-    armMotor.set(speed);
-  }
-
   public void setVelocity(double velocity) {
     armMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
@@ -84,7 +80,7 @@ public class Arm extends SubsystemBase {
   public void resetSideEncoders() {
     sideMotorEncoder.setPosition(0);
   }
-  public void moveSideArm(double speed){
+  public void setSide(double speed){
     sideMotor.set(speed);
   }
   public void setSideVelocity(int velocity) {
