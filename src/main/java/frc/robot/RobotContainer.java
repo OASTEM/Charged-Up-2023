@@ -58,13 +58,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //Controllers
   LogitechGamingPad pad = new LogitechGamingPad(0);
-  Trajectory trajectory = new Trajectory();
-  String trajectoryJSON = "PathWeaver/output/Unnamed.wpilib.json";
  
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  private final Arm arm = new Arm();
+  //private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -98,7 +96,7 @@ public class RobotContainer {
     padA.whileTrue(new Balance(driveTrain));
     padB.whileTrue(new Music(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    padY.whileTrue(new MoveArm(arm, shuffleboard));
+    //padY.whileTrue(new MoveArm(arm, shuffleboard));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
@@ -109,9 +107,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   //TODO AutoCommand to be returned
-  public Command getAutonomousCommand() {
-    TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
-    config.setKinematics(driveTrain.getKinematics());
+  public Command getAutonomousCommand(Trajectory trajectory, TrajectoryConfig config) {
     // final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
     //   Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
     //     config
@@ -120,17 +116,10 @@ public class RobotContainer {
     //    new Pose2d(0, 0, new Rotation2d(0)),
     //    List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
     //    new Pose2d(3, 0, new Rotation2d(0)),
-     //   config
-     //   );
-
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-    try{
-    trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    }
-    catch(IOException ex){
-       System.out.println("ERROR!");
-
-    }
+    //    config
+    //    );
+    config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
+    config.setKinematics(driveTrain.getKinematics());
     
     RamseteCommand command = new RamseteCommand(
     trajectory,
@@ -151,7 +140,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
-  public Command Calibrate(){
-    return new Calibration(arm);
-  }
+  // public Command Calibrate(){
+  //   return new Calibration(arm);
+  // }
 }

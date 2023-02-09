@@ -25,10 +25,10 @@ import frc.robot.utils.PID;
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
   private boolean climbing;
-  private TalonSRX frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-  private TalonSRX frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-  private TalonSRX backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-  private TalonSRX backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
+  private TalonFX frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
+  private TalonFX frontL = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
+  private TalonFX backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
+  private TalonFX backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
 
   Orchestra orchestra1;
   Orchestra orchestra2;
@@ -105,11 +105,14 @@ public class DriveTrain extends SubsystemBase {
     // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // this.setPID(Constants.DriveTrain.PID);
 
+    resetEncoders();
   }
 
 
 
   public void arcadeDrive(double x, double y) {
+    // System.out.println("LEFT" + frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
+    // System.out.println("RIGHT" + frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
     frontL.set(ControlMode.PercentOutput, y - x);
     frontR.set(ControlMode.PercentOutput, y + x);
   }
@@ -187,10 +190,10 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void resetEncoders() {
-    // frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
-    // frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
-    frontL.getSensorCollection().setQuadraturePosition(0, 0);
-    frontR.getSensorCollection().setQuadraturePosition(0, 0);
+    frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    // frontL.getSensorCollection().setQuadraturePosition(0, 0);
+    // frontR.getSensorCollection().setQuadraturePosition(0, 0);
   }
 
   public void printEncoders() {
@@ -269,11 +272,12 @@ public class DriveTrain extends SubsystemBase {
 }
 
   public Pose2d getPose() {
+    System.out.println("GOT SPEED");
     return pose;
   }
 
   public void setOutput(double left, double right) {
-    System.out.println(left + "  " + right);
+    System.out.println(left + "  " + right + " OUTPUT");
     frontL.set(ControlMode.PercentOutput, left);
     frontR.set(ControlMode.PercentOutput, right);
   }
@@ -287,6 +291,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getSpeeds(){
+    System.out.println("GOT SPEED");
     return new DifferentialDriveWheelSpeeds(
       frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60, 
       frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60
@@ -299,6 +304,7 @@ public class DriveTrain extends SubsystemBase {
   public void periodic(){
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
     printEncoders();
+    System.out.println(navX.getAngle());
   }
 
   public SimpleMotorFeedforward getFeedForward(){

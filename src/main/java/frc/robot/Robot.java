@@ -4,11 +4,19 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,6 +34,10 @@ public class Robot extends TimedRobot {
 
   private RobotContainer container;
 
+  TrajectoryConfig config;
+  Path trajectoryPath;
+  Trajectory trajectory = new Trajectory();
+  String trajectoryJSON = "Paths/Unnamed.wpilib.json";
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,6 +47,15 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     container = new RobotContainer();
+    trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    try{
+    trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    }
+    catch(IOException ex){
+       System.out.println("ERROR!");
+
+    }
+
   }
 
   /**
@@ -74,7 +95,7 @@ public class Robot extends TimedRobot {
 
     // container.getAutonomousCommand().schedule();
     //container.reset();
-    container.getAutonomousCommand().schedule();
+    container.getAutonomousCommand(trajectory, config).schedule();
 
   }
 
@@ -106,7 +127,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().enable();
     //CommandScheduler.getInstance().schedule(m_robotContainer.Music());
-    CommandScheduler.getInstance().schedule(container.Calibrate());
+    //CommandScheduler.getInstance().schedule(container.Calibrate());
   }
 
   /** This function is called periodically during test mode. */
