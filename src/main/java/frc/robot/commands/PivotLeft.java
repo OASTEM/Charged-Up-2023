@@ -4,65 +4,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.utils.ShuffleBoard;
 
-public class Calibration extends CommandBase {
-  /** Creates a new Calibration. */
+public class PivotLeft extends CommandBase {
+  /** Creates a new PivotLeft. */
   private Arm arm;
-  private Timer timer;
-  private boolean armDone;
-  private boolean armPivot;
-  public Calibration(Arm arm) {
+  private ShuffleBoard shuffleboard;
+  public PivotLeft(Arm arm, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     this.arm = arm;
-    armDone = false;
-    armPivot = false;
-    timer = new Timer();
+    this.shuffleboard = shuffleboard;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    timer.start();
-    arm.set(0.2);
-    arm.setSide(0.2);
-    armPivot = false;
-    armDone = false;
+    arm.setSidePID(shuffleboard.getArmSidePID());
+    arm.setVelocity(-3000);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if(timer.get()>0.2){
-      arm.set(-0.2);
-      arm.setSide(-0.2);
-      if(arm.getArmCurrent()>=25){
-          armDone = true;
-          arm.set(0);
-      }
-      if(arm.getSideCurrent()>=25){
-        armPivot = true;
-        arm.setSide(0);
-      }
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    timer.stop();
     arm.stop();
-    arm.resetEncoders();
-    System.out.println("Calibration Stopped");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return armDone;
+    return false;
   }
 }
