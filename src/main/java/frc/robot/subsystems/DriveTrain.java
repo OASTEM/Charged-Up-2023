@@ -245,39 +245,6 @@ public class DriveTrain extends SubsystemBase {
     orchestraBackR.addInstrument(backR);
   }
 
-  public void playMusic(){
-    orchestraFrontL.play();
-    orchestraBackR.play();
-    orchestraBackL.play();
-    orchestraFrontR.play();
-  }
-
-  public boolean playFrontL(){
-    orchestraFrontL.play();
-    return true;
-  }
-
-  public boolean playFrontR(){
-    orchestraFrontR.play();
-    return true;
-  }
-
-  public boolean playBackL(){
-    orchestraBackL.play();
-    return true;
-  }
-
-  public boolean playBackR(){
-    orchestraBackR.play();
-    return true;
-  }
-
-  public void stopMusic(){
-    orchestraFrontL.stop();
-    orchestraBackR.stop();
-    orchestraFrontR.stop();
-    orchestraBackL.stop();
-  }
 
   public double getZAngle() {
     return navX.getAngle();

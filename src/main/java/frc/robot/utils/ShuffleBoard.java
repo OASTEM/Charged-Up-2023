@@ -5,37 +5,14 @@
 package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Manipulator;
 
 /** Add your docs here. */
 public class ShuffleBoard {
-    private Arm arm;
-    private Manipulator manipulator;
     private PID armUpPID = Constants.Arm.upPID;
     private PID armDownPID = Constants.Arm.downPID;
     private PID armSidePID = Constants.Arm.sidePID;
     private PID openClosePID = Constants.openCloseMotor.openClosePID;
 
-
-    public void ShuffleBoard(Arm arm, Manipulator manipulator){
-        this.arm = arm;
-        this.manipulator = manipulator;
-        SmartDashboard.putNumber("Arm Up P", armUpPID.p); 
-        SmartDashboard.putNumber("Arm Up I", armUpPID.i);
-        SmartDashboard.putNumber("Arm Up D", armUpPID.d);
-        SmartDashboard.putNumber("Arm Up F", armUpPID.f);
-
-        SmartDashboard.putNumber("Arm Down P", armDownPID.p); 
-        SmartDashboard.putNumber("Arm Down I", armDownPID.i);
-        SmartDashboard.putNumber("Arm Down D", armDownPID.d);
-        SmartDashboard.putNumber("Arm Down F", armDownPID.f);
-
-        SmartDashboard.putNumber("Arm Side P", armSidePID.p); 
-        SmartDashboard.putNumber("Arm Side I", armSidePID.i);
-        SmartDashboard.putNumber("Arm Side D", armSidePID.d);
-        SmartDashboard.putNumber("Arm Side F", armSidePID.f);
-    }
 
     public PID getArmUpPID(){
         armUpPID.updatePID(

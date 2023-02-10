@@ -31,21 +31,11 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
-import frc.robot.commands.Calibration;
-import frc.robot.commands.MoveArm;
-import frc.robot.commands.MoveArmUp;
-import frc.robot.commands.Music;
-//import frc.robot.commands.FollowPath;
-import frc.robot.subsystems.Arm;
-
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Manipulator;
-
 
 
 /**
@@ -94,7 +84,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain));
-    padB.whileTrue(new Music(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
     //padY.whileTrue(new MoveArm(arm, shuffleboard));
     //padA.whileTrue(new AprilTagDetect(limelight));
@@ -136,11 +125,4 @@ public class RobotContainer {
 
     return command;
   }
-
-  public Command Music(){
-    return new Music(driveTrain);
-  }
-  // public Command Calibrate(){
-  //   return new Calibration(arm);
-  // }
 }
