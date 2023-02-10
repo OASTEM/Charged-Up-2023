@@ -67,4 +67,8 @@ public final class Constants {
     public static final PID PID = new PID(0,0,0,0);
   }
 
+  public final static class openCloseMotor{
+    public static final PID openClosePID = new PID(0, 0, 0, 0);
+    public static final double conePosition = 10;
+  }
 }

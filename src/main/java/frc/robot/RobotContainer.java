@@ -63,7 +63,7 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   //private final Arm arm = new Arm();
-  private final Manipulator manipulator = new Manipulator();
+  //private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
   //Commands

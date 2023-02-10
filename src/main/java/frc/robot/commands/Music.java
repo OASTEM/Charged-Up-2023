@@ -19,7 +19,7 @@ public class Music extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //driveTrain.addInstruments();
+    driveTrain.addInstruments();
     driveTrain.loadMusic();
     driveTrain.playMusic();
   }

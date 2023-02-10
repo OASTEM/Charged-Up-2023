@@ -30,10 +30,10 @@ public class DriveTrain extends SubsystemBase {
   private TalonFX backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
   private TalonFX backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
 
-  Orchestra orchestra1;
-  Orchestra orchestra2;
-  Orchestra orchestra3;
-  Orchestra orchestra4;
+  Orchestra orchestraFrontR;
+  Orchestra orchestraFrontL;
+  Orchestra orchestraBackR;
+  Orchestra orchestraBackL;
 
   private final AHRS navX = new AHRS(Port.kMXP, (byte) 50);
   Pose2d pose = new Pose2d();
@@ -56,10 +56,10 @@ public class DriveTrain extends SubsystemBase {
     climbing = false;
 
 
-    orchestra1 = new Orchestra();
-    orchestra2 = new Orchestra();
-    orchestra3 = new Orchestra();
-    orchestra4 = new Orchestra();
+    orchestraFrontR = new Orchestra();
+    orchestraFrontL = new Orchestra();
+    orchestraBackR = new Orchestra();
+    orchestraBackL = new Orchestra();
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
@@ -232,31 +232,51 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void loadMusic(){
-    orchestra1.loadMusic("fight song.chrp");
-    orchestra2.loadMusic("fight song.chrp");
-    orchestra3.loadMusic("fight song.chrp");
-    orchestra4.loadMusic("fight song.chrp");
+    orchestraFrontR.loadMusic("nyancat.chrp");
+    orchestraFrontL.loadMusic("nyancat.chrp");
+    orchestraBackR.loadMusic("nyancat.chrp");
+    orchestraBackL.loadMusic("nyancat.chrp");
   }
 
-  // public void addInstruments(){
-  //   orchestra1.addInstrument(frontL);
-  //   orchestra2.addInstrument(backL);
-  //   orchestra3.addInstrument(frontR);
-  //   orchestra4.addInstrument(backR);
-  // }
+  public void addInstruments(){
+    orchestraFrontL.addInstrument(frontL);
+    orchestraBackL.addInstrument(backL);
+    orchestraFrontR.addInstrument(frontR);
+    orchestraBackR.addInstrument(backR);
+  }
 
   public void playMusic(){
-    orchestra1.play();
-    orchestra2.play();
-    orchestra3.play();
-    orchestra4.play();
+    orchestraFrontL.play();
+    orchestraBackR.play();
+    orchestraBackL.play();
+    orchestraFrontR.play();
+  }
+
+  public boolean playFrontL(){
+    orchestraFrontL.play();
+    return true;
+  }
+
+  public boolean playFrontR(){
+    orchestraFrontR.play();
+    return true;
+  }
+
+  public boolean playBackL(){
+    orchestraBackL.play();
+    return true;
+  }
+
+  public boolean playBackR(){
+    orchestraBackR.play();
+    return true;
   }
 
   public void stopMusic(){
-    orchestra1.stop();
-    orchestra2.stop();
-    orchestra3.stop();
-    orchestra4.stop();
+    orchestraFrontL.stop();
+    orchestraBackR.stop();
+    orchestraFrontR.stop();
+    orchestraBackL.stop();
   }
 
   public double getZAngle() {
@@ -303,8 +323,8 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic(){
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
-    printEncoders();
-    System.out.println(navX.getAngle());
+    //printEncoders();
+    //System.out.println(navX.getAngle());
   }
 
   public SimpleMotorFeedforward getFeedForward(){

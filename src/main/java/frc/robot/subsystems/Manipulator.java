@@ -60,6 +60,14 @@ public class Manipulator extends SubsystemBase {
     
   }
 
+  public void stop(){
+    openCloseMotor.stopMotor();
+  }
+
+  public void setOC(double speed){
+    openCloseMotor.set(speed);
+  }
+
   public void intake(double speed){
     leftMotor.set(speed);
     rightMotor.set(-speed);
@@ -68,7 +76,7 @@ public class Manipulator extends SubsystemBase {
   public void open(){
     openCloseMotorEncoder.setPosition(0);
   }
-
+//TODO: cube and cone
   public void close(){
     openCloseMotorEncoder.setPosition(1);
   }
@@ -78,7 +86,30 @@ public class Manipulator extends SubsystemBase {
     openCloseMotorPIDController.setD(pid.d);
   }
 
+  public void setManipulatorVelocity(int velocity){
+    leftMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+    rightMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+  }
   
+  public void setOpenCloseMotor(int velocity){
+    openCloseMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+  }
+
+  public void getCone(){
+    openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition, CANSparkMax.ControlType.kPosition);
+    
+  }
+
+  public double getOCcurrent(){
+    return openCloseMotor.getOutputCurrent();
+  }
+
+  public void resetEncoders(){
+    openCloseMotorEncoder.setPosition(0);
+  }
+
+  // public void setManipulatorRightVelocity(int velocity){
+
 
   @Override
   public void periodic() {

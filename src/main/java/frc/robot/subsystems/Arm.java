@@ -86,6 +86,8 @@ public class Arm extends SubsystemBase {
   public void setSideVelocity(int velocity) {
     sideMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
+
+
   public void setSidePID(PID pid){
     sideMotorPIDController.setP(pid.p);
     sideMotorPIDController.setI(pid.i);
@@ -94,6 +96,8 @@ public class Arm extends SubsystemBase {
   public double getArmCurrent(){
     return Math.abs(armMotor.getOutputCurrent());
   }
+
+  
 
   public double getSideCurrent(){
     return Math.abs(sideMotor.getOutputCurrent());
