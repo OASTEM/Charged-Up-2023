@@ -43,7 +43,7 @@ public class Calibration extends CommandBase {
     driveTrain.loadMusic();
     timer.reset();
     timer.start();
-    arm.set(0.2);
+    arm.setArm(0.2);
     arm.setSide(0.2);
     manipulator.setOC(0.2);
     manipulatorDone = false;
@@ -59,11 +59,11 @@ public class Calibration extends CommandBase {
     }
     if(timer.get()>0.2){
       manipulator.setOC(-0.2);
-      arm.set(-0.2);
-      arm.setSide(-0.2);
+      arm.setArm(-0.1);
+      arm.setSide(0.1);
       if(arm.getArmCurrent()>=25){
           armDone = true;
-          arm.set(0);
+          arm.setArm(0);
       }
       if(arm.getSideCurrent()>=25){
         armPivot = true;

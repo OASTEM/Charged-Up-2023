@@ -67,7 +67,7 @@ public class Arm extends SubsystemBase {
     armMotorPIDController.setD(pid.d);
   }
 
-  public void set(double speed){
+  public void setArm(double speed){
     armMotor.set(speed);
   }
 

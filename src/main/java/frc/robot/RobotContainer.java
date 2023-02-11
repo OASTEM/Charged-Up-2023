@@ -36,6 +36,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.MoveArm;
+import frc.robot.commands.MoveArmJoystick;
 import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
 //import frc.robot.commands.FollowPath;
@@ -62,7 +63,7 @@ public class RobotContainer {
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
-  //private final Arm arm = new Arm();
+  private final Arm arm = new Arm();
   //private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -78,7 +79,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-   //arm.setDefaultCommand(new MoveArm(arm, pad));
+   arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, pad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -140,6 +141,7 @@ public class RobotContainer {
   public Command Music(){
     return new Music(driveTrain);
   }
+
   // public Command Calibrate(){
   //   return new Calibration(arm);
   // }

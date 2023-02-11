@@ -22,9 +22,9 @@ public final class Constants {
     public static final int DRIVETRAIN_BACK_RIGHT = 9; //9 //practice bot: 3
     public static final int DRIVETRAIN_FRONT_LEFT = 7; // 7  //practice bot: 0
     public static final int DRIVETRAIN_BACK_LEFT = 6; //6  //practice bot: 1
-    public static final int ARM_ID = 13;
-    public static final int SIDEARM_ID = 5;
-    public static final int LEFTGRABBER_ID = 2;
+    public static final int ARM_ID = 2;
+    public static final int SIDEARM_ID = 1;
+    public static final int LEFTGRABBER_ID = 5; 
     public static final int RIGHTGRABBER_ID = 3;
     public static final int OPENCLOSE_ID = 4;
     
