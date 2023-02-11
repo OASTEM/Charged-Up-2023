@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public final class Constants {
   public static class CANIDS{
-    public static final int DRIVETRAIN_FRONT_RIGHT = 8; //8 //practice bot: 2
-    public static final int DRIVETRAIN_BACK_RIGHT = 9; //9 //practice bot: 3
-    public static final int DRIVETRAIN_FRONT_LEFT = 7; // 7  //practice bot: 0
-    public static final int DRIVETRAIN_BACK_LEFT = 6; //6  //practice bot: 1
+    public static final int DRIVETRAIN_FRONT_RIGHT = 2; //8 //practice bot: 2
+    public static final int DRIVETRAIN_BACK_RIGHT = 3; //9 //practice bot: 3
+    public static final int DRIVETRAIN_FRONT_LEFT = 0; // 7  //practice bot: 0
+    public static final int DRIVETRAIN_BACK_LEFT = 1; //6  //practice bot: 1
     public static final int ARM_ID = 13;
     public static final int SIDEARM_ID = 5;
     public static final int LEFTGRABBER_ID = 2;

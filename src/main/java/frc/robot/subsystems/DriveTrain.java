@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
@@ -25,10 +24,10 @@ import frc.robot.utils.PID;
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
   private boolean climbing;
-  private TalonFX frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-  private TalonFX frontL = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-  private TalonFX backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-  private TalonFX backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
+  private TalonSRX frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
+  private TalonSRX frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
+  private TalonSRX backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
+  private TalonSRX backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
 
   Orchestra orchestraFrontR;
   Orchestra orchestraFrontL;
@@ -54,12 +53,6 @@ public class DriveTrain extends SubsystemBase {
     // backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
     climbing = false;
-
-
-    orchestraFrontR = new Orchestra();
-    orchestraFrontL = new Orchestra();
-    orchestraBackR = new Orchestra();
-    orchestraBackL = new Orchestra();
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
@@ -190,10 +183,10 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void resetEncoders() {
-    frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
-    frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
-    // frontL.getSensorCollection().setQuadraturePosition(0, 0);
-    // frontR.getSensorCollection().setQuadraturePosition(0, 0);
+    // frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    // frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    frontL.getSensorCollection().setQuadraturePosition(0, 0);
+    frontR.getSensorCollection().setQuadraturePosition(0, 0);
   }
 
   public void printEncoders() {
@@ -230,21 +223,6 @@ public class DriveTrain extends SubsystemBase {
 //     frontR.config_kD(pid.s, pid.d);
 //     frontR.config_kF(pid.s, pid.f);
 //   }
-
-  public void loadMusic(){
-    orchestraFrontR.loadMusic("nyancat.chrp");
-    orchestraFrontL.loadMusic("nyancat.chrp");
-    orchestraBackR.loadMusic("nyancat.chrp");
-    orchestraBackL.loadMusic("nyancat.chrp");
-  }
-
-  public void addInstruments(){
-    orchestraFrontL.addInstrument(frontL);
-    orchestraBackL.addInstrument(backL);
-    orchestraFrontR.addInstrument(frontR);
-    orchestraBackR.addInstrument(backR);
-  }
-
 
   public double getZAngle() {
     return navX.getAngle();
