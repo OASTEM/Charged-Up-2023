@@ -124,10 +124,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
+    System.out.println("here in test init *********************");
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().enable();
     //CommandScheduler.getInstance().schedule(m_robotContainer.Music());
-    //CommandScheduler.getInstance().schedule(container.Calibrate());
+    CommandScheduler.getInstance().schedule(container.Calibrate());
   }
 
   /** This function is called periodically during test mode. */

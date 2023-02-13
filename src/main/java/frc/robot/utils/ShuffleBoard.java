@@ -18,7 +18,7 @@ public class ShuffleBoard {
     private PID openClosePID = Constants.openCloseMotor.openClosePID;
 
 
-    public void ShuffleBoard(Arm arm, Manipulator manipulator){
+    public ShuffleBoard(Arm arm, Manipulator manipulator){
         this.arm = arm;
         this.manipulator = manipulator;
         SmartDashboard.putNumber("Arm Up P", armUpPID.p); 

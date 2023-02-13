@@ -23,7 +23,7 @@ public class PivotLeft extends CommandBase {
   @Override
   public void initialize() {
     arm.setSidePID(shuffleboard.getArmSidePID());
-    arm.setVelocity(-3000);
+    arm.setSideVelocity(-3000);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

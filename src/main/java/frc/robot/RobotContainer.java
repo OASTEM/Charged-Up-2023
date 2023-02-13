@@ -7,7 +7,7 @@ package frc.robot;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
-import frc.robot.utils.ShuffleBoard;
+//import frc.robot.utils.ShuffleBoard;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -34,11 +34,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
-import frc.robot.commands.Calibration;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.MoveArmJoystick;
 import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
+import frc.robot.commands.PivotLeft;
+import frc.robot.commands.PivotRight;
+import frc.robot.commands.Calibration.CalibrationFile;
+import frc.robot.commands.Calibration.CalibrationSequence;
+import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
 
@@ -59,13 +63,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //Controllers
   LogitechGamingPad pad = new LogitechGamingPad(0);
+  LogitechGamingPad opPad = new LogitechGamingPad(1);
  
 
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Arm arm = new Arm();
-  //private final Manipulator manipulator = new Manipulator();
-  private final ShuffleBoard shuffleboard = new ShuffleBoard();
+  private final Manipulator manipulator = new Manipulator();
+  private final ShuffleBoard shuffleboard = new ShuffleBoard(arm, manipulator);
   //private final Limelight limelight = new Limelight();
   //Commands
 
@@ -76,10 +81,18 @@ public class RobotContainer {
   private final JoystickButton padB = new JoystickButton(pad, 2);
   private final JoystickButton padX = new JoystickButton(pad, 3);
   private final JoystickButton padY = new JoystickButton(pad, 4);
+  private final JoystickButton rightBumper = new JoystickButton(pad, 6);
+
+  private final JoystickButton opPadA = new JoystickButton(opPad, 1);
+  private final JoystickButton opPadB = new JoystickButton(opPad, 2);
+  private final JoystickButton opPadX = new JoystickButton(opPad, 3);
+  private final JoystickButton opPadY = new JoystickButton(opPad, 4);
+
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-   driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-   arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, pad));
+    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -94,12 +107,18 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    padA.whileTrue(new Balance(driveTrain));
-    padB.whileTrue(new Music(driveTrain));
-    padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    //padY.whileTrue(new MoveArm(arm, shuffleboard));
+    padX.whileTrue(new Balance(driveTrain));
+
+    //padB.whileTrue(new Music(driveTrain));
+    opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
+    rightBumper.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
+    opPadX.whileTrue(new PivotRight(arm, shuffleboard));
+    opPadY.whileTrue(new MoveArm(arm, shuffleboard));
+    opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
+
+
   }
 
   /**
@@ -142,7 +161,8 @@ public class RobotContainer {
     return new Music(driveTrain);
   }
 
-  // public Command Calibrate(){
-  //   return new Calibration(arm);
-  // }
+  public Command Calibrate(){
+    return new CalibrationSequence(driveTrain, arm, manipulator);
+  }
+
 }

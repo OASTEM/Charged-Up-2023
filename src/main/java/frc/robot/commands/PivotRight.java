@@ -14,6 +14,7 @@ public class PivotRight extends CommandBase {
   private ShuffleBoard shuffleboard;
   public PivotRight(Arm arm, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(arm);
     this.arm = arm;
     this.shuffleboard = shuffleboard;
   }
@@ -23,6 +24,7 @@ public class PivotRight extends CommandBase {
   public void initialize() {
     arm.setSidePID(shuffleboard.getArmSidePID());
     arm.setSideVelocity(3000);
+    System.out.println("got to pivot right");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

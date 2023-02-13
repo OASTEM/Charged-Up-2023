@@ -71,12 +71,16 @@ public class Arm extends SubsystemBase {
     armMotor.set(speed);
   }
 
+  public double getArmEncoder(){
+    return armMotor.getEncoder().getPosition();
+  }
 
 
   //Side Arm
   public void setSideMotorPosition(double position){
     sideMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);  
   }
+
   public void resetSideEncoders() {
     sideMotorEncoder.setPosition(0);
   }
@@ -97,7 +101,9 @@ public class Arm extends SubsystemBase {
     return Math.abs(armMotor.getOutputCurrent());
   }
 
-  
+  public double getSideEncoder(){
+    return sideMotor.getEncoder().getPosition();
+  }
 
   public double getSideCurrent(){
     return Math.abs(sideMotor.getOutputCurrent());
@@ -118,7 +124,11 @@ public class Arm extends SubsystemBase {
     //System.out.println(armMotorEncoder.getVelocity());
     //System.out.println(getArmCurrent());
     // System.out.println(armMotorEncoder.getVelocity());
-    SmartDashboard.putNumber("velocity", armMotorEncoder.getVelocity());
+    // System.out.println("Side Motor Current " + getSideCurrent());
+    // System.out.println("Arm Motor Current: " + getArmCurrent());
+    // System.out.println("Arm Encoder: " + getArmEncoder());
+    // System.out.println("Side Encoder: " + getSideEncoder());
+    SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
   }
 }
 

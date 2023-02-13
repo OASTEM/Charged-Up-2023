@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.PID;
 import frc.robot.utils.ShuffleBoard;
@@ -27,6 +28,7 @@ public class MoveArmJoystick extends CommandBase {
     addRequirements(arm);
     this.arm = arm;
     this.shuffleboard = shuffleboard;
+    this.drivePad = drivePad;
 
   }
 
@@ -39,8 +41,35 @@ public class MoveArmJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.setArm(drivePad.getRightAnalogXAxis()); //right moves counterclockwise
-    arm.setSide(drivePad.getLeftAnalogYAxis()); 
+    if(arm.getArmEncoder() < Constants.Arm.SoftStop.ARM_UP){
+      if(drivePad.getRightAnalogYAxis() < 0){
+      arm.setArm(drivePad.getRightAnalogYAxis());
+      // do nothing
+      } //right moves counterclockwise
+    }
+    if(arm.getArmEncoder() >= Constants.Arm.SoftStop.ARM_DOWN){
+      if(drivePad.getRightAnalogYAxis() > 0){
+      arm.setArm(drivePad.getRightAnalogYAxis());
+      
+      } //right moves counterclockwise
+    }
+
+    if(arm.getSideEncoder() < Constants.Arm.SoftStop.ARM_LEFT){
+      if(drivePad.getLeftAnalogXAxis() < 0){
+      arm.setSide(-drivePad.getLeftAnalogXAxis());
+      } //right moves counterclockwise
+    }
+    if(arm.getSideEncoder() >= Constants.Arm.SoftStop.ARM_RIGHT){
+      if(drivePad.getLeftAnalogXAxis() > 0){
+      arm.setSide(-drivePad.getLeftAnalogXAxis());
+      } //right moves counterclockwise
+    }
+    // if(arm.getSideEncoder() > 1000){
+    //   arm.setSide(drivePad.getLeftAnalogXAxis()); 
+    // }
+    // arm.setArm(drivePad.getRightAnalogYAxis());
+    // arm.setSide(-drivePad.getLeftAnalogXAxis());
+
   }
 
   // Called once the command ends or is interrupted.
