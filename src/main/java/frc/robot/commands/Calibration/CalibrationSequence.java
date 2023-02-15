@@ -20,7 +20,7 @@ public class CalibrationSequence extends ParallelCommandGroup {
   Arm arm;
   Manipulator manipulator;
   public CalibrationSequence(DriveTrain driveTrain, Arm arm, Manipulator manipulator) {
-    this.driveTrain = driveTrain;
+    this.driveTrain = driveTrain; 
     this.arm = arm;
     this.manipulator = manipulator;
     // Add your commands in the addCommands() call, e.g.
@@ -29,11 +29,12 @@ public class CalibrationSequence extends ParallelCommandGroup {
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
         new InstantCommand(arm::resetDefault),
+        new InstantCommand(arm::ArmSoftLimitDisabke),
         new CalibrateArm(arm),
         new CalibratePivot(arm),
         new InstantCommand(arm::resetEncoders),
         new InstantCommand(arm::resetSideEncoders),
-        new InstantCommand(arm::ArmSoftLimit),
+        new InstantCommand(arm::ArmSoftLimitEnable),
         new InstantCommand(arm::setArmSoftLimit)
       )
     );
