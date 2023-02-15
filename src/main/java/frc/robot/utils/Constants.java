@@ -62,10 +62,10 @@ public final class Constants {
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0);
     public static final PID sidePID = new PID(0.00001,0,0,0);
     public final static class SoftStop {
-      public static final double ARM_UP = 3.2;
-      public static final double ARM_DOWN = 75;
-      public static final double ARM_LEFT = -55;
-      public static final double ARM_RIGHT = -180;
+      public static final float ARM_UP = (float)3.2;
+      public static final float ARM_DOWN = 75;
+      public static final float ARM_LEFT = -52;
+      public static final float ARM_RIGHT = -190;
     }
   }
 

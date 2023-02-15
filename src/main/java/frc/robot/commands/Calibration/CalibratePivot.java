@@ -37,7 +37,7 @@ public class CalibratePivot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(timer.get()>0.2){
+    if(timer.get()>0.8){
       arm.setSide(0.2);
       timer2.start();
     }
@@ -52,6 +52,9 @@ public class CalibratePivot extends CommandBase {
     arm.stop();
     arm.resetSideEncoders();
     timer.stop();
+    timer.reset();
+    timer2.reset();
+    //arm.ArmSoftLimit(true);
     System.out.println("Calibrate pivot done now ***************************");
   }
 

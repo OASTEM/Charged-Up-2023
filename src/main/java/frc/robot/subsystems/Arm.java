@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +36,10 @@ public class Arm extends SubsystemBase {
     armMotorPIDController = armMotor.getPIDController();
     armMotorEncoder = armMotor.getEncoder();
 
-
+    armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
     armMotorPIDController.setP(Constants.Arm.upPID.p);
     armMotorPIDController.setI(Constants.Arm.upPID.i);
@@ -68,6 +72,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void setArm(double speed){
+    System.out.println("Setting arm motor speed ***************************");
     armMotor.set(speed);
   }
 
@@ -129,6 +134,38 @@ public class Arm extends SubsystemBase {
     // System.out.println("Arm Encoder: " + getArmEncoder());
     // System.out.println("Side Encoder: " + getSideEncoder());
     SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
+  }
+
+  public void ArmSoftLimit(boolean enable) {
+    armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
+    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
+  }
+
+  public void ArmSoftLimit() {
+    armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+  }
+
+  public void setArmSoftLimit() {
+    armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_DOWN);
+    armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_UP);
+    sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_LEFT);
+    sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT);
+  }
+
+  public void resetDefault(){
+    System.out.println("Default restored ********************************************");
+    armMotor.restoreFactoryDefaults();
+    sideMotor.restoreFactoryDefaults();
+    ArmSoftLimit(false);
+  }
+
+  public boolean armLimit(){
+    return armMotor.isSoftLimitEnabled(SoftLimitDirection.kForward);
   }
 }
 
