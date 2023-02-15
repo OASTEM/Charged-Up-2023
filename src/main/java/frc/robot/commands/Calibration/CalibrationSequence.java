@@ -33,8 +33,8 @@ public class CalibrationSequence extends ParallelCommandGroup {
         new CalibratePivot(arm),
         new InstantCommand(arm::resetEncoders),
         new InstantCommand(arm::resetSideEncoders)
-        //new InstantCommand(arm::ArmSoftLimit),
-        //new InstantCommand(arm::setArmSoftLimit)
+        new InstantCommand(arm::ArmSoftLimit),
+        new InstantCommand(arm::setArmSoftLimit)
       )
     );
   }
