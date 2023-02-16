@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Calibration;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,13 +30,14 @@ public class CalibrationSequence extends ParallelCommandGroup {
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
         new InstantCommand(arm::resetDefault),
-        new InstantCommand(arm::ArmSoftLimitDisable),
+        new InstantCommand(arm::disableArmSoftLimit),
         new CalibrateArm(arm),
         new CalibratePivot(arm),
         new InstantCommand(arm::resetEncoders),
         new InstantCommand(arm::resetSideEncoders),
-        new InstantCommand(arm::ArmSoftLimitEnable),
-        new InstantCommand(arm::setArmSoftLimit)
+        new InstantCommand(arm::enableArmSoftLimit),
+        new InstantCommand(arm::setArmSoftLimit),
+        Commands.runOnce(() -> arm.ArmSoftLimit(true))
       )
     );
   }

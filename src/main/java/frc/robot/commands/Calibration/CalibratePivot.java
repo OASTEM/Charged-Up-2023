@@ -54,7 +54,7 @@ public class CalibratePivot extends CommandBase {
     timer.stop();
     timer.reset();
     timer2.reset();
-    //arm.ArmSoftLimit(true);
+    arm.ArmSoftLimit(true);
     System.out.println("Calibrate pivot done now ***************************");
   }
 

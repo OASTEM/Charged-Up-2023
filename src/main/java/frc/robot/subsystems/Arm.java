@@ -169,14 +169,14 @@ public class Arm extends SubsystemBase {
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
   }
 
-  public void ArmSoftLimitEnable() {
+  public void enableArmSoftLimit() {
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
   }
 
-  public void ArmSoftLimitDisable() {
+  public void disableArmSoftLimit() {
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);

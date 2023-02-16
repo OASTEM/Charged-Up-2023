@@ -15,6 +15,7 @@ public class OpenClaw extends CommandBase {
   private ShuffleBoard shuffleboard;
   public OpenClaw(Manipulator manipulator, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(manipulator);
     this.manipulator = manipulator;
     this.shuffleboard = shuffleboard;
   }
