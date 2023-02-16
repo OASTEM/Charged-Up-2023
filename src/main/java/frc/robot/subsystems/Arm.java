@@ -36,6 +36,8 @@ public class Arm extends SubsystemBase {
     armMotorPIDController = armMotor.getPIDController();
     armMotorEncoder = armMotor.getEncoder();
 
+    System.out.println("CALLED ARM CONSTRUCTOR");
+    
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
@@ -157,6 +159,9 @@ public class Arm extends SubsystemBase {
   //   sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT);
   // }
 
+
+  //Forward
+  //Reverse
   public void ArmSoftLimit(boolean enable) {
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
@@ -171,7 +176,7 @@ public class Arm extends SubsystemBase {
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
   }
 
-  public void ArmSoftLimitDisabke() {
+  public void ArmSoftLimitDisable() {
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);

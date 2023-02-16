@@ -29,7 +29,7 @@ public class CalibrationSequence extends ParallelCommandGroup {
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
         new InstantCommand(arm::resetDefault),
-        new InstantCommand(arm::ArmSoftLimitDisabke),
+        new InstantCommand(arm::ArmSoftLimitDisable),
         new CalibrateArm(arm),
         new CalibratePivot(arm),
         new InstantCommand(arm::resetEncoders),

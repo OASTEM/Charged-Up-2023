@@ -75,7 +75,7 @@ public class CalibrationFile extends CommandBase {
       }
     }
 
-    if(timer.get()>0.2 && !armDone){
+    if(timer.get()>0.3 && !armDone){
       //manipulator.setOC(-0.2);
       arm.setArm(-0.2);
       if(arm.getArmCurrent()>=25){
