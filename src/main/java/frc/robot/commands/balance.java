@@ -32,14 +32,18 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    p = SmartDashboard.getNumber("P", 0.015);
-    i = SmartDashboard.getNumber("I", 0.00015);
-    d = SmartDashboard.getNumber("D", 0.0008);
-    SmartDashboard.putNumber("P", p);
-    SmartDashboard.putNumber("I", i);
-    SmartDashboard.putNumber("D", d);
-                                                                              
+
+    
+    p = SmartDashboard.getNumber("PBal", 0.010);
+    i = SmartDashboard.getNumber("IBal", 0);
+    d = SmartDashboard.getNumber("DBal", 0.0001);
+    SmartDashboard.putNumber("PBal", p);
+    SmartDashboard.putNumber("IBal", i);
+    SmartDashboard.putNumber("DBal", d);
+
     balancePID = new PID(p, i, d, 0);
+                                                                              
+
     driveTrain.stop();
     driveTrain.reset();
   }
@@ -71,9 +75,9 @@ public class Balance extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     driveTrain.stop();
-    p = SmartDashboard.getNumber("P", 0.021);
-    i = SmartDashboard.getNumber("I", 0.002);
-    d = SmartDashboard.getNumber("D", 0.002);
+    p = SmartDashboard.getNumber("PBal", 0.021);
+    i = SmartDashboard.getNumber("IBal", 0.002);
+    d = SmartDashboard.getNumber("DBal", 0.002);
     balancePID = new PID(p, i, d,0);
   }
 

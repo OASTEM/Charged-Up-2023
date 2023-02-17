@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Manipulator;
 
+
+
 /** Add your docs here. */
 public class ShuffleBoard {
     private Arm arm;
@@ -80,6 +82,10 @@ public class ShuffleBoard {
     //         SmartDashboard.getNumber("close D", closePID.d),
     //         SmartDashboard.getNumber("close F", closePID.f));
     //     return closePID;
+    // }
+
+    // public PID balPID(){
+
     // }
 
  }

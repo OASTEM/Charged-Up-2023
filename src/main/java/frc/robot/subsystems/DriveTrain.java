@@ -70,11 +70,11 @@ public class DriveTrain extends SubsystemBase {
 
     backL.follow(frontL);
     backR.follow(frontR);
-    frontL.setInverted(false);
-    backL.setInverted(false);
+    frontL.setInverted(true);
+    backL.setInverted(true);
     
-    frontR.setInverted(true);
-    backR.setInverted(true);
+    frontR.setInverted(false);
+    backR.setInverted(false);
 
     // frontL.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
     // frontR.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
@@ -318,6 +318,8 @@ public class DriveTrain extends SubsystemBase {
       frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60
       );
   }
+
+  
 
 
 

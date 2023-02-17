@@ -26,7 +26,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     leftPad = drivePad.getLeftAnalogYAxis();
-    rightPad = drivePad.getRightAnalogXAxis();
+    rightPad = -drivePad.getRightAnalogXAxis();
 
     if (driveTrain.getSlowMode()){
       driveTrain.arcadeDrive((rightPad * -Constants.DriveTrain.SLOW_MODE),
