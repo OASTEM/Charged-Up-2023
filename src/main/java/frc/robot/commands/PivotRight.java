@@ -23,7 +23,8 @@ public class PivotRight extends CommandBase {
   @Override
   public void initialize() {
     arm.setSidePID(shuffleboard.getArmSidePID());
-    arm.setSideVelocity(3000);
+    arm.setSide(0.4);
+    //arm.setSideVelocity(10000);
     System.out.println("got to pivot right");
   }
 

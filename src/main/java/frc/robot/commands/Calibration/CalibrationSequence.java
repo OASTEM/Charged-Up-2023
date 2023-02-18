@@ -36,8 +36,8 @@ public class CalibrationSequence extends ParallelCommandGroup {
         new InstantCommand(arm::resetEncoders),
         new InstantCommand(arm::resetSideEncoders),
         new InstantCommand(arm::enableArmSoftLimit),
-        new InstantCommand(arm::setArmSoftLimit),
-        Commands.runOnce(() -> arm.ArmSoftLimit(true))
+        new InstantCommand(arm::setArmSoftLimit)
+        //Commands.runOnce(() -> arm.ArmSoftLimit(true))
       )
     );
   }

@@ -58,7 +58,7 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID upPID = new PID(0.0001, 0.00001, 0,0);
+    public static final PID upPID = new PID(0.01, 0.0000, 0,0); //TODO fix these pid values
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0);
     public static final PID sidePID = new PID(0.00001,0,0,0);
     public final static class SoftStop {

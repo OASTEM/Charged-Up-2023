@@ -4,33 +4,28 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.utils.ShuffleBoard;
 
-public class PivotLeft extends CommandBase {
-  /** Creates a new PivotLeft. */
-  private Arm arm;
-  private ShuffleBoard shuffleboard;
-  public PivotLeft(Arm arm, ShuffleBoard shuffleboard) {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class SetPivotPosition extends CommandBase {
+  Arm arm;
+  /** Creates a new setArmPosition. */
+  public SetPivotPosition(Arm arm) {
     addRequirements(arm);
     this.arm = arm;
-    this.shuffleboard = shuffleboard;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setSidePID(shuffleboard.getArmSidePID());
-    arm.setSide(-0.4);
-    //arm.setSideVelocity(-10000);
+    arm.setSideMotorPosition(-51);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    arm.setSideMotorPosition(-51);
   }
 
   // Called once the command ends or is interrupted.

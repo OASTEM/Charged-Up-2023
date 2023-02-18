@@ -41,36 +41,10 @@ public class MoveArmJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(arm.getArmEncoder() < Constants.Arm.SoftStop.ARM_UP){
-    //   if(drivePad.getRightAnalogYAxis() < 0){
-    //   arm.setArm(drivePad.getRightAnalogYAxis());
-    //   // do nothing
-    //   } //right moves counterclockwise
-    // }
-    // if(arm.getArmEncoder() >= Constants.Arm.SoftStop.ARM_DOWN){
-    //   if(drivePad.getRightAnalogYAxis() > 0){
-    //   arm.setArm(drivePad.getRightAnalogYAxis());
-
-    //   } //right moves counterclockwise
-    // }
-
-    // if(arm.getSideEncoder() < Constants.Arm.SoftStop.ARM_LEFT){
-    //   if(drivePad.getLeftAnalogXAxis() < 0){
-    //   arm.setSide(-drivePad.getLeftAnalogXAxis());
-    //   } //right moves counterclockwise
-    // }
-    // if(arm.getSideEncoder() >= Constants.Arm.SoftStop.ARM_RIGHT){
-    //   if(drivePad.getLeftAnalogXAxis() > 0){
-    //   arm.setSide(-drivePad.getLeftAnalogXAxis());
-    //   } //right moves counterclockwise
-    // }
-    // if(arm.getSideEncoder() > 1000){
-    //   arm.setSide(drivePad.getLeftAnalogXAxis()); 
-    // }
     System.out.println(arm.getArmEncoder() + " ARM ***********");
     arm.setArm(drivePad.getLeftAnalogYAxis() * 0.5);
     arm.setSide(-drivePad.getRightAnalogXAxis() * 0.2);
-
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -85,3 +59,7 @@ public class MoveArmJoystick extends CommandBase {
     return false;
   }
 }
+
+
+//32 arm for stradle front
+//24 arm for stradle back

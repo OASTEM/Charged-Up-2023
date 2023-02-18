@@ -98,6 +98,10 @@ public class Arm extends SubsystemBase {
     sideMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
 
+  public void setPivotPercent(double speed){
+    sideMotor.set(speed);
+  }
+
 
   public void setSidePID(PID pid){
     sideMotorPIDController.setP(pid.p);
@@ -136,6 +140,8 @@ public class Arm extends SubsystemBase {
     // System.out.println("Arm Encoder: " + getArmEncoder());
     // System.out.println("Side Encoder: " + getSideEncoder());
     SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
+    SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
+    SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
   }
 
   // public void ArmSoftLimit(boolean enable) {
