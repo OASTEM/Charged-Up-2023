@@ -29,12 +29,12 @@ public class CalibrateArm extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println("Calibrate arm starting *************************************");
+    // System.out.println("Calibrate arm starting *************************************");
     timer.reset();
     timer.start();
     timer2.reset();
     arm.ArmSoftLimit(false);
-    arm.setArm(0.3);
+    arm.setArm(0.4);
     armDone = false;
     changed = false;
   }
@@ -42,11 +42,12 @@ public class CalibrateArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   
   @Override
+  
   public void execute() {
     System.out.println(arm.getArmCurrent());
     if(timer.get()>0.2 && !changed){
-      System.out.println("Got to calibrate Arm **************************");
-      System.out.println(arm.armLimit() + "******************************************");
+      // System.out.println("Got to calibrate Arm **************************");
+      // System.out.println(arm.armLimit() + "******************************************");
       arm.setArm(-0.2);
       timer2.start();
       changed = true;
@@ -67,7 +68,7 @@ public class CalibrateArm extends CommandBase {
     timer.reset();
     timer2.reset();
     arm.resetEncoders();
-    System.out.println("Caibrate arm is now done ***************************");
+    // System.out.println("Caibrate arm is now done ***************************");
   }
 
   // Returns true when the command should end.

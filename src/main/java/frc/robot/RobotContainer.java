@@ -44,6 +44,7 @@ import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.SetPivotPosition;
 import frc.robot.commands.Calibration.CalibrationFile;
 import frc.robot.commands.Calibration.CalibrationSequence;
+import frc.robot.commands.auto.StraightAuto;
 import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
@@ -119,8 +120,9 @@ public class RobotContainer {
     opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
-    padA.whileTrue(new SetArmPosition(arm));
-    padB.whileTrue(new SetPivotPosition(arm));
+    padA.whileTrue(new SetArmPosition(arm, 73));
+    // padA.onTrue(new SequentialCommandGroup( new SetPivotPosition(arm, -177), new SetArmPosition(arm, 73)));
+    padB.whileTrue(new SetPivotPosition(arm,-100));
 
   }
 
@@ -157,7 +159,8 @@ public class RobotContainer {
     driveTrain
     );
 
-    return command;
+    //return command;
+    return new StraightAuto(driveTrain, arm);
   }
 
   public Command Music(){

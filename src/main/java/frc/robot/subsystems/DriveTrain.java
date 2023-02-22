@@ -175,20 +175,20 @@ public class DriveTrain extends SubsystemBase {
   // public void setBackLeftSpeed() {
   //   backL.set(ControlMode.PercentOutput, 0.6);
   // }
-//   public double getNativeUnitsFromInches(double inches) {
-//     return inches * Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION / (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
-//         * Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
-//   }
+  public double getNativeUnitsFromInches(double inches) {
+    return inches * Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION / (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
+        * Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
+  }
 
-//   public double getInchesFromNativeUnits(double native_units) {
-//     return native_units / Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION * (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
-//         / Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
-//   }
+  public double getInchesFromNativeUnits(double native_units) {
+    return native_units / Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION * (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
+        / Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
+  }
 
-//   public double getNativeUnitsFromAngle(double degrees) {
-//     return degrees * Constants.DriveTrain.TURN_CONSTANT;
+  public double getNativeUnitsFromAngle(double degrees) {
+    return degrees * Constants.DriveTrain.TURN_CONSTANT;
 
-//   }
+  }
 
   public void resetEncoders() {
     frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
