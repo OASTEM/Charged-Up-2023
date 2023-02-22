@@ -61,9 +61,11 @@ public final class Constants {
     public static final PID upPID = new PID(0.01, 0.0000, 0,0); //TODO fix these pid values
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0);
     public static final PID sidePID = new PID(0.00001,0,0,0);
+    public static final double ARM_START_POSITION = 27;
+    public static final double PIVOT_START = -73;
     public final static class SoftStop {
       public static final float ARM_UP = (float)3.2;
-      public static final float ARM_DOWN = 75;
+      public static final float ARM_DOWN = 74;
       public static final float ARM_LEFT = -52;
       public static final float ARM_RIGHT = -190;
     }

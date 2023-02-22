@@ -8,24 +8,26 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
 public class SetPivotPosition extends CommandBase {
-  Arm arm;
+  private Arm arm;
+  private double position;
   /** Creates a new setArmPosition. */
-  public SetPivotPosition(Arm arm) {
+  public SetPivotPosition(Arm arm, double position) {
     addRequirements(arm);
     this.arm = arm;
+    this.position = position;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setSideMotorPosition(-51);
+    arm.setSideMotorPosition(position);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.setSideMotorPosition(-51);
+    
   }
 
   // Called once the command ends or is interrupted.
