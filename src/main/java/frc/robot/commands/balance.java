@@ -34,7 +34,7 @@ public class Balance extends CommandBase {
   public void initialize() {
 
     
-    p = SmartDashboard.getNumber("PBal", 0.010);
+    p = SmartDashboard.getNumber("PBal", 0.01015);
     i = SmartDashboard.getNumber("IBal", 0);
     d = SmartDashboard.getNumber("DBal", 0.0001);
     SmartDashboard.putNumber("PBal", p);
