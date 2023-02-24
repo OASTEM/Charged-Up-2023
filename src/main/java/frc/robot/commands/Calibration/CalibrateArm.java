@@ -34,7 +34,7 @@ public class CalibrateArm extends CommandBase {
     timer.start();
     timer2.reset();
     arm.ArmSoftLimit(false);
-    arm.setArm(0.4);
+    arm.setArm(0.3);
     armDone = false;
     changed = false;
   }
@@ -68,6 +68,7 @@ public class CalibrateArm extends CommandBase {
     timer.reset();
     timer2.reset();
     arm.resetEncoders();
+    arm.disableArmSoftLimit();
     // System.out.println("Caibrate arm is now done ***************************");
   }
 

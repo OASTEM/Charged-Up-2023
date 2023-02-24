@@ -85,6 +85,7 @@ public class Arm extends SubsystemBase {
 
   //Side Arm
   public void setSideMotorPosition(double position){
+    System.out.println("SETTING SIDE MOTOR POSITION *********************************");
     sideMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);  
   }
 
@@ -99,7 +100,9 @@ public class Arm extends SubsystemBase {
   }
 
   public void setPivotPercent(double speed){
-    sideMotor.set(speed);
+    if(!(getArmEncoder()> Constants.Arm.ARM_LIMIT_BOTTOM && getSideEncoder()<Constants.Arm.ARM_LIMIT_LEFT && getSideEncoder()>Constants.Arm.ARM_LIMIT_RIGHT)){
+      sideMotor.set(speed);
+    }
   }
 
 
@@ -137,8 +140,8 @@ public class Arm extends SubsystemBase {
     // System.out.println(armMotorEncoder.getVelocity());
     // System.out.println("Side Motor Current " + getSideCurrent());
     // System.out.println("Arm Motor Current: " + getArmCurrent());
-    System.out.println("Arm Encoder: " + getArmEncoder());
-    System.out.println("Side Encoder: " + getSideEncoder());
+    // System.out.println("Arm Encoder: " + getArmEncoder());
+    // System.out.println("Side Encoder: " + getSideEncoder());
     SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
     SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
     SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
@@ -194,6 +197,11 @@ public class Arm extends SubsystemBase {
     armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_UP);
     sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_LEFT);
     sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT);
+  }
+
+  public void setSideSoftLimit() {
+    sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.PIVOT_MID_LEFT);
+    sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.PIVOT_MID_RIGHT);
   }
 
   public void resetDefault(){

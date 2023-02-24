@@ -39,6 +39,7 @@ public class CalibrateDriveTrain extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     driveTrain.stopMusic();
+    driveTrain.resetEncoders();
   }
 
   // Returns true when the command should end.

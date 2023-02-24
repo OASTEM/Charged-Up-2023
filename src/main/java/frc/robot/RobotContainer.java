@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.utils.Constants;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
@@ -34,17 +35,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
-import frc.robot.commands.MoveArm;
-import frc.robot.commands.MoveArmJoystick;
-import frc.robot.commands.MoveArmUp;
 import frc.robot.commands.Music;
-import frc.robot.commands.PivotLeft;
-import frc.robot.commands.PivotRight;
-import frc.robot.commands.SetArmPosition;
-import frc.robot.commands.SetPivotPosition;
 import frc.robot.commands.Calibration.CalibrationFile;
 import frc.robot.commands.Calibration.CalibrationSequence;
+import frc.robot.commands.arm.MoveArm;
+import frc.robot.commands.arm.MoveArmJoystick;
+import frc.robot.commands.arm.MoveArmUp;
+import frc.robot.commands.arm.PivotLeft;
+import frc.robot.commands.arm.PivotRight;
+import frc.robot.commands.arm.SetArmPosition;
+import frc.robot.commands.arm.SetPivotPosition;
+import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.auto.StraightAuto;
+import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
@@ -94,8 +97,8 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
+    // driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    // arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -113,14 +116,20 @@ public class RobotContainer {
     padX.whileTrue(new Balance(driveTrain));
 
     //padB.whileTrue(new Music(driveTrain));
-    opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
+    // opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
     rightBumper.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    opPadX.whileTrue(new PivotRight(arm, shuffleboard));
-    opPadY.whileTrue(new MoveArm(arm, shuffleboard));
-    opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
+    // opPadX.whileTrue(new PivotRight(arm, shuffleboard));
+    // opPadY.whileTrue(new MoveArm(arm, shuffleboard));
+    // opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
+    opPadY.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION));
+    opPadA.onTrue(new SetArmPosition(arm, 70));
+    opPadX.onTrue(new SetPivotPosition(arm, -175));
+    opPadB.onTrue(new SetPivotPosition(arm, -52));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
     padA.whileTrue(new SetArmPosition(arm, 73));
+    // padY.whileTrue(new OpenClaw(manipulator));
+    padY.whileTrue(new ArmBottomStartPosition(arm));
     // padA.onTrue(new SequentialCommandGroup( new SetPivotPosition(arm, -177), new SetArmPosition(arm, 73)));
     padB.whileTrue(new SetPivotPosition(arm,-100));
 

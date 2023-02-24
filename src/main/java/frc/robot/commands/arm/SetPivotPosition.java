@@ -2,31 +2,38 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.arm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-public class SetArmPosition extends CommandBase {
+public class SetPivotPosition extends CommandBase {
   private Arm arm;
   private double position;
+  private Timer timer;
   /** Creates a new setArmPosition. */
-  public SetArmPosition(Arm arm, double position) {
+  public SetPivotPosition(Arm arm, double position) {
     addRequirements(arm);
     this.arm = arm;
     this.position = position;
+    // timer = 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setArmMotorPosition(position);
+    // if(arm.getArmEncoder()<40 && arm.getSideEncoder() < 2){
+      System.out.println("SETING PIVOT POSITION INITIALIZE ***************************");
+      arm.setSideMotorPosition(position);
+    // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +45,9 @@ public class SetArmPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // if (Math.abs(position - arm.getSideEncoder()) < .5) {
+    //   return true;
+    // } else return false;
     return false;
   }
 }

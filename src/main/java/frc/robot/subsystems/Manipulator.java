@@ -70,7 +70,7 @@ public class Manipulator extends SubsystemBase {
 
   public void intake(double speed){
     leftMotor.set(speed);
-    rightMotor.set(-speed);
+    rightMotor.set(speed);
   }
 
   public void open(){
@@ -78,7 +78,7 @@ public class Manipulator extends SubsystemBase {
   }
 //TODO: cube and cone
   public void close(){
-    openCloseMotorEncoder.setPosition(1);
+    openCloseMotorPIDController.setReference(Constants.openCloseMotor.closePosition, CANSparkMax.ControlType.kPosition);
   }
   public void setPID(PID pid){
     openCloseMotorPIDController.setP(pid.p);

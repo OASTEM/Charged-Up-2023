@@ -58,16 +58,22 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID upPID = new PID(0.01, 0.0000, 0,0); //TODO fix these pid values
-    public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0);
-    public static final PID sidePID = new PID(0.00001,0,0,0);
-    public static final double ARM_START_POSITION = 27;
+    public static final PID upPID = new PID(0.01, 0.0000, 0,0, 0); //TODO fix these pid values
+    public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
+    public static final PID sidePID = new PID(0.0155,0,0,0, 0);//0.00001
+    public static final double ARM_SCORING_POSITION = 27;
     public static final double PIVOT_START = -73;
+    public static final double ARM_LIMIT_RIGHT = -50;
+    public static final double ARM_LIMIT_LEFT = -55;
+    public static final double ARM_LIMIT_BOTTOM = 70;
+    public static final double ARM_START_POSITION = 74;
     public final static class SoftStop {
       public static final float ARM_UP = (float)3.2;
       public static final float ARM_DOWN = 74;
       public static final float ARM_LEFT = -52;
-      public static final float ARM_RIGHT = -190;
+      public static final float ARM_RIGHT = -200;
+      public static final float PIVOT_MID_LEFT = -45; //TODO: fix these
+      public static final float PIVOT_MID_RIGHT = -60;
     }
   }
 
@@ -78,5 +84,6 @@ public final class Constants {
   public final static class openCloseMotor{
     public static final PID openClosePID = new PID(0, 0, 0, 0);
     public static final double conePosition = 10;
+    public static final double closePosition = 0;
   }
 }

@@ -326,7 +326,8 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic(){
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
-    //printEncoders();
+    // printEncoders();
+    getInchesFromNativeUnits(getLeftEncoderCount());
     //System.out.println(navX.getAngle());
   }
 
