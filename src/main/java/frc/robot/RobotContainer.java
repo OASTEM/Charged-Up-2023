@@ -33,9 +33,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.OpenClaw;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Manipulator;
 
 
 /**
@@ -53,6 +55,7 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   //private final Arm arm = new Arm();
+  private final Manipulator manipulator = new Manipulator();
   //private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -85,7 +88,7 @@ public class RobotContainer {
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    //padY.whileTrue(new MoveArm(arm, shuffleboard));
+    padY.whileTrue(new OpenClaw(manipulator));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
