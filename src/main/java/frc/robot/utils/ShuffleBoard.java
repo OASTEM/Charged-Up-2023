@@ -18,6 +18,7 @@ public class ShuffleBoard {
     private PID armDownPID = Constants.Arm.downPID;
     private PID armSidePID = Constants.Arm.sidePID;
     private PID openClosePID = Constants.openCloseMotor.openClosePID;
+    private PID driveTrainPID = Constants.DriveTrain.PID;
 
 
     public ShuffleBoard(Arm arm, Manipulator manipulator){
@@ -37,6 +38,12 @@ public class ShuffleBoard {
         SmartDashboard.putNumber("Arm Side I", armSidePID.i);
         SmartDashboard.putNumber("Arm Side D", armSidePID.d);
         SmartDashboard.putNumber("Arm Side F", armSidePID.f);
+
+        SmartDashboard.putNumber("PBal", driveTrainPID.p);
+        SmartDashboard.putNumber("IBal", driveTrainPID.i);
+        SmartDashboard.putNumber("DBal", driveTrainPID.d);
+        SmartDashboard.putNumber("FBal", driveTrainPID.f);
+
     }
 
     public PID getArmUpPID(){
@@ -74,6 +81,15 @@ public class ShuffleBoard {
             SmartDashboard.getNumber("openClose F", openClosePID.f));
         return openClosePID;
     }
+
+    // public PID getBalancePID(){
+    //     driveTrainPID.updatePID(
+    //         SmartDashboard.getNumber("PBal", driveTrainPID.p),
+    //         SmartDashboard.getNumber("IBal", driveTrainPID.i),
+    //         SmartDashboard.getNumber("DBal", driveTrainPID.d),
+    //         SmartDashboard.getNumber("FBal", driveTrainPID.f));
+    //     return driveTrainPID;
+    // }
 
     // public PID getClosePID(){
     //     closePID.updatePID(

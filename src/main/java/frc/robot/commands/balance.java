@@ -7,7 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.Constants;
 import frc.robot.utils.PID;
+import frc.robot.utils.ShuffleBoard;
 
 public class Balance extends CommandBase {
   /** Creates a new balance. */
@@ -21,8 +23,9 @@ public class Balance extends CommandBase {
   //Might need to create two pid values for both sides of the drivetrain
   //PID balancePID = new PID(0.023, 0.002, 0.002);
   PID balancePID;
+  private ShuffleBoard shuffleboard;
 
-  public Balance(DriveTrain driveTrain) {
+  public Balance(DriveTrain driveTrain , ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
 
@@ -32,16 +35,18 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    System.out.println("STARTIGN TO BALANCE ***************************************");
     
-    p = SmartDashboard.getNumber("PBal", 0.01015);
-    i = SmartDashboard.getNumber("IBal", 0);
-    d = SmartDashboard.getNumber("DBal", 0.0001);
-    SmartDashboard.putNumber("PBal", p);
-    SmartDashboard.putNumber("IBal", i);
-    SmartDashboard.putNumber("DBal", d);
+    // p = SmartDashboard.getNumber("PBal",0.01015 );//0.01015
+    // i = SmartDashboard.getNumber("IBal", 0);
+    // d = SmartDashboard.getNumber("DBal", 0.0001);
+    // SmartDashboard.putNumber("PBal", p);
+    // SmartDashboard.putNumber("IBal", i);
+    // SmartDashboard.putNumber("DBal", d);
 
-    balancePID = new PID(p, i, d, 0);
+    // balancePID = new PID(p, i, d, 0);
+    balancePID = Constants.DriveTrain.PID;
+    // balancePID = shuffleboard.getBalancePID();
                                                                               
 
     driveTrain.stop();
@@ -56,7 +61,7 @@ public class Balance extends CommandBase {
     // driveTrain.setBackLeftSpeed();
     // driveTrain.setRightSpeed(0.3);
     this.error = driveTrain.getXAngle();
-
+    // System.out.println(error);
     double effort = balancePID.calculate(this.goal, this.error);
     if (effort < -maxEffort) {
       effort = -maxEffort;

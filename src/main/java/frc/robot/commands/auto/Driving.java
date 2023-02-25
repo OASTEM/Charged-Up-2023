@@ -12,7 +12,8 @@ import frc.robot.subsystems.DriveTrain;
 public class Driving extends CommandBase {
   DriveTrain driveTrain;
 
-  double kP;
+  double leftkP;
+  double rightkP;
   double setpoint = 0;
   double leftError = 0;
   double rightError = 0;
@@ -24,11 +25,12 @@ public class Driving extends CommandBase {
 
 
   /** Creates a new Driving. */
-  public Driving(DriveTrain driveTrain, double setpoint, double kP) {
+  public Driving(DriveTrain driveTrain, double setpoint, double leftkP, double rightkP) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
     this.setpoint = setpoint; 
-    this.kP = kP;
+    this.leftkP = leftkP;
+    this.rightkP = rightkP;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -38,8 +40,8 @@ public class Driving extends CommandBase {
     driveTrain.resetEncoders();
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    leftSpeed = kP * leftError;
-    rightSpeed = kP * rightError;
+    leftSpeed = leftkP * leftError;
+    rightSpeed = rightkP * rightError;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,10 +49,11 @@ public class Driving extends CommandBase {
   public void execute() {
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    leftSpeed = kP * leftError * 1.05;
-    rightSpeed = kP * rightError;
+    leftSpeed = leftkP * leftError; //*1.05 */
+    rightSpeed = rightkP * rightError;
+    System.out.println(rightSpeed);
     driveTrain.tankDrive(leftSpeed, rightSpeed);
-    if (Math.abs(leftError) < 10 && Math.abs(rightError) < 10){
+    if (Math.abs(leftError) < 1 && Math.abs(rightError) < 1){
       count++;
     }
     else{
@@ -60,13 +63,14 @@ public class Driving extends CommandBase {
     SmartDashboard.putNumber("Left Speed", leftSpeed);
     SmartDashboard.putNumber("Left Error", leftError);
     SmartDashboard.putNumber("Right Error", rightError);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     driveTrain.stop();
-    driveTrain.printEncoders();
+    // driveTrain.printEncoders();
     //driveTrain.printInches();
   }
 

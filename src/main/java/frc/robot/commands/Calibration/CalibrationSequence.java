@@ -33,15 +33,19 @@ public class CalibrationSequence extends ParallelCommandGroup {
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
         new InstantCommand(arm::resetDefault),
-        new InstantCommand(arm::disableArmSoftLimit),
+        // new InstantCommand(arm::disableArmSoftLimit),
         new CalibrateArm(arm),
         new CalibratePivot(arm),
         // new InstantCommand(arm::resetEncoders),
         // new InstantCommand(arm::resetSideEncoders),
         // new InstantCommand(arm::enableArmSoftLimit),
         // new InstantCommand(arm::setArmSoftLimit),
-        new SetPivotPosition(arm, -180).withTimeout(4)
-        .andThen(new SetArmPosition(arm, 68))
+        // new SetPivotPosition(arm, -180).withTimeout(4)
+        // .andThen(new SetArmPosition(arm, 68))
+        new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
+        new ArmBottomStartPosition(arm).withTimeout(8),
+        new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
+        new InstantCommand(arm::setArmSoftLimit)
         //Commands.runOnce(() -> arm.ArmSoftLimit(true))
         // new SetPivotPosition(arm, -180),
         // new SetArmPosition(arm, 68)

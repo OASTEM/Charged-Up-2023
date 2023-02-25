@@ -49,8 +49,8 @@ public final class Constants {
     public static final double ANGLE_TOLERANCE = .5;
     public static final boolean DEBUG = false;
     public static final double TRACK_WIDTH = 20;
-
-    public static final double kP = 1;
+    public static final PID PID = new PID(0.011, 0, 0.0001, 0, 0); //0.01015
+    public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -58,9 +58,9 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID upPID = new PID(0.01, 0.0000, 0,0, 0); //TODO fix these pid values
+    public static final PID upPID = new PID(0.01, 0.0000, 0,0.000001, 0); //TODO fix these pid values
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
-    public static final PID sidePID = new PID(0.0155,0,0,0, 0);//0.00001
+    public static final PID sidePID = new PID(0.02,0,0,0, 0);//0.00001
     public static final double ARM_SCORING_POSITION = 27;
     public static final double PIVOT_START = -73;
     public static final double ARM_LIMIT_RIGHT = -50;

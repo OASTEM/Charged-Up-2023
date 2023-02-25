@@ -20,7 +20,7 @@ public class ArmBottomStartPosition extends SequentialCommandGroup {
     System.out.println("EXECUTING THE STARTING POSITION IN CALIBRATE********************");
     addCommands(
       new SetPivotPosition(arm, -180).withTimeout(4)
-        .andThen(new SetArmPosition(arm, 68))
+        .andThen(new SetArmPosition(arm, 73))
     );
   }
 }

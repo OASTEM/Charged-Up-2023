@@ -7,6 +7,7 @@ package frc.robot.commands.arm;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.utils.Constants;
 
 public class SetPivotPosition extends CommandBase {
   private Arm arm;
@@ -25,6 +26,7 @@ public class SetPivotPosition extends CommandBase {
   @Override
   public void initialize() {
     // if(arm.getArmEncoder()<40 && arm.getSideEncoder() < 2){
+      arm.setSidePID(Constants.Arm.sidePID);
       System.out.println("SETING PIVOT POSITION INITIALIZE ***************************");
       arm.setSideMotorPosition(position);
     // }
@@ -45,7 +47,7 @@ public class SetPivotPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (Math.abs(position - arm.getSideEncoder()) < .5) {
+    // if (Math.abs(position - arm.getSideEncoder()) < 2) {
     //   return true;
     // } else return false;
     return false;

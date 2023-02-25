@@ -6,6 +6,7 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.utils.Constants;
 
 public class SetArmPosition extends CommandBase {
   private Arm arm;
@@ -21,7 +22,9 @@ public class SetArmPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    arm.setPID(Constants.Arm.upPID);
     arm.setArmMotorPosition(position);
+    
     System.out.println("HOWAIDHDAAHIUAGBIJUHIUADHGIUADHIUHOAIUDHOUADHOU");
   }
 
@@ -39,6 +42,7 @@ public class SetArmPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("ENDING SeT ARP POSITION ***********************************");
     arm.stop();
   }
 

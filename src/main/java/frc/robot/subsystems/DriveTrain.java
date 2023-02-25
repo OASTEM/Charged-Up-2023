@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
 import frc.robot.utils.PID;
@@ -115,7 +116,7 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("LEFT" + frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
     // System.out.println("RIGHT" + frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
     frontL.set(ControlMode.PercentOutput, y - x);
-    frontR.set(ControlMode.PercentOutput, y + x);
+    frontR.set(ControlMode.PercentOutput, 0.95*(y + x));
   }
 
   public boolean getSlowMode() {
@@ -319,18 +320,6 @@ public class DriveTrain extends SubsystemBase {
       );
   }
 
-  
-
-
-
-  @Override
-  public void periodic(){
-    pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
-    // printEncoders();
-    getInchesFromNativeUnits(getLeftEncoderCount());
-    //System.out.println(navX.getAngle());
-  }
-
   public SimpleMotorFeedforward getFeedForward(){
     return feedForward;
   }
@@ -346,5 +335,17 @@ public class DriveTrain extends SubsystemBase {
   public DifferentialDriveKinematics getKinematics(){
     return kinematics;
   }
-
+  @Override
+  public void periodic(){
+    pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
+    // printEncoders();
+    // System.out.println("X: " + getXAngle());
+    // System.out.println("Y: " + getYAngle());
+    // System.out.println("Z: " + getZAngle());
+    // System.out.println("Inches from native units: " + getInchesFromNativeUnits(getLeftEncoderCount()));
+    SmartDashboard.putNumber("DriveTrain L Encoder", getLeftEncoderCount());
+    SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
+    // getInchesFromNativeUnits(getLeftEncoderCount());
+    //System.out.println(navX.getAngle());
+  }
 }

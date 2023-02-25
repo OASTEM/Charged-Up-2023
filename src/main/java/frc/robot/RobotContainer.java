@@ -46,6 +46,8 @@ import frc.robot.commands.arm.PivotRight;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
+import frc.robot.commands.auto.DriveStraight;
+import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.StraightAuto;
 import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.utils.ShuffleBoard;
@@ -97,8 +99,8 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-    // arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
+    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -113,7 +115,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    padX.whileTrue(new Balance(driveTrain));
+    padX.whileTrue(new Balance(driveTrain, shuffleboard));
 
     //padB.whileTrue(new Music(driveTrain));
     // opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
@@ -127,10 +129,11 @@ public class RobotContainer {
     opPadB.onTrue(new SetPivotPosition(arm, -52));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
-    padA.whileTrue(new SetArmPosition(arm, 73));
+    // padA.whileTrue(new SetArmPosition(arm, 73));
     // padY.whileTrue(new OpenClaw(manipulator));
     padY.whileTrue(new ArmBottomStartPosition(arm));
-    // padA.onTrue(new SequentialCommandGroup( new SetPivotPosition(arm, -177), new SetArmPosition(arm, 73)));
+    padA.onTrue(new Driving(driveTrain, 170, 0.00588, 0.00652));
+    // padA.onTrue(new DriveStraight(driveTrain, 50));
     padB.whileTrue(new SetPivotPosition(arm,-100));
 
   }
@@ -169,7 +172,7 @@ public class RobotContainer {
     );
 
     //return command;
-    return new StraightAuto(driveTrain, arm);
+    return new StraightAuto(driveTrain, arm, shuffleboard);
   }
 
   public Command Music(){

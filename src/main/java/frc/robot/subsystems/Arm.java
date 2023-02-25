@@ -57,6 +57,7 @@ public class Arm extends SubsystemBase {
 
   //Not Side Arm
   public void setArmMotorPosition(double position){
+    System.out.println("SETTIGN ARM MOTOR POISIOTN *****************************************************");
     armMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);  
   }
   public void resetEncoders() {
@@ -71,10 +72,11 @@ public class Arm extends SubsystemBase {
     armMotorPIDController.setP(pid.p);
     armMotorPIDController.setI(pid.i);
     armMotorPIDController.setD(pid.d);
+    armMotorPIDController.setFF(pid.f);
   }
 
   public void setArm(double speed){
-    System.out.println("Setting arm motor speed ***************************");
+    // System.out.println("Setting arm motor speed ***************************");
     armMotor.set(speed);
   }
 
@@ -85,7 +87,7 @@ public class Arm extends SubsystemBase {
 
   //Side Arm
   public void setSideMotorPosition(double position){
-    System.out.println("SETTING SIDE MOTOR POSITION *********************************");
+    // System.out.println("SETTING SIDE MOTOR POSITION *********************************");
     sideMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);  
   }
 
@@ -130,22 +132,7 @@ public class Arm extends SubsystemBase {
   }
 
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    //System.out.println(armMotorEncoder.getPosition());
-    //System.out.println(armMotor.getAppliedOutput());
-    //System.out.println(armMotorEncoder.getVelocity());
-    //System.out.println(getArmCurrent());
-    // System.out.println(armMotorEncoder.getVelocity());
-    // System.out.println("Side Motor Current " + getSideCurrent());
-    // System.out.println("Arm Motor Current: " + getArmCurrent());
-    // System.out.println("Arm Encoder: " + getArmEncoder());
-    // System.out.println("Side Encoder: " + getSideEncoder());
-    SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
-    SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
-    SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
-  }
+ 
 
   // public void ArmSoftLimit(boolean enable) {
   //   armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
@@ -183,6 +170,7 @@ public class Arm extends SubsystemBase {
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    System.out.println("Enableing soft limit ******************************************");
   }
 
   public void disableArmSoftLimit() {
@@ -193,10 +181,10 @@ public class Arm extends SubsystemBase {
   }
 
   public void setArmSoftLimit() {
-    armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_DOWN);
-    armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_UP);
-    sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_LEFT);
-    sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT);
+    armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_DOWN); //kForward
+    armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_UP); //KReverse
+    sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_LEFT); //kForward
+    sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT); //kReverse
   }
 
   public void setSideSoftLimit() {
@@ -213,6 +201,22 @@ public class Arm extends SubsystemBase {
 
   public boolean armLimit(){
     return armMotor.isSoftLimitEnabled(SoftLimitDirection.kForward);
+  }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    //System.out.println(armMotorEncoder.getPosition());
+    //System.out.println(armMotor.getAppliedOutput());
+    //System.out.println(armMotorEncoder.getVelocity());
+    //System.out.println(getArmCurrent());
+    // System.out.println(armMotorEncoder.getVelocity());
+    // System.out.println("Side Motor Current " + getSideCurrent());
+    // System.out.println("Arm Motor Current: " + getArmCurrent());
+    // System.out.println("Arm Encoder: " + getArmEncoder());
+    // System.out.println("Side Encoder: " + getSideEncoder());
+    SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
+    SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
+    SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
   }
 }
 
