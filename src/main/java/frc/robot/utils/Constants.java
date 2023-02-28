@@ -82,8 +82,8 @@ public final class Constants {
   }
 
   public final static class openCloseMotor{
-    public static final PID openClosePID = new PID(0, 0, 0, 0);
+    public static final PID openClosePID = new PID(0.005, 0.00002, 0, 0);
     public static final double conePosition = 10;
-    public static final double closePosition = 0;
+    public static final double closePosition = -35;
   }
 }

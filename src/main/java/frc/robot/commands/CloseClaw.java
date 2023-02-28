@@ -7,35 +7,28 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.utils.Constants;
-import frc.robot.utils.ShuffleBoard;
-import frc.robot.utils.Constants.openCloseMotor;
 
-public class OpenClaw extends CommandBase {
-  /** Creates a new OpenClaw. */
+public class CloseClaw extends CommandBase {
+  /** Creates a new CloseClaw. */
   private Manipulator manipulator;
-  // private ShuffleBoard shuffleboard;
-  public OpenClaw(Manipulator manipulator) {
+
+  public CloseClaw(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(manipulator);
     this.manipulator = manipulator;
-    // this.shuffleboard = shuffleboard;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // manipulator.open();
-    // manipulator.setPID(shuffleboard.getOpenClosePID());
-    // manipulator.setManipulatorVelocity(100);
     manipulator.setPID(Constants.openCloseMotor.openClosePID);
-    manipulator.open();
-    // manipulator.setOC(-0.3);
+    manipulator.intake(-0.3);
+    manipulator.close();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    manipulator.getOpenCloseEncoder();
+
   }
 
   // Called once the command ends or is interrupted.

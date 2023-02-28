@@ -77,9 +77,21 @@ public class Manipulator extends SubsystemBase {
   }
 
   public void open(){
-    openCloseMotorEncoder.setPosition(0);
+    openCloseMotorPIDController.setReference(0, CANSparkMax.ControlType.kPosition);
   }
+
+  // public void close
+
+  // open: -50
+  // cone: -1.15
+  //cube: 
+
 //TODO: cube and cone
+
+  public void setPosition(int position) {
+    openCloseMotorEncoder.setPosition(position);
+  }
+
   public void close(){
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.closePosition, CANSparkMax.ControlType.kPosition);
   }
@@ -117,6 +129,7 @@ public class Manipulator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    getOpenCloseEncoder();
   }
 
   public void getOpenCloseEncoder(){

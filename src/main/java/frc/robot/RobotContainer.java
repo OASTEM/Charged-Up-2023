@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
@@ -68,6 +69,7 @@ public class RobotContainer {
   private final JoystickButton padB = new JoystickButton(pad, 2);
   private final JoystickButton padX = new JoystickButton(pad, 3);
   private final JoystickButton padY = new JoystickButton(pad, 4);
+  private final JoystickButton rightBumper = new JoystickButton(pad, 6);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
@@ -88,7 +90,12 @@ public class RobotContainer {
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    padY.whileTrue(new OpenClaw(manipulator));
+    padY.whileTrue(new CloseClaw(manipulator));
+    padB.whileTrue(new OpenClaw(manipulator));
+    rightBumper.onTrue(new InstantCommand(manipulator::resetEncoders));
+
+    // padB.whileTrue(new CloseClaw(manipulator));
+
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
   }
