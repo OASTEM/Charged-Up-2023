@@ -25,10 +25,10 @@ public class StraightAuto extends SequentialCommandGroup {
       new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
       .andThen(new SetPivotPosition(arm, Constants.Arm.PIVOT_START).withTimeout(3)), 
       // new SetArmPosition(arm, 33).withTimeout(2)
-      //Close Claw (Claw is closed) -Averi :D
+      //Close Claw (Claw is closed) -Averi :D   //0.00448
     
-      new Driving(driveTrain, 200, 0.0054, 0.006), //0.00588, 0.00652
-      new Driving(driveTrain, -60, 0.00588, 0.00652),
+      new Driving(driveTrain, 260, 0.00278, 0.00352).withTimeout(4.5), //0.00588, 0.00652
+      new Driving(driveTrain, -150, 0.00688, 0.00352).withTimeout(3),
       new Balance(driveTrain, shuffleboard)
     );
   }
