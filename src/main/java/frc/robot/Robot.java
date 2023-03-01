@@ -7,21 +7,12 @@ package frc.robot;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Music;
-import frc.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,8 +21,6 @@ import frc.robot.subsystems.DriveTrain;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-
   private RobotContainer container;
 
   TrajectoryConfig config;

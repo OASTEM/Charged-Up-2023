@@ -12,14 +12,12 @@ import frc.robot.utils.ShuffleBoard;
 public class OpenCloseClaw extends CommandBase {
   /** Creates a new OpenCloseClaw. */
   private Manipulator manipulator;
-  private ShuffleBoard shuffleBoard;
   private LogitechGamingPad gamepad;
 
   public OpenCloseClaw(Manipulator manipulator, ShuffleBoard shuffleboard, LogitechGamingPad gamepad) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(manipulator);
     this.manipulator = manipulator;
-    this.shuffleBoard = shuffleboard;
     this.gamepad = gamepad;
   }
 

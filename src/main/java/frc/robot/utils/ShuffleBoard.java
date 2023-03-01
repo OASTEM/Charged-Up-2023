@@ -12,8 +12,6 @@ import frc.robot.subsystems.Manipulator;
 
 /** Add your docs here. */
 public class ShuffleBoard {
-    private Arm arm;
-    private Manipulator manipulator;
     private PID armUpPID = Constants.Arm.upPID;
     private PID armDownPID = Constants.Arm.downPID;
     private PID armSidePID = Constants.Arm.sidePID;
@@ -22,8 +20,6 @@ public class ShuffleBoard {
 
 
     public ShuffleBoard(Arm arm, Manipulator manipulator){
-        this.arm = arm;
-        this.manipulator = manipulator;
         SmartDashboard.putNumber("Arm Up P", armUpPID.p); 
         SmartDashboard.putNumber("Arm Up I", armUpPID.i);
         SmartDashboard.putNumber("Arm Up D", armUpPID.d);

@@ -23,8 +23,6 @@ public class Balance extends CommandBase {
   //Might need to create two pid values for both sides of the drivetrain
   //PID balancePID = new PID(0.023, 0.002, 0.002);
   PID balancePID;
-  private ShuffleBoard shuffleboard;
-
   public Balance(DriveTrain driveTrain , ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);

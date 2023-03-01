@@ -10,53 +10,29 @@ import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
 //import frc.robot.utils.ShuffleBoard;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AprilTagDetect;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
 import frc.robot.commands.Music;
-import frc.robot.commands.Calibration.CalibrationFile;
 import frc.robot.commands.Calibration.CalibrationSequence;
-import frc.robot.commands.arm.MoveArm;
 import frc.robot.commands.arm.MoveArmJoystick;
-import frc.robot.commands.arm.MoveArmUp;
-import frc.robot.commands.arm.PivotLeft;
-import frc.robot.commands.arm.PivotRight;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
-import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.StraightAuto;
-import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
 
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 
 
@@ -158,19 +134,6 @@ public class RobotContainer {
     config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
     config.setKinematics(driveTrain.getKinematics());
     
-    RamseteCommand command = new RamseteCommand(
-    trajectory,
-    driveTrain::getPose,
-    new RamseteController(2.0, 0.7),
-    driveTrain.getFeedForward(),
-    driveTrain.getKinematics(),
-    driveTrain::getSpeeds,
-    driveTrain.getLeftPIDController(),
-    driveTrain.getRightPIDController(),
-    driveTrain::setOutput, 
-    driveTrain
-    );
-
     //return command;
     return new StraightAuto(driveTrain, arm, shuffleboard);
   }

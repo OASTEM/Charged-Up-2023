@@ -4,12 +4,9 @@
 
 package frc.robot.commands.Calibration;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.arm.SetArmPosition;
-import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;

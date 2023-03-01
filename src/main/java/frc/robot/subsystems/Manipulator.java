@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -21,11 +20,7 @@ public class Manipulator extends SubsystemBase {
   private CANSparkMax openCloseMotor;
 
   private SparkMaxPIDController leftMotorPIDController;
-  private RelativeEncoder leftMotorEncoder;
-
   private SparkMaxPIDController rightMotorPIDController;
-  private RelativeEncoder rightMotorEncoder;
-
   private SparkMaxPIDController openCloseMotorPIDController;
   private RelativeEncoder openCloseMotorEncoder;
 

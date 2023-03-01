@@ -4,7 +4,6 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.Constants;
@@ -12,7 +11,6 @@ import frc.robot.utils.Constants;
 public class SetPivotPosition extends CommandBase {
   private Arm arm;
   private double position;
-  private Timer timer;
   /** Creates a new setArmPosition. */
   public SetPivotPosition(Arm arm, double position) {
     addRequirements(arm);

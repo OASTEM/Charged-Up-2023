@@ -4,18 +4,14 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
-import frc.robot.utils.PID;
 import frc.robot.utils.ShuffleBoard;
 
 public class MoveArmJoystick extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
-  private ShuffleBoard shuffleboard;
   private LogitechGamingPad drivePad;
 
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
@@ -27,7 +23,6 @@ public class MoveArmJoystick extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     this.arm = arm;
-    this.shuffleboard = shuffleboard;
     this.drivePad = drivePad;
 
   }

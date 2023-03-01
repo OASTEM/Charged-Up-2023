@@ -5,22 +5,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.lang.reflect.Array;
-import java.math.BigInteger;
-
 import org.json.*;
 
 //import javax.swing.text.StyleContext.SmallAttributeSet;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase {
-  private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  private NetworkTableEntry t6c_ts;
   private double id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
   private double x = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
   private double y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);

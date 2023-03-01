@@ -13,28 +13,19 @@ import frc.robot.subsystems.Manipulator;
 public class CalibrationFile extends CommandBase {
   /** Creates a new Calibration. */
   private Arm arm;
-  private Manipulator manipulator;
   private Timer timer;
   private Timer pivotTimer;
   private DriveTrain driveTrain;
   private boolean armDone;
   private boolean armPivot;
   private boolean driveTrainDone;
-  private boolean manipulatorDone;
-  private boolean frontLTest;
-  private boolean backLTest;
-  private boolean frontRTest;
-  private boolean backRTest;
-
   public CalibrationFile(Arm arm, Manipulator manipulator, DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm, manipulator, driveTrain);
     this.arm = arm;
     this.driveTrain = driveTrain;
-    this.manipulator = manipulator;
     armDone = false;
     armPivot = false;
-    manipulatorDone = false;
     timer = new Timer();
     pivotTimer = new Timer();
   }

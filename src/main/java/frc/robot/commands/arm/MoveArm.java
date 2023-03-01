@@ -4,17 +4,13 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.utils.LogitechGamingPad;
-import frc.robot.utils.PID;
 import frc.robot.utils.ShuffleBoard;
 
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
-  private double p, i, d;
   private ShuffleBoard shuffleboard;
   //private LogitechGamingPad drivePad;
 

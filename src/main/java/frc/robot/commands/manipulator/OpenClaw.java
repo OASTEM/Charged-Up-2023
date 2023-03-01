@@ -6,8 +6,6 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.utils.ShuffleBoard;
-import frc.robot.utils.Constants.openCloseMotor;
 
 public class OpenClaw extends CommandBase {
   /** Creates a new OpenClaw. */
