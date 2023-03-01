@@ -6,32 +6,29 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.utils.Constants;
+import frc.robot.utils.LogitechGamingPad;
 
-public class CloseClaw extends CommandBase {
-  /** Creates a new CloseClaw. */
+public class openCloseJoystick extends CommandBase {
+  /** Creates a new openCloseJoystick. */
   private Manipulator manipulator;
-
-  public CloseClaw(Manipulator manipulator) {
+  private LogitechGamingPad gamePad;
+  public openCloseJoystick(Manipulator manipulator, LogitechGamingPad gamePad) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(manipulator);
     this.manipulator = manipulator;
+    this.gamePad = gamePad;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(manipulator.getState()==1){
-      
-    }
-    manipulator.setPID(Constants.openCloseMotor.openClosePID);
-    manipulator.intake(-0.3);
-    manipulator.close();
+    // manipulator.setOC(gamePad.getLeftAnalogYAxis()*0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    manipulator.setOC(gamePad.getLeftAnalogYAxis()*0.3);
   }
 
   // Called once the command ends or is interrupted.

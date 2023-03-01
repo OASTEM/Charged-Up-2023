@@ -9,35 +9,22 @@ package frc.robot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
+import frc.robot.commands.openCloseJoystick;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Manipulator;
 
 
@@ -70,9 +57,11 @@ public class RobotContainer {
   private final JoystickButton padX = new JoystickButton(pad, 3);
   private final JoystickButton padY = new JoystickButton(pad, 4);
   private final JoystickButton rightBumper = new JoystickButton(pad, 6);
+  private final JoystickButton leftBumper = new JoystickButton(pad, 5);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-   driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+  //  driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    // manipulator.setDefaultCommand(new openCloseJoystick(manipulator, pad));
    //arm.setDefaultCommand(new MoveArm(arm, pad));
     // Configure the trigger bindings
     configureBindings();
@@ -91,8 +80,11 @@ public class RobotContainer {
     padA.whileTrue(new Balance(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
     padY.whileTrue(new CloseClaw(manipulator));
-    padB.whileTrue(new OpenClaw(manipulator));
-    rightBumper.onTrue(new InstantCommand(manipulator::resetEncoders));
+    // padB.whileTrue(new OpenClaw(manipulator));
+    padB.onTrue(new InstantCommand(manipulator::resetEncoders));
+    // rightBumper.onTrue(new InstantCommand(manipulator::resetEncoders));
+    rightBumper.onTrue(new InstantCommand(manipulator::close));
+    leftBumper.onTrue(new InstantCommand(manipulator::open));
 
     // padB.whileTrue(new CloseClaw(manipulator));
 

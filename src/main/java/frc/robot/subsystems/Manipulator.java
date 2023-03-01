@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +30,11 @@ public class Manipulator extends SubsystemBase {
 
   private SparkMaxPIDController openCloseMotorPIDController;
   private RelativeEncoder openCloseMotorEncoder;
+
+  private int state;
+  // 0: Open
+  // 1: Cube
+  // 2: Cone
 
   public Manipulator() {
     leftMotor = new CANSparkMax(Constants.CANIDS.LEFTGRABBER_ID, MotorType.kBrushless);
@@ -55,14 +61,30 @@ public class Manipulator extends SubsystemBase {
     openCloseMotorPIDController = openCloseMotor.getPIDController();
     openCloseMotorEncoder = openCloseMotor.getEncoder();
 
-    openCloseMotorPIDController.setP(Constants.Grabber.PID.p);
-    openCloseMotorPIDController.setI(Constants.Grabber.PID.i);
-    openCloseMotorPIDController.setD(Constants.Grabber.PID.d);
+    setPID(Constants.openCloseMotor.openClosePID);
+
+    state = 0;
+    openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
+    openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
     
   }
+  public int getState(){
+    return state;
+  }
 
+  public void enableAndSetSoftStop(){ //TODO: call in calibrate
+    openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    openCloseMotor.setSoftLimit(SoftLimitDirection.kForward, 0);
+    openCloseMotor.setSoftLimit(SoftLimitDirection.kReverse, -21);
+  }
   public void stop(){
     openCloseMotor.stopMotor();
+    leftMotor.stopMotor();
+    rightMotor.stopMotor();
+  }
+
+  public void stopIntake(){
     leftMotor.stopMotor();
     rightMotor.stopMotor();
   }
@@ -78,6 +100,8 @@ public class Manipulator extends SubsystemBase {
 
   public void open(){
     openCloseMotorPIDController.setReference(0, CANSparkMax.ControlType.kPosition);
+    state = 0;
+    intake(-0.3);
   }
 
   // public void close
@@ -86,15 +110,26 @@ public class Manipulator extends SubsystemBase {
   // cone: -1.15
   //cube: 
 
-//TODO: cube and cone
-
   public void setPosition(int position) {
     openCloseMotorEncoder.setPosition(position);
   }
 
+
+
   public void close(){
-    openCloseMotorPIDController.setReference(Constants.openCloseMotor.closePosition, CANSparkMax.ControlType.kPosition);
+    // setPID(Constants.openCloseMotor.openClosePID);
+    if (state == 1) {
+      // openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition, CANSparkMax.ControlType.kPosition);
+      getCone();
+      state = 2;
+    } else {
+      openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition, CANSparkMax.ControlType.kPosition);
+      state = 1;
+    }
+    System.out.println("CLOSING MOTOR ************************************ : " + state);
+    stopIntake();
   }
+
   public void setPID(PID pid){
     openCloseMotorPIDController.setP(pid.p);
     openCloseMotorPIDController.setI(pid.i);
@@ -121,18 +156,19 @@ public class Manipulator extends SubsystemBase {
 
   public void resetEncoders(){
     openCloseMotorEncoder.setPosition(0);
+    enableAndSetSoftStop();
   }
 
   // public void setManipulatorRightVelocity(int velocity){
 
+  public void getOpenCloseEncoder(){
+    // SmartDashboard.putNumber("Open Close Encoder", openCloseMotor.getEncoder().getPosition());
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    getOpenCloseEncoder();
-  }
-
-  public void getOpenCloseEncoder(){
-    SmartDashboard.putNumber("Open Close Encoder", openCloseMotor.getEncoder().getPosition());
+    System.out.println(openCloseMotorEncoder.getPosition());
+    // System.out.println(openCloseMotorPIDController.getP());
   }
 }

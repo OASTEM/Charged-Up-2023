@@ -76,14 +76,10 @@ public final class Constants {
       public static final float PIVOT_MID_RIGHT = -60;
     }
   }
-
-  public final static class Grabber {
-    public static final PID PID = new PID(0,0,0,0);
-  }
-
   public final static class openCloseMotor{
-    public static final PID openClosePID = new PID(0.005, 0.00002, 0, 0);
-    public static final double conePosition = 10;
+    public static final PID openClosePID = new PID(0.06, 0.0000, 0, 0);
+    public static final double conePosition = -21;
+    public static final double cubePosition = -10;
     public static final double closePosition = -35;
   }
 }
