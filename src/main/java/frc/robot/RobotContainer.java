@@ -13,6 +13,7 @@ import frc.robot.utils.LogitechGamingPad;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -27,6 +28,9 @@ import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.StraightAuto;
+import frc.robot.commands.manipulator.OpenClaw;
+import frc.robot.commands.manipulator.grabCone;
+import frc.robot.commands.manipulator.grabCube;
 import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
@@ -66,17 +70,24 @@ public class RobotContainer {
   private final JoystickButton padX = new JoystickButton(pad, 3);
   private final JoystickButton padY = new JoystickButton(pad, 4);
   private final JoystickButton rightBumper = new JoystickButton(pad, 6);
+  private final JoystickButton leftBumper = new JoystickButton(pad, 5);
 
   private final JoystickButton opPadA = new JoystickButton(opPad, 1);
   private final JoystickButton opPadB = new JoystickButton(opPad, 2);
   private final JoystickButton opPadX = new JoystickButton(opPad, 3);
   private final JoystickButton opPadY = new JoystickButton(opPad, 4);
+  private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
+  private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
+  
+
+
 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
+    manipulator.setDefaultCommand(new OpenClaw(manipulator, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -103,6 +114,9 @@ public class RobotContainer {
     opPadA.onTrue(new SetArmPosition(arm, 70));
     opPadX.onTrue(new SetPivotPosition(arm, -175));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
+
+    opRightBumper.onTrue(new grabCube(manipulator));
+    opLeftBumper.onTrue(new grabCone(manipulator));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
     // padA.whileTrue(new SetArmPosition(arm, 73));

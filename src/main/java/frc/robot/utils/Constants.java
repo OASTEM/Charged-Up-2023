@@ -25,8 +25,8 @@ public final class Constants {
     public static final int ARM_ID = 2;
     public static final int SIDEARM_ID = 1;
     public static final int LEFTGRABBER_ID = 5; 
-    public static final int RIGHTGRABBER_ID = 3;
-    public static final int OPENCLOSE_ID = 4;
+    public static final int RIGHTGRABBER_ID = 4;
+    public static final int OPENCLOSE_ID = 3;
     
   }
 
@@ -68,7 +68,7 @@ public final class Constants {
     public static final double ARM_LIMIT_BOTTOM = 70;
     public static final double ARM_START_POSITION = 74;
     public final static class SoftStop {
-      public static final float ARM_UP = (float)3.2;
+      public static final float ARM_UP = (float) 3.2;
       public static final float ARM_DOWN = 74;
       public static final float ARM_LEFT = -52;
       public static final float ARM_RIGHT = -200;
@@ -77,13 +77,10 @@ public final class Constants {
     }
   }
 
-  public final static class Grabber {
-    public static final PID PID = new PID(0,0,0,0);
-  }
-
   public final static class openCloseMotor{
-    public static final PID openClosePID = new PID(0, 0, 0, 0);
-    public static final double conePosition = 10;
-    public static final double closePosition = 0;
+    public static final PID openClosePID = new PID(0.06, 0.0000, 0, 0);
+    public static final double conePosition = -21;
+    public static final double cubePosition = -10;
+    public static final double closePosition = -35;
   }
 }

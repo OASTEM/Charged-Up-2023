@@ -6,45 +6,33 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.utils.LogitechGamingPad;
 
-public class OpenClaw extends CommandBase {
-  /** Creates a new OpenClaw. */
+
+public class grabCone extends CommandBase {
+
   private Manipulator manipulator;
-  private LogitechGamingPad pad;
-  // private ShuffleBoard shuffleboard;
-  public OpenClaw(Manipulator manipulator, LogitechGamingPad pad) {
+  
+  /** Creates a new getCone. */
+
+  public grabCone(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(manipulator);
     this.manipulator = manipulator;
-    this.pad = pad;
-    // this.shuffleboard = shuffleboard;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // manipulator.setPID(shuffleboard.getOpenClosePID());
-    // manipulator.setManipulatorVelocity(100);
-
-    
+    manipulator.getCone();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-
-    if(pad.getRightTriggerValue() > 0.3){
-      manipulator.open();
-    }
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    manipulator.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
