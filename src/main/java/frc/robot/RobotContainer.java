@@ -13,7 +13,6 @@ import frc.robot.utils.LogitechGamingPad;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -79,15 +78,12 @@ public class RobotContainer {
   private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
   
-
-
-
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
-    manipulator.setDefaultCommand(new OpenClaw(manipulator, opPad));
+    //manipulator.setDefaultCommand(new OpenClaw(manipulator, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
