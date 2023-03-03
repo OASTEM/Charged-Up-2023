@@ -29,8 +29,8 @@ import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.StraightAuto;
 import frc.robot.commands.manipulator.OpenClaw;
-import frc.robot.commands.manipulator.grabCone;
-import frc.robot.commands.manipulator.grabCube;
+import frc.robot.commands.manipulator.GrabCone;
+import frc.robot.commands.manipulator.GrabCube;
 import frc.robot.utils.ShuffleBoard;
 //import frc.robot.commands.FollowPath;
 import frc.robot.subsystems.Arm;
@@ -115,8 +115,8 @@ public class RobotContainer {
     opPadX.onTrue(new SetPivotPosition(arm, -175));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
 
-    opRightBumper.onTrue(new grabCube(manipulator));
-    opLeftBumper.onTrue(new grabCone(manipulator));
+    opRightBumper.onTrue(new GrabCube(manipulator));
+    opLeftBumper.onTrue(new GrabCone(manipulator));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
     // padA.whileTrue(new SetArmPosition(arm, 73));

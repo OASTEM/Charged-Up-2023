@@ -7,10 +7,10 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
 
-public class grabCube extends CommandBase {
+public class GrabCube extends CommandBase {
   /** Creates a new grabCube. */
   private Manipulator manipulator;
-  public grabCube(Manipulator manipulator) {
+  public GrabCube(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(manipulator);
     this.manipulator = manipulator;

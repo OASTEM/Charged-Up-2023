@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
 
 
-public class grabCone extends CommandBase {
+public class GrabCone extends CommandBase {
 
   private Manipulator manipulator;
   
   /** Creates a new getCone. */
 
-  public grabCone(Manipulator manipulator) {
+  public GrabCone(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(manipulator);
     this.manipulator = manipulator;
