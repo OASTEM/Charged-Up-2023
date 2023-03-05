@@ -7,6 +7,7 @@ package frc.robot.commands.Calibration;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Manipulator;
 
 public class CalibrateArm extends CommandBase {
   /** Creates a new CalibrateArm. */
@@ -15,10 +16,12 @@ public class CalibrateArm extends CommandBase {
   private Timer timer;
   private Timer timer2;
   private boolean changed;
-  public CalibrateArm(Arm arm) {
+  private Manipulator manipulator;
+  public CalibrateArm(Arm arm, Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
+    addRequirements(arm, manipulator);
     this.arm = arm;
+    this.manipulator = manipulator;
     armDone = false;
     timer = new Timer();
     timer2 = new Timer();
@@ -34,6 +37,7 @@ public class CalibrateArm extends CommandBase {
     timer.start();
     timer2.reset();
     arm.ArmSoftLimit(false);
+    manipulator.resetEncoders();
     arm.setArm(0.3);
     armDone = false;
     changed = false;

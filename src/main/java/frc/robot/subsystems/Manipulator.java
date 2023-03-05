@@ -6,6 +6,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
 import frc.robot.utils.PID;
@@ -70,7 +71,7 @@ public class Manipulator extends SubsystemBase {
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     openCloseMotor.setSoftLimit(SoftLimitDirection.kForward, 0);
-    openCloseMotor.setSoftLimit(SoftLimitDirection.kReverse, -21);
+    openCloseMotor.setSoftLimit(SoftLimitDirection.kReverse, -22);
   }
   public void stop(){
     openCloseMotor.stopMotor();
@@ -166,7 +167,9 @@ public class Manipulator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(openCloseMotorEncoder.getPosition());
+    // System.out.println(openCloseMotorEncoder.getPosition());
     // System.out.println(openCloseMotorPIDController.getP());
+    SmartDashboard.putNumber("Manipulator Encoder", openCloseMotorEncoder.getPosition());
+    
   }
 }

@@ -76,6 +76,7 @@ public class RobotContainer {
   private final JoystickButton opPadX = new JoystickButton(opPad, 3);
   private final JoystickButton opPadY = new JoystickButton(opPad, 4);
   private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
+  private final JoystickButton opStart = new JoystickButton(opPad, 8);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
   
   
@@ -83,7 +84,6 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
-    //manipulator.setDefaultCommand(new OpenClaw(manipulator, opPad));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -108,19 +108,20 @@ public class RobotContainer {
     // opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
     opPadY.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION));
     opPadA.onTrue(new SetArmPosition(arm, 70));
-    opPadX.onTrue(new SetPivotPosition(arm, -175));
+    // opPadX.onTrue(new SetPivotPosition(arm, -175));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
-
+    opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
     opRightBumper.onTrue(new GrabCube(manipulator));
     opLeftBumper.onTrue(new GrabCone(manipulator));
     //padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
     // padA.whileTrue(new SetArmPosition(arm, 73));
-    // padY.whileTrue(new OpenClaw(manipulator));
+    opStart.whileTrue(new OpenClaw(manipulator));
+
     padY.whileTrue(new ArmBottomStartPosition(arm));
-    padA.onTrue(new Driving(driveTrain, 170, 0.00338, 0.00352));
+    // padA.onTrue(new Driving(driveTrain, 170, 0.00338, 0.00352));
     // padA.onTrue(new DriveStraight(driveTrain, 50));
-    padB.whileTrue(new SetPivotPosition(arm,-100));
+    // padB.whileTrue(new SetPivotPosition(arm,-100));
 
   }
 
@@ -145,7 +146,7 @@ public class RobotContainer {
     config.setKinematics(driveTrain.getKinematics());
     
     //return command;
-    return new StraightAuto(driveTrain, arm, shuffleboard);
+    return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
   }
 
   public Command Music(){

@@ -7,6 +7,7 @@ package frc.robot.commands.Calibration;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Manipulator;
 
 public class CalibratePivot extends CommandBase {
   /** Creates a new CalibratePivot. */
@@ -14,6 +15,7 @@ public class CalibratePivot extends CommandBase {
   private boolean pivotDone;
   private Timer timer;
   private Timer timer2;
+  // private Manipulator manipulator;
   public CalibratePivot(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
@@ -21,6 +23,7 @@ public class CalibratePivot extends CommandBase {
     pivotDone = false;
     timer = new Timer();
     timer2 = new Timer();
+    // this.manipulator = manipulator;
   }
 
   // Called when the command is initially scheduled.
@@ -55,6 +58,7 @@ public class CalibratePivot extends CommandBase {
     timer.reset();
     timer2.reset();
     arm.ArmSoftLimit(true);
+    // manipulator.resetEncoders();
     System.out.println("Calibrate pivot done now ***************************");
   }
 
