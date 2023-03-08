@@ -52,6 +52,16 @@ public class Arm extends SubsystemBase {
     sideMotorPIDController.setP(Constants.Arm.sidePID.p);
     sideMotorPIDController.setI(Constants.Arm.sidePID.i);
     sideMotorPIDController.setD(Constants.Arm.sidePID.d);
+
+    // sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
+    sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
+    // armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
+    armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
+
+    // sideMotor.setSmartCurrentLimit(30);
+    // armMotor.setSmartCurrentLimit(40);
+    // sideMotor.setSecondaryCurrentLimit(35);
+    // armMotor.setSecondaryCurrentLimit(45);
   }
 
   //Not Side Arm
@@ -211,11 +221,15 @@ public class Arm extends SubsystemBase {
     // System.out.println(armMotorEncoder.getVelocity());
     // System.out.println("Side Motor Current " + getSideCurrent());
     // System.out.println("Arm Motor Current: " + getArmCurrent());
-    System.out.println("Arm Encoder: " + getArmEncoder());
-    System.out.println("Side Encoder: " + getSideEncoder());
+    // System.out.println("Arm Encoder: " + getArmEncoder());
+    // System.out.println("Side Encoder: " + getSideEncoder());
     SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
     SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
     SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
+    SmartDashboard.putNumber("side open ramp rate", sideMotor.getOpenLoopRampRate());
+    SmartDashboard.putNumber("side closed ramp rate", sideMotor.getClosedLoopRampRate());
+    SmartDashboard.putNumber("arm open ramp rate", armMotor.getOpenLoopRampRate());
+    SmartDashboard.putNumber("arm closed ramp rate", armMotor.getClosedLoopRampRate());
   }
 }
 

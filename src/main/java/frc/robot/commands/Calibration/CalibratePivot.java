@@ -44,7 +44,7 @@ public class CalibratePivot extends CommandBase {
       arm.setSide(0.2);
       timer2.start();
     }
-    if(timer2.get()>0.2 && arm.getSideCurrent()>=5){
+    if(timer2.get()>0.2 && arm.getSideCurrent()>=7){
       pivotDone = true;
       arm.setSide(0);
     }

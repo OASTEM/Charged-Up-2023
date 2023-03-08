@@ -32,7 +32,7 @@ public class StraightAuto extends SequentialCommandGroup {
       // new SetArmPosition(arm, 33).withTimeout(2)
       //Close Claw (Claw is closed) -Averi :D   //0.00448
       //new OpenClaw(manipulator).withTimeout(0.1),
-      new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(3), //0.00588, 0.00652
+      new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(3).alongWith(new SetPivotPosition(arm, -180)), //0.00588, 0.00652
       new Driving(driveTrain, -98, 0.00688, 0.00352).withTimeout(2.5),
       new Balance(driveTrain, shuffleboard)
     );

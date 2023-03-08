@@ -4,23 +4,25 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.utils.PID;
 
 
 public class Driving extends CommandBase {
   DriveTrain driveTrain;
-
-  double leftkP;
-  double rightkP;
-  double setpoint = 0;
-  double leftError = 0;
-  double rightError = 0;
-  double leftSpeed = 0;
-  double rightSpeed = 0;
-  int count = 0;
-
+  
+  private double leftkP;
+  private double rightkP;
+  private double setpoint = 0;
+  private double leftError = 0;
+  private double rightError = 0;
+  private double leftSpeed = 0;
+  private double rightSpeed = 0;
+  private int count = 0;
+  private double turningError;
   //private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
 
 
@@ -37,30 +39,36 @@ public class Driving extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    driveTrain.reset();
     driveTrain.resetEncoders();
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
     leftSpeed = leftkP * leftError;
     rightSpeed = rightkP * rightError;
+    turningError = driveTrain.getXAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    turningError = driveTrain.getXAngle() * 0.001;
+    SmartDashboard.putNumber("Turning Error", turningError);
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    leftSpeed = leftkP * leftError; //*1.05 */
-    rightSpeed = rightkP * rightError;
+    leftSpeed = leftkP * leftError * (1 + turningError); //*1.05 */
+    rightSpeed = rightkP * rightError * (1 - turningError);
     System.out.println(rightSpeed);
     driveTrain.tankDrive(leftSpeed, rightSpeed);
-    if (Math.abs(leftError) < 1 && Math.abs(rightError) < 1){
+    if (Math.abs(leftError) < 
+    100 && Math.abs(rightError) < 100){
       count++;
     }
     else{
       count = 0;
     }
-    SmartDashboard.putNumber("Right Speed", rightSpeed);
+
     SmartDashboard.putNumber("Left Speed", leftSpeed);
+    SmartDashboard.putNumber("Right Speed", rightSpeed);
     SmartDashboard.putNumber("Left Error", leftError);
     SmartDashboard.putNumber("Right Error", rightError);
 

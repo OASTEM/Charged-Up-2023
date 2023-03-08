@@ -45,7 +45,7 @@ public final class Constants {
     public static final int ACCELERATION = 3500;
     public static final int ERROR_THRESHOLD = 500;
     public static final double OPEN_LOOP_RAMP = .5;
-    public static final double CLOSED_LOOP_RAMP = 0;
+    public static final double CLOSED_LOOP_RAMP = .5;
     public static final double ANGLE_TOLERANCE = .5;
     public static final boolean DEBUG = false;
     public static final double TRACK_WIDTH = 20;
@@ -58,7 +58,7 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID upPID = new PID(0.01, 0.0000, 0,0.000005, 0); //TODO fix these pid values
+    public static final PID upPID = new PID(0.01, 0.0000, 0,0.00005, 0); //TODO fix these pid values
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
     public static final PID sidePID = new PID(0.01,0,0,0, 0);//0.02
     public static final double ARM_SCORING_POSITION = 26;
@@ -67,7 +67,11 @@ public final class Constants {
     public static final double ARM_LIMIT_LEFT = -55;
     public static final double ARM_LIMIT_BOTTOM = 70;
     public static final double ARM_START_POSITION = 74;
-    public static final double PIVOT_START_POSITION = -190;
+    public static final double PIVOT_START_POSITION = -180;
+    public static final double PIVOT_OPEN_LOOP_RATE = 10;
+    public static final double PIVOT_CLOSED_LOOP_RATE = 10;
+    public static final double ARM_OPEN_LOOP_RATE = 0.25;
+    public static final double ARM_CLOSED_LOOP_RATE = 0.25;
     public final static class SoftStop {
       public static final float ARM_UP = (float) 3.2;
       public static final float ARM_DOWN = 74;
