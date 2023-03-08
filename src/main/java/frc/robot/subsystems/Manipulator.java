@@ -94,8 +94,8 @@ public class Manipulator extends SubsystemBase {
   }
 
   public void open(){
-    openCloseMotorPIDController.setReference(0, CANSparkMax.ControlType.kPosition);
-    state = 0;
+    openCloseMotorPIDController.setReference(Constants.openCloseMotor.openPosition, CANSparkMax.ControlType.kPosition);
+    // state = 0;
     intake(-0.3);
   }
 

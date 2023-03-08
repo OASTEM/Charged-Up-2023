@@ -67,9 +67,9 @@ public final class Constants {
     public static final double ARM_LIMIT_LEFT = -55;
     public static final double ARM_LIMIT_BOTTOM = 70;
     public static final double ARM_START_POSITION = 74;
-    public static final double PIVOT_START_POSITION = -180;
-    public static final double PIVOT_OPEN_LOOP_RATE = 10;
-    public static final double PIVOT_CLOSED_LOOP_RATE = 10;
+    public static final double PIVOT_START_POSITION = -190;
+    public static final double PIVOT_OPEN_LOOP_RATE = .5;
+    public static final double PIVOT_CLOSED_LOOP_RATE = .5;
     public static final double ARM_OPEN_LOOP_RATE = 0.25;
     public static final double ARM_CLOSED_LOOP_RATE = 0.25;
     public final static class SoftStop {
@@ -86,6 +86,6 @@ public final class Constants {
     public static final PID openClosePID = new PID(0.06, 0.0000, 0, 0.00001); //0.06
     public static final double conePosition = -25;
     public static final double cubePosition = -10;
-    public static final double closePosition = -35;
+    public static final double openPosition = 0;
   }
 }

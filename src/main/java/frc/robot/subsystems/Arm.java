@@ -53,9 +53,9 @@ public class Arm extends SubsystemBase {
     sideMotorPIDController.setI(Constants.Arm.sidePID.i);
     sideMotorPIDController.setD(Constants.Arm.sidePID.d);
 
-    // sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
+    sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
     sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
-    // armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
+    armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
     armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
 
     // sideMotor.setSmartCurrentLimit(30);
@@ -167,6 +167,16 @@ public class Arm extends SubsystemBase {
 
   //Forward
   //Reverse
+
+  public void setArmRampRate(){
+    sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
+    sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
+  }
+  public void setPivotRampRate(){
+    armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
+    armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
+
+  }
   public void ArmSoftLimit(boolean enable) {
     armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
     armMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);

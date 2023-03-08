@@ -102,6 +102,9 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
     // }
+    CommandScheduler.getInstance().cancelAll();
+    // CommandScheduler.getInstance().removeAll();
+    CommandScheduler.getInstance().enable();
 
   }
 
