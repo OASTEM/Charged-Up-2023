@@ -11,11 +11,15 @@ import frc.robot.utils.Constants;
 public class SetArmPosition extends CommandBase {
   private Arm arm;
   private double position;
+  private int count;
+  private double error;
   /** Creates a new setArmPosition. */
   public SetArmPosition(Arm arm, double position) {
     addRequirements(arm);
     this.arm = arm;
     this.position = position;
+    error = 0;
+    count = 0;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,12 +35,13 @@ public class SetArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if(arm.getArmEncoder()>40 && arm.getSideEncoder() < 2){
-    //   arm.setSideSoftLimit();
-    // }
-    // else{
-    //   arm.setArmSoftLimit();
-    // }
+    error = Math.abs(arm.getArmEncoder()-position);
+    if (error<=Constants.Arm.ARM_TOL){
+      count++;
+    }
+    else{
+      count = 0;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +54,7 @@ public class SetArmPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // return false;
+    return (count > 10);
   }
 }

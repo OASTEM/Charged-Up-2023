@@ -62,6 +62,7 @@ public class Arm extends SubsystemBase {
     // armMotor.setSmartCurrentLimit(40);
     // sideMotor.setSecondaryCurrentLimit(35);
     // armMotor.setSecondaryCurrentLimit(45);
+    System.out.println("In Arm Constructor ************");
   }
 
   //Not Side Arm

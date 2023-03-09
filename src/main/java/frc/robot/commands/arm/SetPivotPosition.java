@@ -11,11 +11,14 @@ import frc.robot.utils.Constants;
 public class SetPivotPosition extends CommandBase {
   private Arm arm;
   private double position;
+  private double error;
+  private int count;
   /** Creates a new setArmPosition. */
   public SetPivotPosition(Arm arm, double position) {
     addRequirements(arm);
     this.arm = arm;
     this.position = position;
+    error = 0;
     // timer = 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -33,7 +36,13 @@ public class SetPivotPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    error = Math.abs(arm.getArmEncoder()-position);
+    if (error<=Constants.Arm.PIVOT_TOL){
+      count++;
+    }
+    else{
+      count = 0;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -48,6 +57,7 @@ public class SetPivotPosition extends CommandBase {
     // if (Math.abs(position - arm.getSideEncoder()) < 2) {
     //   return true;
     // } else return false;
-    return false;
+    // return false;
+    return (count > 10);
   }
 }

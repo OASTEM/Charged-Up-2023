@@ -72,6 +72,8 @@ public final class Constants {
     public static final double PIVOT_CLOSED_LOOP_RATE = .5;
     public static final double ARM_OPEN_LOOP_RATE = 0.25;
     public static final double ARM_CLOSED_LOOP_RATE = 0.25;
+    public static final double ARM_TOL = 0.5;
+    public static final double PIVOT_TOL = 0.5;
     public final static class SoftStop {
       public static final float ARM_UP = (float) 3.2;
       public static final float ARM_DOWN = 74;
