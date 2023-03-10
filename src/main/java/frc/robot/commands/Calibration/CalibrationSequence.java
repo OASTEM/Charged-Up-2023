@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auto.ArmBottomStartPosition;
+import frc.robot.commands.manipulator.GrabCone;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
@@ -43,10 +44,12 @@ public class CalibrationSequence extends ParallelCommandGroup {
         // new SetPivotPosition(arm, -180).withTimeout(4)
         // .andThen(new SetArmPosition(arm, 68))
         new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
-        new ArmBottomStartPosition(arm).withTimeout(8),
+        new ArmBottomStartPosition(arm),
         new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
         new InstantCommand(arm::setArmSoftLimit).withTimeout(0.1),
-        new InstantCommand(manipulator::getCone)
+        new GrabCone(manipulator).withTimeout(2)
+        // new InstantCommand(manipulator::getCone),
+        // new InstantCommand(manipulator::stopOpenClose)
         //Commands.runOnce(() -> arm.ArmSoftLimit(true))
         // new SetPivotPosition(arm, -180),
         // new SetArmPosition(arm, 68)

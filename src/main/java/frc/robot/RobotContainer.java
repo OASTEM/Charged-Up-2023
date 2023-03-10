@@ -107,10 +107,10 @@ public class RobotContainer {
     // opPadY.whileTrue(new MoveArm(arm, shuffleboard));
     // opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
     opPadY.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION));
-    opPadA.onTrue(new SetArmPosition(arm, 70));
-    // opPadX.onTrue(new SetPivotPosition(arm, -175));
+    opPadA.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION));
+    opPadX.onTrue(new SetPivotPosition(arm, -175));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
-    opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
+    // opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
     opRightBumper.onTrue(new GrabCube(manipulator));
     opLeftBumper.onTrue(new GrabCone(manipulator));
     //padA.whileTrue(new AprilTagDetect(limelight));

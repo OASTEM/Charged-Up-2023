@@ -36,7 +36,7 @@ public class SetPivotPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    error = Math.abs(arm.getArmEncoder()-position);
+    error = Math.abs(arm.getSideEncoder()-position);
     if (error<=Constants.Arm.PIVOT_TOL){
       count++;
     }

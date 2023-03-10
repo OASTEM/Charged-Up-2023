@@ -159,6 +159,10 @@ public class Manipulator extends SubsystemBase {
   }
 
   // public void setManipulatorRightVelocity(int velocity){
+  public void stopOpenClose(){
+    openCloseMotor.disable();;
+  }
+
 
   public void getOpenCloseEncoder(){
     // SmartDashboard.putNumber("Open Close Encoder", openCloseMotor.getEncoder().getPosition());

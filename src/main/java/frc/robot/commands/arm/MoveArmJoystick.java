@@ -45,6 +45,8 @@ public class MoveArmJoystick extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    arm.setArmMotorPosition(arm.getArmEncoder());
+    // arm.setSideMotorPosition(arm.getSideEncoder());
     arm.stop();
   }
 

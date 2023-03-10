@@ -26,6 +26,7 @@ public class OpenClaw extends CommandBase {
   public void initialize() {
     // manipulator.setPID(shuffleboard.getOpenClosePID());
     // manipulator.setManipulatorVelocity(100);
+    manipulator.open();
 
     
   }
@@ -33,7 +34,7 @@ public class OpenClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    manipulator.open();
+    
     
   }
 
