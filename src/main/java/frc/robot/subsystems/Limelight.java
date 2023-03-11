@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.json.*;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+
 //import javax.swing.text.StyleContext.SmallAttributeSet;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -31,6 +33,8 @@ public class Limelight extends SubsystemBase {
 
   String jsonString;
   int fID;
+
+  
   /** Creates a new Limelight. */
   public Limelight() {
 
@@ -65,6 +69,7 @@ public class Limelight extends SubsystemBase {
     this.y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     this.a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     this.v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+
     //this.t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("t6r_fs").getDouble(0.0);;
     SmartDashboard.putNumber("tx", x);
     SmartDashboard.putNumber("ty", y);

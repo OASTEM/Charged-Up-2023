@@ -46,11 +46,6 @@ public class DriveTrain extends SubsystemBase {
   
 
   public DriveTrain() {
-
-    // frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-    // frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-    // backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-    // backL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
     slowModeOn = true;
     climbing = false;
 
@@ -104,6 +99,17 @@ public class DriveTrain extends SubsystemBase {
     frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
+
+    backL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    backL.configSupplyCurrentLimit(currentLimit, 0);
+    backR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    backR.configSupplyCurrentLimit(currentLimit, 0);
+
+
+    // backL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
+    // backL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
+    // backR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
+    // backR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // this.setPID(Constants.DriveTrain.PID);
 
     resetEncoders();
@@ -233,10 +239,10 @@ public class DriveTrain extends SubsystemBase {
 //   }
 
   public void loadMusic(){
-    orchestraFrontR.loadMusic("jessica.chrp");
-    orchestraFrontL.loadMusic("jessica.chrp");
-    orchestraBackR.loadMusic("jessica.chrp");
-    orchestraBackL.loadMusic("jessica.chrp");
+    orchestraFrontR.loadMusic("fight song.chrp");
+    orchestraFrontL.loadMusic("fight song.chrp");
+    orchestraBackR.loadMusic("fight song.chrp");
+    orchestraBackL.loadMusic("fight song.chrp");
   }
 
   public void addInstruments(){
@@ -336,15 +342,13 @@ public class DriveTrain extends SubsystemBase {
   }
   @Override
   public void periodic(){
+    SmartDashboard.putNumber("NavX X", getXAngle());
+    SmartDashboard.putNumber("NavX Y", getYAngle());
+    SmartDashboard.putNumber("NavX Z", getZAngle());
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
     // printEncoders();
-    // System.out.println("X: " + getXAngle());
-    // System.out.println("Y: " + getYAngle());
-    // System.out.println("Z: " + getZAngle());
     // System.out.println("Inches from native units: " + getInchesFromNativeUnits(getLeftEncoderCount()));
     SmartDashboard.putNumber("DriveTrain L Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
-    // getInchesFromNativeUnits(getLeftEncoderCount());
-    //System.out.println(navX.getAngle());
   }
 }

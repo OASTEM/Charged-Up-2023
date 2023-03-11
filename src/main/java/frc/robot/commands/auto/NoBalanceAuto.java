@@ -26,13 +26,13 @@ public class NoBalanceAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //new GrabCone(manipulator).withTimeout(0.1),
-      //new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
-      //andThen(new SetPivotPosition(arm, Constants.Arm.PIVOT_START).withTimeout(3)), 
-      // new SetArmPosition(arm, 33).withTimeout(2)
+      new GrabCone(manipulator).withTimeout(0.1),
+      new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
+      .andThen(new SetPivotPosition(arm, Constants.Arm.PIVOT_START).withTimeout(3)), 
+      new SetArmPosition(arm, 33).withTimeout(2),
       //Close Claw (Claw is closed) -Averi :D   //0.00448
-      //new OpenClaw(manipulator).withTimeout(0.1),
-      new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(3).alongWith(new SetPivotPosition(arm, -180)), //0.00588, 0.00652
+      new OpenClaw(manipulator).withTimeout(0.1),
+      new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(3).alongWith(new SetPivotPosition(arm, -180)) //0.00588, 0.00652
     );
   }
 

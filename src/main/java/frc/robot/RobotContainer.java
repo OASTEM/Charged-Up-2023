@@ -118,7 +118,7 @@ public class RobotContainer {
     // padA.whileTrue(new SetArmPosition(arm, 73));
     opStart.whileTrue(new OpenClaw(manipulator));
 
-    padY.whileTrue(new ArmBottomStartPosition(arm));
+    // padY.whileTrue(new ArmBottomStartPosition(arm));
     // padA.onTrue(new Driving(driveTrain, 170, 0.00338, 0.00352));
     // padA.onTrue(new DriveStraight(driveTrain, 50));
     // padB.whileTrue(new SetPivotPosition(arm,-100));

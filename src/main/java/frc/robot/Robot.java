@@ -6,13 +6,18 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
 
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utils.ShuffleBoard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,11 +36,19 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private HttpCamera limelightFeed;
+  ShuffleboardTab driverShuffleboardTab = Shuffleboard.getTab("SmartDashboard");
+
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
     container = new RobotContainer();
+
+    limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
+    driverShuffleboardTab.add("LL", limelightFeed).withPosition(0,0).withSize(15,0).withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+    
     trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
     try{
     trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);

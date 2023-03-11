@@ -47,8 +47,8 @@ public class SetArmPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("ENDING SeT ARP POSITION ***********************************");
-    arm.stop();
+    System.out.println("ENDING SeT ARP POSITION ***********************************" + arm.getArmEncoder());
+    // arm.stop();
   }
 
   // Returns true when the command should end.
