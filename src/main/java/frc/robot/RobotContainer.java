@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.NotifierCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
@@ -26,6 +27,8 @@ import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.auto.Driving;
+import frc.robot.commands.auto.NoBalanceAuto;
+import frc.robot.commands.auto.PreloadNoMove;
 import frc.robot.commands.auto.StraightAuto;
 import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.commands.manipulator.GrabCone;
@@ -146,7 +149,10 @@ public class RobotContainer {
     config.setKinematics(driveTrain.getKinematics());
     
     //return command;
-    return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
+    // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
+    // return null;
+    // return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
+    return new NoBalanceAuto(driveTrain, arm, manipulator, shuffleboard);
   }
 
   public Command Music(){

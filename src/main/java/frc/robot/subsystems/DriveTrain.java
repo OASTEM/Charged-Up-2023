@@ -55,6 +55,11 @@ public class DriveTrain extends SubsystemBase {
     orchestraBackR = new Orchestra();
     orchestraBackL = new Orchestra();
 
+    frontL.configFactoryDefault();
+    frontR.configFactoryDefault();
+    backL.configFactoryDefault();
+    backR.configFactoryDefault();
+
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
     backR.setNeutralMode(NeutralMode.Brake);
@@ -79,32 +84,35 @@ public class DriveTrain extends SubsystemBase {
     // backL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
     // backR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
 
-    frontL.configPeakOutputForward(1);
-    frontL.configPeakOutputReverse(-1);
-    frontR.configPeakOutputForward(1);
-    frontR.configPeakOutputReverse(-1);
 
-    SupplyCurrentLimitConfiguration currentLimit = new SupplyCurrentLimitConfiguration();
-    currentLimit.currentLimit = 40;
-    currentLimit.enable = true;
-    currentLimit.triggerThresholdCurrent = 40;
-    currentLimit.triggerThresholdTime = 2;
-    frontL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
-    frontL.configSupplyCurrentLimit(currentLimit, 0);
-    frontR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
-    frontR.configSupplyCurrentLimit(currentLimit, 0);
+    //Current Limit comment start
+    // frontL.configPeakOutputForward(1);
+    // frontL.configPeakOutputReverse(-1);
+    // frontR.configPeakOutputForward(1);
+    // frontR.configPeakOutputReverse(-1);
+
+    // SupplyCurrentLimitConfiguration currentLimit = new SupplyCurrentLimitConfiguration();
+    // currentLimit.currentLimit = 40;
+    // currentLimit.enable = true;
+    // currentLimit.triggerThresholdCurrent = 40;
+    // currentLimit.triggerThresholdTime = 2;
+    // frontL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // frontL.configSupplyCurrentLimit(currentLimit, 0);
+    // frontR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // frontR.configSupplyCurrentLimit(currentLimit, 0);
 
 
-    frontL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
-    frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
-    frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
-    frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
+    // frontL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
+    // frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
+    // frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
+    // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
 
-    backL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
-    backL.configSupplyCurrentLimit(currentLimit, 0);
-    backR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
-    backR.configSupplyCurrentLimit(currentLimit, 0);
+    // backL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // backL.configSupplyCurrentLimit(currentLimit, 0);
+    // backR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // backR.configSupplyCurrentLimit(currentLimit, 0);
 
+//Current Limit comment done
 
     // backL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // backL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
@@ -113,35 +121,24 @@ public class DriveTrain extends SubsystemBase {
     // this.setPID(Constants.DriveTrain.PID);
 
     resetEncoders();
+    
   }
 
 
 
   public void arcadeDrive(double x, double y) {
-    // System.out.println("LEFT" + frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
-    // System.out.println("RIGHT" + frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
+    SmartDashboard.putNumber("X number", x);
+    SmartDashboard.putNumber("y number", y);
     frontL.set(ControlMode.PercentOutput, y - x);
-    frontR.set(ControlMode.PercentOutput, 0.95*(y + x));
+    frontR.set(ControlMode.PercentOutput, y + x);
   }
 
   public boolean getSlowMode() {
     return slowModeOn;
   }
 
-  public boolean climbing(){
-    return climbing;
-  }
-
   public void toggleSlowMode() {
     slowModeOn = ! slowModeOn;
-  }
-
-  public void falseSlowMode(){
-    slowModeOn = false;
-  }
-
-  public void trueSlowMode(){
-    slowModeOn = true;
   }
 
   public void setSlowMode(boolean slowMode) {
@@ -350,5 +347,8 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("Inches from native units: " + getInchesFromNativeUnits(getLeftEncoderCount()));
     SmartDashboard.putNumber("DriveTrain L Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
+
+    SmartDashboard.putNumber("FrontL Current", frontL.getSupplyCurrent());
+    SmartDashboard.putNumber("FrontR Current", frontR.getSupplyCurrent());
   }
 }

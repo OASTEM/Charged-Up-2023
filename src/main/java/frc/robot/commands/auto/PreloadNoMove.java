@@ -20,9 +20,9 @@ import frc.robot.utils.ShuffleBoard;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class NoBalanceAuto extends SequentialCommandGroup {
+public class PreloadNoMove extends SequentialCommandGroup {
   /** Creates a new StraightAuto. */
-  public NoBalanceAuto(DriveTrain driveTrain, Arm arm, Manipulator manipulator, ShuffleBoard shuffleboard) {
+  public PreloadNoMove(DriveTrain driveTrain, Arm arm, Manipulator manipulator, ShuffleBoard shuffleboard) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -30,8 +30,10 @@ public class NoBalanceAuto extends SequentialCommandGroup {
       .andThen(new SetPivotPosition(arm, Constants.Arm.PIVOT_START).withTimeout(3))),
       new SetArmPosition(arm, 33).withTimeout(2),
       //Close Claw (Claw is closed) -Averi :D   //0.00448
-      new OpenClaw(manipulator).withTimeout(0.1),
-      new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(4).alongWith(new SetPivotPosition(arm, -180)) //0.00588, 0.00652
+      new OpenClaw(manipulator).withTimeout(0.1)
+      //new Driving(driveTrain, 220, 0.00352, 0.00352).withTimeout(3).alongWith(new SetPivotPosition(arm, -180)), //0.00588, 0.00652
+      //new Driving(driveTrain, -98, 0.00688, 0.00352).withTimeout(2.5),
+      //new Balance(driveTrain, shuffleboard)
     );
   }
 

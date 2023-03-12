@@ -51,12 +51,14 @@ public class Driving extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turningError = driveTrain.getXAngle() * 0.01;
+    turningError = driveTrain.getXAngle() * 0.05;
     SmartDashboard.putNumber("Turning Error", turningError);
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    leftSpeed = leftkP * leftError * (1 + turningError); //*1.05 */
-    rightSpeed = rightkP * rightError * (1 - turningError);
+    //leftSpeed = leftkP * leftError * (1 + turningError); //*1.05 */
+    //rightSpeed = rightkP * rightError * (1 - turningError);
+    leftSpeed = leftkP * leftError; //*1.05 */
+    rightSpeed = rightkP * rightError;
     System.out.println(rightSpeed);
     driveTrain.tankDrive(leftSpeed, rightSpeed);
     if (Math.abs(leftError) < 

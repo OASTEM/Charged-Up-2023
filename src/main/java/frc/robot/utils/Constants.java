@@ -31,11 +31,11 @@ public final class Constants {
   }
 
   public final static class DriveTrain {
-    public static final double SLOW_MODE_TURN = 0.3;
-    public static final double SLOW_MODE = 0.2;
+    public static final double SLOW_MODE_TURN = 0.5;
+    public static final double SLOW_MODE = 0.3;
     public static final double SUPER_SLOW_MODE = 0.1;
-    public static final double REGULAR_MODE = 0.6; //0.6
-    public static final double REGULAR_MODE_TURN = 0.3; //0.3
+    public static final double REGULAR_MODE = 0.8; //0.6
+    public static final double REGULAR_MODE_TURN = 0.5; //0.3
     public static final double MOTOR_TO_WHEEL_REVOLUTION = 10.71;
     public static final int SENSOR_UNITS_PER_ROTATION = 2048;
     public static final double TURN_CONSTANT = 240;
@@ -62,14 +62,14 @@ public final class Constants {
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
     public static final PID sidePID = new PID(0.02,0,0,0, 0);//0.02
     public static final double ARM_SCORING_POSITION = 18;  //26  //24
-    public static final double PIVOT_START = -68; 
+    public static final double PIVOT_START = -59; 
     public static final double ARM_LIMIT_RIGHT = -50;
     public static final double ARM_LIMIT_LEFT = -55;
     public static final double ARM_LIMIT_BOTTOM = 70;
     public static final double ARM_START_POSITION = 73;
     public static final double PIVOT_START_POSITION = -174; //
-    public static final double PIVOT_OPEN_LOOP_RATE = .75;//.5 //0.75
-    public static final double PIVOT_CLOSED_LOOP_RATE = .75;  //0.75
+    public static final double PIVOT_OPEN_LOOP_RATE = 0.75;//.5 //0.75
+    public static final double PIVOT_CLOSED_LOOP_RATE = 0.75;  //0.75
     public static final double ARM_OPEN_LOOP_RATE = 0.5; //.25
     public static final double ARM_CLOSED_LOOP_RATE = 0.5;
     public static final double ARM_TOL = 3;
