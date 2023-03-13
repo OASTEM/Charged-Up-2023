@@ -13,6 +13,7 @@ public class SetArmPosition extends CommandBase {
   private double position;
   private int count;
   private double error;
+
   /** Creates a new setArmPosition. */
   public SetArmPosition(Arm arm, double position) {
     addRequirements(arm);
@@ -28,18 +29,17 @@ public class SetArmPosition extends CommandBase {
   public void initialize() {
     arm.setPID(Constants.Arm.upPID);
     arm.setArmMotorPosition(position);
-    
+
     System.out.println("HOWAIDHDAAHIUAGBIJUHIUADHGIUADHIUHOAIUDHOUADHOU");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    error = Math.abs(arm.getArmEncoder()-position);
-    if (error<=Constants.Arm.ARM_TOL){
+    error = Math.abs(arm.getArmEncoder() - position);
+    if (error <= Constants.Arm.ARM_TOL) {
       count++;
-    }
-    else{
+    } else {
       count = 0;
     }
   }

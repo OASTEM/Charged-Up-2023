@@ -13,13 +13,14 @@ public class SetPivotPosition extends CommandBase {
   private double position;
   private double error;
   private int count;
+
   /** Creates a new setArmPosition. */
   public SetPivotPosition(Arm arm, double position) {
     addRequirements(arm);
     this.arm = arm;
     this.position = position;
     error = 0;
-    // timer = 
+    // timer =
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,20 +28,19 @@ public class SetPivotPosition extends CommandBase {
   @Override
   public void initialize() {
     // if(arm.getArmEncoder()<40 && arm.getSideEncoder() < 2){
-      arm.setSidePID(Constants.Arm.sidePID);
-      System.out.println("SETING PIVOT POSITION INITIALIZE ***************************");
-      arm.setSideMotorPosition(position);
+    arm.setSidePID(Constants.Arm.sidePID);
+    System.out.println("SETING PIVOT POSITION INITIALIZE ***************************");
+    arm.setSideMotorPosition(position);
     // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    error = Math.abs(arm.getSideEncoder()-position);
-    if (error<=Constants.Arm.PIVOT_TOL){
+    error = Math.abs(arm.getSideEncoder() - position);
+    if (error <= Constants.Arm.PIVOT_TOL) {
       count++;
-    }
-    else{
+    } else {
       count = 0;
     }
   }
@@ -55,7 +55,7 @@ public class SetPivotPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     // if (Math.abs(position - arm.getSideEncoder()) < 2) {
-    //   return true;
+    // return true;
     // } else return false;
     // return false;
     return (count > 10);

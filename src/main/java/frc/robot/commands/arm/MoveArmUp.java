@@ -14,12 +14,12 @@ public class MoveArmUp extends CommandBase {
   private Arm arm;
   private double velocity;
   private ShuffleBoard shuffleboard;
-  //private LogitechGamingPad drivePad;
+  // private LogitechGamingPad drivePad;
 
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
-  //   addRequirements(arm);
-  //   this.arm = arm;
-  //   this.drivePad = drivePad;
+  // addRequirements(arm);
+  // this.arm = arm;
+  // this.drivePad = drivePad;
   // }
   public MoveArmUp(Arm arm, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,8 +32,8 @@ public class MoveArmUp extends CommandBase {
   @Override
   public void initialize() {
     arm.resetEncoders();
-    //arm.setArmMotorPosition(100);
-    // p = SmartDashboard.getNumber("PArmUp", 0.0001); 
+    // arm.setArmMotorPosition(100);
+    // p = SmartDashboard.getNumber("PArmUp", 0.0001);
     // i = SmartDashboard.getNumber("IArmUp", 0.000001);
     // d = SmartDashboard.getNumber("DArmUp", 0);
     // SmartDashboard.putNumber("PArmUp", p);
@@ -44,14 +44,14 @@ public class MoveArmUp extends CommandBase {
     velocity = SmartDashboard.getNumber("velocityArm", -1920);
     SmartDashboard.putNumber("velocityArm", velocity);
     arm.setPID(shuffleboard.getArmUpPID());
-    //arm.setVelocity(-1920);
+    // arm.setVelocity(-1920);
     arm.setVelocity(velocity);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //arm.moveArm(drivePad.getRightAnalogXAxis());
+    // arm.moveArm(drivePad.getRightAnalogXAxis());
   }
 
   // Called once the command ends or is interrupted.

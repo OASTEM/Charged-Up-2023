@@ -35,20 +35,21 @@ public class DriveTrain extends SubsystemBase {
 
   private final AHRS navX = new AHRS(Port.kMXP, (byte) 50);
   Pose2d pose = new Pose2d();
-  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
-  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading(), getLeftEncoderCount(), getRightEncoderCount(), pose);
+  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
+      Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
+  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading(), getLeftEncoderCount(),
+      getRightEncoderCount(), pose);
 
   SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(0.5, 0.5);
 
-  PIDController leftPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD);
-  PIDController rightPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI, Constants.DriveTrain.kD);
-
-  
+  PIDController leftPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI,
+      Constants.DriveTrain.kD);
+  PIDController rightPIDController = new PIDController(Constants.DriveTrain.kP, Constants.DriveTrain.kI,
+      Constants.DriveTrain.kD);
 
   public DriveTrain() {
     slowModeOn = true;
     climbing = false;
-
 
     orchestraFrontR = new Orchestra();
     orchestraFrontL = new Orchestra();
@@ -65,12 +66,11 @@ public class DriveTrain extends SubsystemBase {
     backR.setNeutralMode(NeutralMode.Brake);
     backL.setNeutralMode(NeutralMode.Brake);
 
-
     backL.follow(frontL);
     backR.follow(frontR);
     frontL.setInverted(true);
     backL.setInverted(true);
-    
+
     frontR.setInverted(false);
     backR.setInverted(false);
 
@@ -84,35 +84,38 @@ public class DriveTrain extends SubsystemBase {
     // backL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
     // backR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
 
-
-    //Current Limit comment start
+    // Current Limit comment start
     // frontL.configPeakOutputForward(1);
     // frontL.configPeakOutputReverse(-1);
     // frontR.configPeakOutputForward(1);
     // frontR.configPeakOutputReverse(-1);
 
-    // SupplyCurrentLimitConfiguration currentLimit = new SupplyCurrentLimitConfiguration();
+    // SupplyCurrentLimitConfiguration currentLimit = new
+    // SupplyCurrentLimitConfiguration();
     // currentLimit.currentLimit = 40;
     // currentLimit.enable = true;
     // currentLimit.triggerThresholdCurrent = 40;
     // currentLimit.triggerThresholdTime = 2;
-    // frontL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // frontL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
+    // 40, 2), 0);
     // frontL.configSupplyCurrentLimit(currentLimit, 0);
-    // frontR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // frontR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
+    // 40, 2), 0);
     // frontR.configSupplyCurrentLimit(currentLimit, 0);
-
 
     // frontL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
 
-    // backL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // backL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
+    // 40, 2), 0);
     // backL.configSupplyCurrentLimit(currentLimit, 0);
-    // backR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, 2), 0);
+    // backR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
+    // 40, 2), 0);
     // backR.configSupplyCurrentLimit(currentLimit, 0);
 
-//Current Limit comment done
+    // Current Limit comment done
 
     // backL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // backL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
@@ -121,10 +124,8 @@ public class DriveTrain extends SubsystemBase {
     // this.setPID(Constants.DriveTrain.PID);
 
     resetEncoders();
-    
+
   }
-
-
 
   public void arcadeDrive(double x, double y) {
     SmartDashboard.putNumber("X number", x);
@@ -138,7 +139,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void toggleSlowMode() {
-    slowModeOn = ! slowModeOn;
+    slowModeOn = !slowModeOn;
   }
 
   public void setSlowMode(boolean slowMode) {
@@ -150,11 +151,11 @@ public class DriveTrain extends SubsystemBase {
     frontR.set(ControlMode.PercentOutput, right);
   }
 
-  public void setLeftSpeed(double speed){
+  public void setLeftSpeed(double speed) {
     frontL.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setRightSpeed(double speed){
+  public void setRightSpeed(double speed) {
     frontR.set(ControlMode.PercentOutput, speed);
   }
 
@@ -173,18 +174,18 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-
-
   // public void setBackLeftSpeed() {
-  //   backL.set(ControlMode.PercentOutput, 0.6);
+  // backL.set(ControlMode.PercentOutput, 0.6);
   // }
   public double getNativeUnitsFromInches(double inches) {
-    return inches * Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION / (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
+    return inches * Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION
+        / (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
         * Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
   }
 
   public double getInchesFromNativeUnits(double native_units) {
-    return native_units / Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION * (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
+    return native_units / Constants.DriveTrain.MOTOR_TO_WHEEL_REVOLUTION
+        * (Math.PI * Constants.DriveTrain.DRIVE_WHEEL_DIAMETER_INCHES)
         / Constants.DriveTrain.SENSOR_UNITS_PER_ROTATION;
   }
 
@@ -205,78 +206,84 @@ public class DriveTrain extends SubsystemBase {
     System.out.println("Right: " + getRightEncoderCount());
   }
 
-//   public void printInches() {
-//     System.out.println("Left Inches: " + getInchesFromNativeUnits(getLeftEncoderCount()));
-//     System.out.println("Right Inches: " + getInchesFromNativeUnits(getRightEncoderCount()));
-//   }
+  // public void printInches() {
+  // System.out.println("Left Inches: " +
+  // getInchesFromNativeUnits(getLeftEncoderCount()));
+  // System.out.println("Right Inches: " +
+  // getInchesFromNativeUnits(getRightEncoderCount()));
+  // }
 
-//   public void setAngle(double degrees) {
-//     System.out.println("LEFT WAS" + this.getLeftEncoderCount());
-//     System.out.println("ADDDING LEFT TO " + (degrees * Constants.DriveTrain.TURN_CONSTANT));
-//     System.out.println("SETTING TO " + (this.getLeftEncoderCount() + (degrees * Constants.DriveTrain.TURN_CONSTANT)));
-//     frontL.set(ControlMode.MotionMagic, this.getLeftEncoderCount() + (degrees * Constants.DriveTrain.TURN_CONSTANT));
-//     frontR.set(ControlMode.MotionMagic, this.getRightEncoderCount() - (degrees * Constants.DriveTrain.TURN_CONSTANT));
-//   }
-  
+  // public void setAngle(double degrees) {
+  // System.out.println("LEFT WAS" + this.getLeftEncoderCount());
+  // System.out.println("ADDDING LEFT TO " + (degrees *
+  // Constants.DriveTrain.TURN_CONSTANT));
+  // System.out.println("SETTING TO " + (this.getLeftEncoderCount() + (degrees *
+  // Constants.DriveTrain.TURN_CONSTANT)));
+  // frontL.set(ControlMode.MotionMagic, this.getLeftEncoderCount() + (degrees *
+  // Constants.DriveTrain.TURN_CONSTANT));
+  // frontR.set(ControlMode.MotionMagic, this.getRightEncoderCount() - (degrees *
+  // Constants.DriveTrain.TURN_CONSTANT));
+  // }
+
   public void setPosition(double pos) {
     frontL.set(ControlMode.MotionMagic, pos);
     frontR.set(ControlMode.MotionMagic, pos);
   }
 
-//   public void setPID(PID pid) {
-//     frontL.config_kP(pid.s, pid.p);
-//     frontL.config_kI(pid.s, pid.i);
-//     frontL.config_kD(pid.s, pid.d);
-//     frontL.config_kF(pid.s, pid.f);
+  // public void setPID(PID pid) {
+  // frontL.config_kP(pid.s, pid.p);
+  // frontL.config_kI(pid.s, pid.i);
+  // frontL.config_kD(pid.s, pid.d);
+  // frontL.config_kF(pid.s, pid.f);
 
-//     frontR.config_kP(pid.s, pid.p);
-//     frontR.config_kI(pid.s, pid.i);
-//     frontR.config_kD(pid.s, pid.d);
-//     frontR.config_kF(pid.s, pid.f);
-//   }
+  // frontR.config_kP(pid.s, pid.p);
+  // frontR.config_kI(pid.s, pid.i);
+  // frontR.config_kD(pid.s, pid.d);
+  // frontR.config_kF(pid.s, pid.f);
+  // }
 
-  public void loadMusic(){
+  public void loadMusic() {
     orchestraFrontR.loadMusic("fight song.chrp");
     orchestraFrontL.loadMusic("fight song.chrp");
     orchestraBackR.loadMusic("fight song.chrp");
     orchestraBackL.loadMusic("fight song.chrp");
   }
 
-  public void addInstruments(){
+  public void addInstruments() {
     orchestraFrontL.addInstrument(frontL);
     orchestraBackL.addInstrument(backL);
     orchestraFrontR.addInstrument(frontR);
     orchestraBackR.addInstrument(backR);
   }
 
-  public void playMusic(){
+  public void playMusic() {
     orchestraFrontL.play();
     orchestraBackR.play();
     orchestraBackL.play();
     orchestraFrontR.play();
   }
 
-  public boolean playFrontL(){
+  public boolean playFrontL() {
     orchestraFrontL.play();
     return true;
   }
 
-  public boolean playFrontR(){
+  public boolean playFrontR() {
     orchestraFrontR.play();
     return true;
   }
 
-  public boolean playBackL(){
+  public boolean playBackL() {
     orchestraBackL.play();
     return true;
   }
 
-  public boolean playBackR(){
+  public boolean playBackR() {
     orchestraBackR.play();
     return true;
   }
 
-  public void stopMusic(){
+  public void stopMusic() {
     orchestraFrontL.stop();
     orchestraBackR.stop();
     orchestraFrontR.stop();
@@ -287,13 +294,13 @@ public class DriveTrain extends SubsystemBase {
     return navX.getAngle();
   }
 
-  public double getXAngle(){
+  public double getXAngle() {
     return navX.getRoll();
-}
+  }
 
-  public double getYAngle(){
+  public double getYAngle() {
     return navX.getPitch();
-}
+  }
 
   public Pose2d getPose() {
     System.out.println("GOT SPEED");
@@ -314,37 +321,38 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
 
-  public DifferentialDriveWheelSpeeds getSpeeds(){
+  public DifferentialDriveWheelSpeeds getSpeeds() {
     System.out.println("GOT SPEED");
     return new DifferentialDriveWheelSpeeds(
-      frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60, 
-      frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60
-      );
+        frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60,
+        frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
   }
 
-  public SimpleMotorFeedforward getFeedForward(){
+  public SimpleMotorFeedforward getFeedForward() {
     return feedForward;
   }
 
-  public PIDController getLeftPIDController(){
+  public PIDController getLeftPIDController() {
     return leftPIDController;
   }
 
-  public PIDController getRightPIDController(){
+  public PIDController getRightPIDController() {
     return rightPIDController;
   }
-  
-  public DifferentialDriveKinematics getKinematics(){
+
+  public DifferentialDriveKinematics getKinematics() {
     return kinematics;
   }
+
   @Override
-  public void periodic(){
+  public void periodic() {
     SmartDashboard.putNumber("NavX X", getXAngle());
     SmartDashboard.putNumber("NavX Y", getYAngle());
     SmartDashboard.putNumber("NavX Z", getZAngle());
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
     // printEncoders();
-    // System.out.println("Inches from native units: " + getInchesFromNativeUnits(getLeftEncoderCount()));
+    // System.out.println("Inches from native units: " +
+    // getInchesFromNativeUnits(getLeftEncoderCount()));
     SmartDashboard.putNumber("DriveTrain L Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
 

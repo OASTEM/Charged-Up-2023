@@ -18,7 +18,6 @@ public class FollowAprilTag extends CommandBase {
   double distanceError;
   double angleError;
 
-
   public FollowAprilTag(DriveTrain driveTrain, Limelight limelight) {
     addRequirements(driveTrain, limelight);
 
@@ -29,7 +28,6 @@ public class FollowAprilTag extends CommandBase {
   public void initialize() {
     distanceError = limelight.getDistance();
     angleError = limelight.getXAngle();
-    
 
   }
 
@@ -37,13 +35,11 @@ public class FollowAprilTag extends CommandBase {
   @Override
   public void execute() {
 
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
 
   }
 

@@ -61,39 +61,41 @@ public class Manipulator extends SubsystemBase {
     state = 0;
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
-    
+
   }
-  public int getState(){
+
+  public int getState() {
     return state;
   }
 
-  public void enableAndSetSoftStop(){ //TODO: call in calibrate
+  public void enableAndSetSoftStop() { // TODO: call in calibrate
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     openCloseMotor.setSoftLimit(SoftLimitDirection.kForward, 0);
     openCloseMotor.setSoftLimit(SoftLimitDirection.kReverse, -22);
   }
-  public void stop(){
+
+  public void stop() {
     openCloseMotor.stopMotor();
     leftMotor.stopMotor();
     rightMotor.stopMotor();
   }
 
-  public void stopIntake(){
+  public void stopIntake() {
     leftMotor.stopMotor();
     rightMotor.stopMotor();
   }
 
-  public void setOC(double speed){
+  public void setOC(double speed) {
     openCloseMotor.set(speed);
   }
 
-  public void intake(double speed){
+  public void intake(double speed) {
     leftMotor.set(speed);
     rightMotor.set(speed);
   }
 
-  public void open(){
+  public void open() {
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.openPosition, CANSparkMax.ControlType.kPosition);
     // state = 0;
     intake(-0.3);
@@ -103,69 +105,70 @@ public class Manipulator extends SubsystemBase {
 
   // open: -50
   // cone: -1.15
-  //cube: 
+  // cube:
 
   public void setPosition(int position) {
     openCloseMotorEncoder.setPosition(position);
   }
 
-
-
-  public void close(){
+  public void close() {
     // setPID(Constants.openCloseMotor.openClosePID);
     if (state == 1) {
-      // openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition, CANSparkMax.ControlType.kPosition);
+      // openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition,
+      // CANSparkMax.ControlType.kPosition);
       getCone();
       state = 2;
     } else {
-      openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition, CANSparkMax.ControlType.kPosition);
+      openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition,
+          CANSparkMax.ControlType.kPosition);
       state = 1;
     }
     System.out.println("CLOSING MOTOR ************************************ : " + state);
     stopIntake();
   }
 
-  public void setPID(PID pid){
+  public void setPID(PID pid) {
     openCloseMotorPIDController.setP(pid.p);
     openCloseMotorPIDController.setI(pid.i);
     openCloseMotorPIDController.setD(pid.d);
   }
 
-  public void setManipulatorVelocity(int velocity){
+  public void setManipulatorVelocity(int velocity) {
     leftMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
     rightMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
-  
-  public void setOpenCloseMotor(int velocity){
+
+  public void setOpenCloseMotor(int velocity) {
     openCloseMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void getCone(){
+  public void getCone() {
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition, CANSparkMax.ControlType.kPosition);
-    
+
   }
 
-  public void getCube(){
+  public void getCube() {
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition, CANSparkMax.ControlType.kPosition);
   }
 
-  public double getOCcurrent(){
+  public double getOCcurrent() {
     return openCloseMotor.getOutputCurrent();
   }
 
-  public void resetEncoders(){
+  public void resetEncoders() {
     openCloseMotorEncoder.setPosition(0);
     enableAndSetSoftStop();
   }
 
   // public void setManipulatorRightVelocity(int velocity){
-  public void stopOpenClose(){
-    openCloseMotor.disable();;
+  public void stopOpenClose() {
+    openCloseMotor.disable();
+    ;
   }
 
-
-  public void getOpenCloseEncoder(){
-    // SmartDashboard.putNumber("Open Close Encoder", openCloseMotor.getEncoder().getPosition());
+  public void getOpenCloseEncoder() {
+    // SmartDashboard.putNumber("Open Close Encoder",
+    // openCloseMotor.getEncoder().getPosition());
   }
 
   @Override
@@ -174,6 +177,6 @@ public class Manipulator extends SubsystemBase {
     // System.out.println(openCloseMotorEncoder.getPosition());
     // System.out.println(openCloseMotorPIDController.getP());
     SmartDashboard.putNumber("Manipulator Encoder", openCloseMotorEncoder.getPosition());
-    
+
   }
 }

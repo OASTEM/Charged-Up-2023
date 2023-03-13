@@ -15,9 +15,9 @@ public class MoveArmJoystick extends CommandBase {
   private LogitechGamingPad drivePad;
 
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
-  //   addRequirements(arm);
-  //   this.arm = arm;
-  //   this.drivePad = drivePad;
+  // addRequirements(arm);
+  // this.arm = arm;
+  // this.drivePad = drivePad;
   // }
   public MoveArmJoystick(Arm arm, ShuffleBoard shuffleboard, LogitechGamingPad drivePad) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,13 +37,13 @@ public class MoveArmJoystick extends CommandBase {
   @Override
   public void execute() {
     // if(Math.abs(drivePad.getLeftAnalogYAxis()) <= 0.1){
-    //   arm.setArmMotorPosition(arm.getArmEncoder());
+    // arm.setArmMotorPosition(arm.getArmEncoder());
     // }
     // else
     // {
     arm.setArm(drivePad.getLeftAnalogYAxis() * 0.5);
     arm.setSide(-drivePad.getRightAnalogXAxis() * 0.2);
-    
+
   }
 
   // Called once the command ends or is interrupted.
@@ -61,6 +61,5 @@ public class MoveArmJoystick extends CommandBase {
   }
 }
 
-
-//32 arm for stradle front
-//24 arm for stradle back
+// 32 arm for stradle front
+// 24 arm for stradle back

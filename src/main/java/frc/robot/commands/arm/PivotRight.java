@@ -12,6 +12,7 @@ public class PivotRight extends CommandBase {
   /** Creates a new Pivot. */
   private Arm arm;
   private ShuffleBoard shuffleboard;
+
   public PivotRight(Arm arm, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
@@ -24,13 +25,14 @@ public class PivotRight extends CommandBase {
   public void initialize() {
     arm.setSidePID(shuffleboard.getArmSidePID());
     arm.setSide(0.4);
-    //arm.setSideVelocity(10000);
+    // arm.setSideVelocity(10000);
     System.out.println("got to pivot right");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override
