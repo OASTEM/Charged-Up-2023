@@ -1,6 +1,5 @@
 package frc.robot.commands.auto;
 
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.utils.Constants;
@@ -8,7 +7,7 @@ import frc.robot.subsystems.DriveTrain;
 
 public class DriveStraight extends CommandBase {
   private final DriveTrain driveTrain;
-  private double suppliedGoal; 
+  private double suppliedGoal;
   int count = 0;
 
   public DriveStraight(DriveTrain driveTrain, double suppliedGoal) {

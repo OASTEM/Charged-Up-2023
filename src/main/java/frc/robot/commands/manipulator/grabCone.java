@@ -7,11 +7,10 @@ package frc.robot.commands.manipulator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
 
-
 public class GrabCone extends CommandBase {
 
   private Manipulator manipulator;
-  
+
   /** Creates a new getCone. */
 
   public GrabCone(Manipulator manipulator) {
@@ -28,7 +27,8 @@ public class GrabCone extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override

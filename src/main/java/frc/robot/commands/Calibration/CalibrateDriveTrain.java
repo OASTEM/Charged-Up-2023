@@ -11,11 +11,12 @@ public class CalibrateDriveTrain extends CommandBase {
   /** Creates a new CalibrateDriveTrain. */
   private DriveTrain driveTrain;
   private boolean driveTrainDone;
+
   public CalibrateDriveTrain(DriveTrain driveTrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
-    driveTrainDone=false;
+    driveTrainDone = false;
   }
 
   // Called when the command is initially scheduled.
@@ -28,10 +29,11 @@ public class CalibrateDriveTrain extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if((driveTrain.playBackL() && driveTrain.playFrontL() && driveTrain.playBackR() && driveTrain.playFrontR()) == false){
+    if ((driveTrain.playBackL() && driveTrain.playFrontL() && driveTrain.playBackR()
+        && driveTrain.playFrontR()) == false) {
       System.out.println("Drivetrain issue");
       driveTrainDone = true;
-      //Play another sound to signify drivetrain error
+      // Play another sound to signify drivetrain error
     }
   }
 

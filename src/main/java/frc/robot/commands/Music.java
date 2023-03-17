@@ -10,6 +10,7 @@ import frc.robot.subsystems.DriveTrain;
 public class Music extends CommandBase {
   /** Creates a new Music. */
   DriveTrain driveTrain;
+
   public Music(DriveTrain driveTrain) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;

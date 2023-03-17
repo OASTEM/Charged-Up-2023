@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.PID;
 
-
 public class Driving extends CommandBase {
   DriveTrain driveTrain;
-  
+
   private double leftkP;
   private double rightkP;
   private double setpoint = 0;
@@ -23,14 +22,13 @@ public class Driving extends CommandBase {
   private double rightSpeed = 0;
   private int count = 0;
   private double turningError;
-  //private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
-
+  // private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
 
   /** Creates a new Driving. */
   public Driving(DriveTrain driveTrain, double setpoint, double leftkP, double rightkP) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
-    this.setpoint = setpoint; 
+    this.setpoint = setpoint;
     this.leftkP = leftkP;
     this.rightkP = rightkP;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -55,17 +53,15 @@ public class Driving extends CommandBase {
     SmartDashboard.putNumber("Turning Error", turningError);
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    //leftSpeed = leftkP * leftError * (1 + turningError); //*1.05 */
-    //rightSpeed = rightkP * rightError * (1 - turningError);
-    leftSpeed = leftkP * leftError; //*1.05 */
+    // leftSpeed = leftkP * leftError * (1 + turningError); //*1.05 */
+    // rightSpeed = rightkP * rightError * (1 - turningError);
+    leftSpeed = leftkP * leftError; // *1.05 */
     rightSpeed = rightkP * rightError;
     System.out.println(rightSpeed);
     driveTrain.tankDrive(leftSpeed, rightSpeed);
-    if (Math.abs(leftError) < 
-    100 && Math.abs(rightError) < 100){
+    if (Math.abs(leftError) < 100 && Math.abs(rightError) < 100) {
       count++;
-    }
-    else{
+    } else {
       count = 0;
     }
 
@@ -81,7 +77,7 @@ public class Driving extends CommandBase {
   public void end(boolean interrupted) {
     driveTrain.stop();
     // driveTrain.printEncoders();
-    //driveTrain.printInches();
+    // driveTrain.printInches();
   }
 
   // Returns true when the command should end.

@@ -45,31 +45,30 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
 
-
-
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //Controllers
+  // Controllers
   LogitechGamingPad pad = new LogitechGamingPad(0);
   LogitechGamingPad opPad = new LogitechGamingPad(1);
- 
 
-  //Subsytems
+  // Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard(arm, manipulator);
-  //private final Limelight limelight = new Limelight();
-  //Commands
+  // private final Limelight limelight = new Limelight();
+  // Commands
 
-
-  //Buttons
+  // Buttons
 
   private final JoystickButton padA = new JoystickButton(pad, 1);
   private final JoystickButton padB = new JoystickButton(pad, 2);
@@ -85,9 +84,10 @@ public class RobotContainer {
   private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
   private final JoystickButton opStart = new JoystickButton(opPad, 8);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
-  
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
@@ -96,12 +96,17 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
@@ -122,7 +127,7 @@ public class RobotContainer {
     // opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
     opRightBumper.onTrue(new GrabCube(manipulator));
     opLeftBumper.onTrue(new GrabCone(manipulator));
-    //padA.whileTrue(new AprilTagDetect(limelight));
+    // padA.whileTrue(new AprilTagDetect(limelight));
     // Configure your button bindings here
     // padA.whileTrue(new SetArmPosition(arm, 73));
     opStart.whileTrue(new OpenClaw(manipulator));
@@ -139,22 +144,22 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  //TODO AutoCommand to be returned
+  // TODO AutoCommand to be returned
   public Command getAutonomousCommand(Trajectory trajectory, TrajectoryConfig config) {
     // final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //   Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
-    //     config
-    //   );
-    //  final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //    new Pose2d(0, 0, new Rotation2d(0)),
-    //    List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-    //    new Pose2d(3, 0, new Rotation2d(0)),
-    //    config
-    //    );
-    config = new TrajectoryConfig(Units.feetToMeters(2) , Units.feetToMeters(2));
+    // Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
+    // config
+    // );
+    // final Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    // new Pose2d(0, 0, new Rotation2d(0)),
+    // List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+    // new Pose2d(3, 0, new Rotation2d(0)),
+    // config
+    // );
+    config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
     config.setKinematics(driveTrain.getKinematics());
-    
-    //return command;
+
+    // return command;
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
     // return null;
     // return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
@@ -162,11 +167,11 @@ public class RobotContainer {
     return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
   }
 
-  public Command Music(){
+  public Command Music() {
     return new Music(driveTrain);
   }
 
-  public Command Calibrate(){
+  public Command Calibrate() {
     return new CalibrationSequence(driveTrain, arm, manipulator);
   }
 

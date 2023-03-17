@@ -42,8 +42,9 @@ public class StraightAuto extends SequentialCommandGroup {
     );
   }
 
-  //TODO:
-  /*arm 75 pivot -175
+  // TODO:
+  /*
+   * arm 75 pivot -175
    * Start arm height: 27
    * Start pivot: -72
    * start pivot other side: -52

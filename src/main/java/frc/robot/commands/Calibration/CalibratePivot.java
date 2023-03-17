@@ -15,6 +15,7 @@ public class CalibratePivot extends CommandBase {
   private boolean pivotDone;
   private Timer timer;
   private Timer timer2;
+
   // private Manipulator manipulator;
   public CalibratePivot(Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -40,15 +41,16 @@ public class CalibratePivot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(timer.get()>.5){
+    if (timer.get() > .5) {
       arm.setSide(0.2);
       timer2.start();
     }
-    if(timer2.get()>0.2 && arm.getSideCurrent()>=10){ //7
+    if (timer2.get() > 0.2 && arm.getSideCurrent() >= 10) { // 7
       pivotDone = true;
       arm.setSide(0);
     }
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

@@ -21,8 +21,9 @@ public class Limelight extends SubsystemBase {
   private double y = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
   private double a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
   private double v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
- // String fID;
-  //private double t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getDouble(0.0);;
+  // String fID;
+  // private double t6r_fs =
+  // NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getDouble(0.0);;
   private double limelightHeight;
   private double goalHeight;
   private double limelightMountDegree;
@@ -34,7 +35,6 @@ public class Limelight extends SubsystemBase {
   String jsonString;
   int fID;
 
-  
   /** Creates a new Limelight. */
   public Limelight() {
 
@@ -42,7 +42,7 @@ public class Limelight extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None"));
+    // System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None"));
     jsonString = NetworkTableInstance.getDefault().getTable("limelight").getEntry("json").getString("None");
     // System.out.println(jsonString);
     JSONObject obj = new JSONObject(jsonString);
@@ -54,15 +54,14 @@ public class Limelight extends SubsystemBase {
       fID = -1;
       System.out.println("error with fID");
     }
-    
+
     System.out.println(fID);
     // JSONArray arr = obj.getJSONArray("fID"); // notice that `"posts": [...]`
     // for (int i = 0; i < arr.length(); i++)
     // {
-    //     fID = arr.getJSONObject(i).getString("fID");
+    // fID = arr.getJSONObject(i).getString("fID");
     // }
     // System.out.println(fID);
-    
 
     this.id = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
     this.x = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
@@ -70,28 +69,29 @@ public class Limelight extends SubsystemBase {
     this.a = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
     this.v = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
 
-    //this.t6r_fs = NetworkTableInstance.getDefault().getTable("limelight").getEntry("t6r_fs").getDouble(0.0);;
+    // this.t6r_fs =
+    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("t6r_fs").getDouble(0.0);;
     SmartDashboard.putNumber("tx", x);
     SmartDashboard.putNumber("ty", y);
     SmartDashboard.putNumber("ta", a);
     SmartDashboard.putNumber("tv", v);
     SmartDashboard.putNumber("id", id);
-    //SmartDashboard.putNumber("field", t6r_fs);
+    // SmartDashboard.putNumber("field", t6r_fs);
     // This method will be called once per scheduler run
   }
 
-  public String getJson(){
+  public String getJson() {
     return jsonString;
   }
 
-  public double getDistance(){
-    angleToGoalDegrees = limelightMountDegree +  y;
+  public double getDistance() {
+    angleToGoalDegrees = limelightMountDegree + y;
     angleToGoalInRadians = Math.toRadians(angleToGoalDegrees);
-    distance = (goalHeight - limelightHeight)/Math.tan(angleToGoalInRadians);
+    distance = (goalHeight - limelightHeight) / Math.tan(angleToGoalInRadians);
     return distance;
   }
 
-  public double getLimelightAngle(){
+  public double getLimelightAngle() {
     double length = 119;
     // In inches adjacent
     double angle = (goalHeight - limelightHeight) / length;
@@ -105,7 +105,7 @@ public class Limelight extends SubsystemBase {
     return angle;
   }
 
-  public double getXAngle(){
+  public double getXAngle() {
     return x;
   }
 }

@@ -2,6 +2,7 @@ package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+
 public class LogitechGamingPad extends GenericHID {
 
   private Joystick gamepad;
@@ -10,7 +11,7 @@ public class LogitechGamingPad extends GenericHID {
   private static final int LEFT_ANALOG_Y_AXIS = 1;
   private static final int RIGHT_ANALOG_X_AXIS = 4;
   private static final int RIGHT_ANALOG_Y_AXIS = 5;
-	
+
   private static final int LEFT_BUMPER = 5;
   private static final int RIGHT_BUMPER = 6;
   private static final int LEFT_TRIGGER_BUTTON = 2;
@@ -21,7 +22,7 @@ public class LogitechGamingPad extends GenericHID {
   private static final int Y_BUTTON = 4;
   private static final int BACK_BUTTON = 7;
   private static final int START_BUTTON = 8;
-	
+
   public LogitechGamingPad(int usbPort) {
     super(0);
     gamepad = new Joystick(usbPort);
@@ -38,7 +39,6 @@ public class LogitechGamingPad extends GenericHID {
   public double getLeftAnalogXAxis() {
     return gamepad.getRawAxis(LEFT_ANALOG_X_AXIS);
   }
-
 
   public double getLeftAnalogYAxis() {
     return gamepad.getRawAxis(LEFT_ANALOG_Y_AXIS);
@@ -94,7 +94,7 @@ public class LogitechGamingPad extends GenericHID {
   public boolean checkDPad(double angle, boolean inDegrees) {
     if (!inDegrees)
       angle = Math.toDegrees(angle);
-    return (int)angle == gamepad.getPOV(); 
+    return (int) angle == gamepad.getPOV();
   }
 
   public int getDPad() {
@@ -102,7 +102,7 @@ public class LogitechGamingPad extends GenericHID {
     if (pov == -1)
       return pov;
     else
-      return pov/45;
+      return pov / 45;
   }
 
   public double getDPad(boolean inDegrees) {

@@ -14,16 +14,17 @@ import frc.robot.utils.ShuffleBoard;
 public class Balance extends CommandBase {
   /** Creates a new balance. */
   DriveTrain driveTrain;
-  private double error;                                                                 
+  private double error;
   private final double goal = 0;
   private final double maxEffort = 1;
 
   private double p, i, d;
-  //PID Values need to be tuned
-  //Might need to create two pid values for both sides of the drivetrain
-  //PID balancePID = new PID(0.023, 0.002, 0.002);
+  // PID Values need to be tuned
+  // Might need to create two pid values for both sides of the drivetrain
+  // PID balancePID = new PID(0.023, 0.002, 0.002);
   PID balancePID;
-  public Balance(DriveTrain driveTrain , ShuffleBoard shuffleboard) {
+
+  public Balance(DriveTrain driveTrain, ShuffleBoard shuffleboard) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
 
@@ -46,7 +47,6 @@ public class Balance extends CommandBase {
     balancePID = Constants.DriveTrain.PID;
     // balancePID = shuffleboard.getBalancePID();
 
-
     driveTrain.stop();
     driveTrain.reset();
   }
@@ -54,7 +54,7 @@ public class Balance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Error is equal to the NavX getYaw (using getRoll)
+    // Error is equal to the NavX getYaw (using getRoll)
     // driveTrain.setLeftSpeed(0.3);
     // driveTrain.setBackLeftSpeed();
     // driveTrain.setRightSpeed(0.3);
@@ -67,8 +67,8 @@ public class Balance extends CommandBase {
       effort = maxEffort;
     }
 
-    driveTrain.setLeftSpeed(-effort); //effort
-    driveTrain.setRightSpeed(-effort); //effort
+    driveTrain.setLeftSpeed(-effort); // effort
+    driveTrain.setRightSpeed(-effort); // effort
 
     SmartDashboard.putNumber("navXYError", this.error);
     SmartDashboard.putNumber("PID Speed", effort);
@@ -81,7 +81,7 @@ public class Balance extends CommandBase {
     p = SmartDashboard.getNumber("PBal", 0.021);
     i = SmartDashboard.getNumber("IBal", 0.002);
     d = SmartDashboard.getNumber("DBal", 0.002);
-    balancePID = new PID(p, i, d,0);
+    balancePID = new PID(p, i, d, 0);
   }
 
   // Returns true when the command should end.

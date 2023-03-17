@@ -12,6 +12,7 @@ public class OpenClaw extends CommandBase {
   /** Creates a new OpenClaw. */
   private Manipulator manipulator;
   private LogitechGamingPad pad;
+
   // private ShuffleBoard shuffleboard;
   public OpenClaw(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,14 +29,12 @@ public class OpenClaw extends CommandBase {
     // manipulator.setManipulatorVelocity(100);
     manipulator.open();
 
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    
+
   }
 
   // Called once the command ends or is interrupted.
