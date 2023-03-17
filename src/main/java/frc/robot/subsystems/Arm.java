@@ -169,7 +169,7 @@ public class Arm extends SubsystemBase {
   //Forward
   //Reverse
 
-  public void setArmRampRate(){
+  public void setPivotRampRate(){
     sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
     sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
   }
@@ -177,7 +177,7 @@ public class Arm extends SubsystemBase {
   public void setSideRange(){
     sideMotorPIDController.setOutputRange(-0.2, 0.2);
   }
-  public void setPivotRampRate(){
+  public void setArmRampRate(){
     armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
     armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
 
@@ -234,13 +234,15 @@ public class Arm extends SubsystemBase {
     //System.out.println(armMotorEncoder.getVelocity());
     //System.out.println(getArmCurrent());
     // System.out.println(armMotorEncoder.getVelocity());
-    // System.out.println("Side Motor Current " + getSideCurrent());
-    // System.out.println("Arm Motor Current: " + getArmCurrent());
-    System.out.println("Arm Encoder: " + getArmEncoder());
-    System.out.println("Side Encoder: " + getSideEncoder());
+    SmartDashboard.putNumber("Side Motor Current ", getSideCurrent());
+    SmartDashboard.putNumber("Arm Motor Current: ", getArmCurrent());
+    // System.out.println("Arm Encoder: " + getArmEncoder());
+    // System.out.println("Side Encoder: " + getSideEncoder());
     // SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
-    // SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
-    // SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
+    SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
+    SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
+    System.out.println(getArmCurrent() + " " + armMotor.getBusVoltage());
+    
     // SmartDashboard.putNumber("side open ramp rate", sideMotor.getOpenLoopRampRate());
     // SmartDashboard.putNumber("side closed ramp rate", sideMotor.getClosedLoopRampRate());
     // SmartDashboard.putNumber("arm open ramp rate", armMotor.getOpenLoopRampRate());

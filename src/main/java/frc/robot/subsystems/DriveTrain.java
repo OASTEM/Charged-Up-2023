@@ -16,6 +16,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.SPI;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
@@ -33,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
   Orchestra orchestraBackR;
   Orchestra orchestraBackL;
 
-  private final AHRS navX = new AHRS(Port.kMXP, (byte) 50);
+  private final AHRS navX = new AHRS(SPI.Port.kMXP, (byte) 50);
   Pose2d pose = new Pose2d();
   DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
   DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading(), getLeftEncoderCount(), getRightEncoderCount(), pose);
@@ -131,6 +133,18 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("y number", y);
     frontL.set(ControlMode.PercentOutput, y - x);
     frontR.set(ControlMode.PercentOutput, y + x);
+  }
+
+  public void setLeftPID(int slot_id, double p, double i, double d){
+    frontL.config_kP(slot_id, p);
+    frontL.config_kI(slot_id, i);
+    frontL.config_kD(slot_id, d);
+  }
+
+  public void setRightPID(int slot_id, double p, double i, double d){
+    frontR.config_kP(slot_id, p);
+    frontR.config_kI(slot_id, i);
+    frontR.config_kD(slot_id, d);
   }
 
   public boolean getSlowMode() {
@@ -344,11 +358,11 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("NavX Z", getZAngle());
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
     // printEncoders();
+    SmartDashboard.putNumber("Right Inches" ,getInchesFromNativeUnits(getRightEncoderCount()));
     // System.out.println("Inches from native units: " + getInchesFromNativeUnits(getLeftEncoderCount()));
     SmartDashboard.putNumber("DriveTrain L Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
-
-    SmartDashboard.putNumber("FrontL Current", frontL.getSupplyCurrent());
-    SmartDashboard.putNumber("FrontR Current", frontR.getSupplyCurrent());
+    // SmartDashboard.putNumber("FrontL Current", frontL.getSupplyCurrent());
+    // SmartDashboard.putNumber("FrontR Current", frontR.getSupplyCurrent());
   }
 }

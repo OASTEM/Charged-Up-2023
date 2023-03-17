@@ -14,23 +14,20 @@ public class DriveStraight extends CommandBase {
   public DriveStraight(DriveTrain driveTrain, double suppliedGoal) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
-    this.suppliedGoal = suppliedGoal;
+    this.suppliedGoal = driveTrain.getNativeUnitsFromInches(suppliedGoal);
   }
 
   @Override
   public void initialize() {
     driveTrain.resetEncoders();
-    driveTrain.setPosition(driveTrain.getNativeUnitsFromInches(suppliedGoal));
+    driveTrain.setPosition(suppliedGoal);
     Timer.delay(.1);
   }
 
   @Override
   public void execute() {
-    double leftError = Math.abs(
-        driveTrain.getNativeUnitsFromInches(suppliedGoal) - driveTrain.getLeftEncoderCount());
-    double rightError = Math.abs(
-        driveTrain.getNativeUnitsFromInches(suppliedGoal) + driveTrain.getRightEncoderCount());
-
+    double leftError = Math.abs(suppliedGoal - driveTrain.getLeftEncoderCount());
+    double rightError = Math.abs(suppliedGoal + driveTrain.getRightEncoderCount());
     if ((leftError <= Constants.DriveTrain.ERROR_THRESHOLD) && (rightError <= Constants.DriveTrain.ERROR_THRESHOLD)) {
       count++;
     } else {

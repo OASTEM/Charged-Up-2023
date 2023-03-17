@@ -10,6 +10,7 @@ import frc.robot.commands.Balance;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.manipulator.GrabCone;
+import frc.robot.commands.manipulator.GrabCube;
 import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
@@ -26,7 +27,7 @@ public class PreloadNoMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new GrabCone(manipulator).raceWith(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
+      new GrabCube(manipulator).raceWith(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
       .andThen(new SetPivotPosition(arm, Constants.Arm.PIVOT_START).withTimeout(3))),
       new SetArmPosition(arm, 33).withTimeout(2),
       //Close Claw (Claw is closed) -Averi :D   //0.00448

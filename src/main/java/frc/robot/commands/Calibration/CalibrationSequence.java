@@ -43,11 +43,13 @@ public class CalibrationSequence extends ParallelCommandGroup {
         // new InstantCommand(arm::setArmSoftLimit),
         // new SetPivotPosition(arm, -180).withTimeout(4)
         // .andThen(new SetArmPosition(arm, 68))
+        //
         new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
         new ArmBottomStartPosition(arm),
         new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
         new InstantCommand(arm::setArmSoftLimit).withTimeout(0.1),
         new GrabCone(manipulator).withTimeout(2)
+        //
         // new InstantCommand(manipulator::getCone),
         // new InstantCommand(manipulator::stopOpenClose)
         //Commands.runOnce(() -> arm.ArmSoftLimit(true))

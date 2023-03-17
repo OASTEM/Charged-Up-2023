@@ -53,16 +53,16 @@ public final class Constants {
     public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
-
+    public static final double TOL = 500;
     public static final HashMap<String, Command> AUTO_EVENT_MAP = new HashMap<>();
   }
 
   public final static class Arm {
     public static final PID upPID = new PID(0.012, 0.0000, 0,0.00005, 0); //TODO fix these pid values
     public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
-    public static final PID sidePID = new PID(0.02,0,0,0, 0);//0.02
+    public static final PID sidePID = new PID(0.015,0,0,0, 0);//0.02
     public static final double ARM_SCORING_POSITION = 18;  //26  //24
-    public static final double PIVOT_START = -59; 
+    public static final double PIVOT_START = -56; 
     public static final double ARM_LIMIT_RIGHT = -50;
     public static final double ARM_LIMIT_LEFT = -55;
     public static final double ARM_LIMIT_BOTTOM = 70;
@@ -73,7 +73,8 @@ public final class Constants {
     public static final double ARM_OPEN_LOOP_RATE = 0.5; //.25
     public static final double ARM_CLOSED_LOOP_RATE = 0.5;
     public static final double ARM_TOL = 3;
-    public static final double PIVOT_TOL = 2; //1
+    public static final double PIVOT_TOL = 4; //1
+    public static final double PIVOT_THRESH = 1;
     public final static class SoftStop {
       public static final float ARM_UP = (float) 3.2;
       public static final float ARM_DOWN = 74;

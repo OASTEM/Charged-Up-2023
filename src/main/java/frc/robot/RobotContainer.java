@@ -23,13 +23,17 @@ import frc.robot.commands.Balance;
 import frc.robot.commands.Music;
 import frc.robot.commands.Calibration.CalibrationSequence;
 import frc.robot.commands.arm.MoveArmJoystick;
+import frc.robot.commands.arm.PivotPositionSpeed;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
+import frc.robot.commands.auto.DriveAuto;
 import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.NoBalanceAuto;
 import frc.robot.commands.auto.PreloadNoMove;
 import frc.robot.commands.auto.StraightAuto;
+import frc.robot.commands.auto.TankBack;
+import frc.robot.commands.auto.tankStraight;
 import frc.robot.commands.manipulator.OpenClaw;
 import frc.robot.commands.manipulator.GrabCone;
 import frc.robot.commands.manipulator.GrabCube;
@@ -102,7 +106,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     padX.whileTrue(new Balance(driveTrain, shuffleboard));
-
+    padB.whileTrue(new tankStraight(driveTrain, 156, .025)); //156
+    padA.whileTrue(new TankBack(driveTrain, -36, 0.025)); //-36
     //padB.whileTrue(new Music(driveTrain));
     // opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
     rightBumper.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
@@ -113,6 +118,7 @@ public class RobotContainer {
     opPadA.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION));
     opPadX.onTrue(new SetPivotPosition(arm, -175));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
+    // opPadB.onTrue(new PivotPositionSpeed(arm, -52));
     // opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
     opRightBumper.onTrue(new GrabCube(manipulator));
     opLeftBumper.onTrue(new GrabCone(manipulator));
@@ -152,7 +158,8 @@ public class RobotContainer {
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
     // return null;
     // return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
-    return new NoBalanceAuto(driveTrain, arm, manipulator, shuffleboard);
+    // return new DriveAuto(driveTrain, shuffleboard);
+    return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
   }
 
   public Command Music(){

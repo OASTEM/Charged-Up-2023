@@ -38,7 +38,7 @@ public class CalibrateArm extends CommandBase {
     timer2.reset();
     arm.ArmSoftLimit(false);
     manipulator.resetEncoders();
-    arm.setArm(0.3);
+    arm.setArm(0.2);
     armDone = false;
     changed = false;
   }
@@ -48,7 +48,7 @@ public class CalibrateArm extends CommandBase {
   @Override
   
   public void execute() {
-    System.out.println(arm.getArmCurrent());
+    // System.out.println(arm.getArmCurrent());
     if(timer.get()>0.2 && !changed){
       // System.out.println("Got to calibrate Arm **************************");
       // System.out.println(arm.armLimit() + "******************************************");
@@ -56,7 +56,7 @@ public class CalibrateArm extends CommandBase {
       timer2.start();
       changed = true;
     }
-    if(timer2.get()>0.2 && arm.getArmCurrent()>=25){
+    if(timer2.get()>0.2 && arm.getArmCurrent()>=30){
       armDone = true;
       arm.setArm(0);
       System.out.println("GOT TO SECOND TIMER FOR CALIBRATE ARM **********************");
@@ -73,7 +73,7 @@ public class CalibrateArm extends CommandBase {
     timer2.reset();
     arm.resetEncoders();
     arm.disableArmSoftLimit();
-    // System.out.println("Caibrate arm is now done ***************************");
+    System.out.println("Caibrate arm is now done ***************************");
   }
 
   // Returns true when the command should end.
