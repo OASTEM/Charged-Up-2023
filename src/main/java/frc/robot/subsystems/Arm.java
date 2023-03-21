@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -17,31 +21,22 @@ import frc.robot.utils.PID;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Arm. */
-  private CANSparkMax armMotor;
-  private SparkMaxPIDController armMotorPIDController;
-  private RelativeEncoder armMotorEncoder;
-
+  private TalonFX arm;
   private CANSparkMax sideMotor;
   private SparkMaxPIDController sideMotorPIDController;
   private RelativeEncoder sideMotorEncoder;
-
+//TODO: Encoder values (max and min for soft stop)
+//TODO: PID values for side and arm
+//TODO: Current values for calibration
+//TODO: Clean up Code
   public Arm() {
-    armMotor = new CANSparkMax(Constants.CANIDS.ARM_ID, MotorType.kBrushless);
     sideMotor = new CANSparkMax(Constants.CANIDS.SIDEARM_ID, MotorType.kBrushless);
-
-    armMotorPIDController = armMotor.getPIDController();
-    armMotorEncoder = armMotor.getEncoder();
+    arm = new TalonFX(Constants.CANIDS.ARM_ID);
 
     System.out.println("CALLED ARM CONSTRUCTOR");
-
-    armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
-    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
+    resetDefault();
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
-
-    armMotorPIDController.setP(Constants.Arm.upPID.p);
-    armMotorPIDController.setI(Constants.Arm.upPID.i);
-    armMotorPIDController.setD(Constants.Arm.upPID.d);
 
     sideMotorPIDController = sideMotor.getPIDController();
     sideMotorEncoder = sideMotor.getEncoder();
@@ -52,8 +47,15 @@ public class Arm extends SubsystemBase {
 
     sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
     sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
-    armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
-    armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
+
+    arm.setNeutralMode(NeutralMode.Brake);
+
+    arm.configPeakOutputForward(1);
+    arm.configPeakOutputReverse(-1);
+
+    initPIDController(Constants.Arm.upPID);
+
+    configRampRates();
 
     // sideMotor.setSmartCurrentLimit(30);
     // armMotor.setSmartCurrentLimit(40);
@@ -61,41 +63,47 @@ public class Arm extends SubsystemBase {
     // armMotor.setSecondaryCurrentLimit(45);
     System.out.println("In Arm Constructor ************");
   }
+  
+  public void initPIDController( PID pid){
+    arm.config_kP(pid.s, pid.p);
+    arm.config_kI(pid.s, pid.i);
+    arm.config_kD(pid.s, pid.d);
+  }
 
-  // Not Side Arm
-  public void setArmMotorPosition(double position) {
-    System.out.println("SETTIGN ARM MOTOR POISIOTN *****************************************************");
-    armMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);
+  public void configRampRates(){
+    arm.configOpenloopRamp(Constants.Arm.ARM_OPEN_LOOP_RATE);
+    arm.configClosedloopRamp(Constants.Arm.ARM_CLOSED_LOOP_RATE);
+  }
+
+  public void setSpeed(double speed){
+    arm.set(ControlMode.PercentOutput, speed);
+    // System.out.println("***********************************setting falcon speed");
+  }
+
+  public void setPosition(double encoder){
+    arm.set(ControlMode.Position, encoder);
   }
 
   public void resetEncoders() {
-    armMotorEncoder.setPosition(0);
+    arm.getSensorCollection().setIntegratedSensorPosition(0, 0);
   }
 
-  public void setVelocity(double velocity) {
-    armMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+  public double getEncoderCount() {
+    //return arm.getSensorCollection().getIntegratedSensorPosition();
+    return arm.getSelectedSensorPosition();
   }
 
-  public void setPID(PID pid) {
-    armMotorPIDController.setP(pid.p);
-    armMotorPIDController.setI(pid.i);
-    armMotorPIDController.setD(pid.d);
-    armMotorPIDController.setFF(pid.f);
+  public double getCurrent() {
+    return Math.abs(arm.getStatorCurrent());
   }
 
-  public void setArm(double speed) {
-    // System.out.println("Setting arm motor speed ***************************");
-    armMotor.set(speed);
+  public double getVelocity(){
+    return arm.getSelectedSensorVelocity();
   }
 
-  public double getArmEncoder() {
-    return armMotor.getEncoder().getPosition();
-  }
 
   // Side Arm
   public void setSideMotorPosition(double position) {
-    // System.out.println("SETTING SIDE MOTOR POSITION
-    // *********************************");
     sideMotorPIDController.setReference(position, CANSparkMax.ControlType.kPosition);
   }
 
@@ -111,21 +119,10 @@ public class Arm extends SubsystemBase {
     sideMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void setPivotPercent(double speed) {
-    if (!(getArmEncoder() > Constants.Arm.ARM_LIMIT_BOTTOM && getSideEncoder() < Constants.Arm.ARM_LIMIT_LEFT
-        && getSideEncoder() > Constants.Arm.ARM_LIMIT_RIGHT)) {
-      sideMotor.set(speed);
-    }
-  }
-
   public void setSidePID(PID pid) {
     sideMotorPIDController.setP(pid.p);
     sideMotorPIDController.setI(pid.i);
     sideMotorPIDController.setD(pid.d);
-  }
-
-  public double getArmCurrent() {
-    return Math.abs(armMotor.getOutputCurrent());
   }
 
   public double getSideEncoder() {
@@ -136,100 +133,48 @@ public class Arm extends SubsystemBase {
     return Math.abs(sideMotor.getOutputCurrent());
   }
 
-  // Stop
-  public void stop() {
-    armMotor.stopMotor();
-    sideMotor.stopMotor();
-  }
-
-  // public void ArmSoftLimit(boolean enable) {
-  // armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
-  // armMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
-  // sideMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
-  // sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
-  // }
-
-  // public void ArmSoftLimit() {
-  // armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-  // armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-  // sideMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-  // sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-  // }
-
-  // public void setArmSoftLimit() {
-  // armMotor.setSoftLimit(SoftLimitDirection.kForward,
-  // Constants.Arm.SoftStop.ARM_DOWN);
-  // armMotor.setSoftLimit(SoftLimitDirection.kReverse,
-  // Constants.Arm.SoftStop.ARM_UP);
-  // sideMotor.setSoftLimit(SoftLimitDirection.kForward,
-  // Constants.Arm.SoftStop.ARM_LEFT);
-  // sideMotor.setSoftLimit(SoftLimitDirection.kReverse,
-  // Constants.Arm.SoftStop.ARM_RIGHT);
-  // }
-
-  // Forward
-  // Reverse
-
-  //Forward
-  //Reverse
-
   public void setPivotRampRate(){
     sideMotor.setClosedLoopRampRate(Constants.Arm.PIVOT_CLOSED_LOOP_RATE);
     sideMotor.setOpenLoopRampRate(Constants.Arm.PIVOT_OPEN_LOOP_RATE);
   }
 
-  public void setSideRange() {
+  public void setSideRange() { //TODO: test this
     sideMotorPIDController.setOutputRange(-0.2, 0.2);
   }
-  public void setArmRampRate(){
-    armMotor.setClosedLoopRampRate(Constants.Arm.ARM_CLOSED_LOOP_RATE);
-    armMotor.setOpenLoopRampRate(Constants.Arm.ARM_OPEN_LOOP_RATE);
 
-  }
-
-  public void ArmSoftLimit(boolean enable) {
-    armMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
-    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
-    sideMotor.enableSoftLimit(SoftLimitDirection.kForward, enable);
-    sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, enable);
+  // Stop
+  public void stop() {
+    arm.set(ControlMode.PercentOutput, 0.0);
+    sideMotor.stopMotor();
   }
 
   public void enableArmSoftLimit() {
-    armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    // arm.configForwardSoftLimitEnable(true, 0);
+    // arm.configReverseSoftLimitEnable(true, 0);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
     System.out.println("Enableing soft limit ******************************************");
   }
 
   public void disableArmSoftLimit() {
-    armMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
-    armMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
+    // arm.configForwardSoftLimitEnable(false, 0);
+    // arm.configReverseSoftLimitEnable(false, 0);
     sideMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     sideMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
   }
 
   public void setArmSoftLimit() {
-    armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_DOWN); // kForward
-    armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_UP); // KReverse
+    arm.configForwardSoftLimitThreshold(Constants.Arm.SoftStop.ARM_UP, 0);
+    arm.configReverseSoftLimitThreshold(Constants.Arm.SoftStop.ARM_DOWN, 0);
     sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.ARM_LEFT); // kForward
     sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.ARM_RIGHT); // kReverse
   }
 
-  public void setSideSoftLimit() {
-    sideMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.Arm.SoftStop.PIVOT_MID_LEFT);
-    sideMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.Arm.SoftStop.PIVOT_MID_RIGHT);
-  }
-
   public void resetDefault() {
     System.out.println("Default restored ********************************************");
-    armMotor.restoreFactoryDefaults();
+    arm.configFactoryDefault(0);
     sideMotor.restoreFactoryDefaults();
-    ArmSoftLimit(false);
-  }
-
-  public boolean armLimit() {
-    return armMotor.isSoftLimitEnabled(SoftLimitDirection.kForward);
+    disableArmSoftLimit();;
   }
 
   @Override
@@ -240,18 +185,27 @@ public class Arm extends SubsystemBase {
     // System.out.println(armMotorEncoder.getVelocity());
     // System.out.println(getArmCurrent());
     // System.out.println(armMotorEncoder.getVelocity());
+    // System.out.println("Arm Current:" + getCurrent());
     SmartDashboard.putNumber("Side Motor Current ", getSideCurrent());
-    SmartDashboard.putNumber("Arm Motor Current: ", getArmCurrent());
+    // SmartDashboard.putNumber("Arm Motor Current: ", getArmCurrent());
     // System.out.println("Arm Encoder: " + getArmEncoder());
     // System.out.println("Side Encoder: " + getSideEncoder());
     // SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
-    SmartDashboard.putNumber("Arm Encoder: ", getArmEncoder());
+    SmartDashboard.putNumber("Arm Encoder: ", getEncoderCount());
     SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
-    System.out.println(getArmCurrent() + " " + armMotor.getBusVoltage());
+    // System.out.println(getArmCurrent() + " " + armMotor.getBusVoltage());
     
     // SmartDashboard.putNumber("side open ramp rate", sideMotor.getOpenLoopRampRate());
     // SmartDashboard.putNumber("side closed ramp rate", sideMotor.getClosedLoopRampRate());
     // SmartDashboard.putNumber("arm open ramp rate", armMotor.getOpenLoopRampRate());
     // SmartDashboard.putNumber("arm closed ramp rate", armMotor.getClosedLoopRampRate());
+    SmartDashboard.putNumber("Side Motor Speed: ", sideMotor.get());
+    SmartDashboard.putNumber("Arm Motor SPeed", arm.getMotorOutputPercent());
+    // AbsoluteEncoder absEncoder;
+
+    // absEncoder.getZeroOffset();
+
+    // absEncoder.getPosition();
+    
   }
 }

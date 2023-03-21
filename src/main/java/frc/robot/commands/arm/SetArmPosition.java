@@ -27,11 +27,8 @@ public class SetArmPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setPID(Constants.Arm.upPID);
-    arm.setArmMotorPosition(position);
-    if(position == 18){
-      position = 26;
-    }
+    
+    arm.setPosition(position);
 
     System.out.println("HOWAIDHDAAHIUAGBIJUHIUADHGIUADHIUHOAIUDHOUADHOU");
   }
@@ -39,7 +36,7 @@ public class SetArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    error = Math.abs(arm.getArmEncoder() - position);
+    error = Math.abs(arm.getEncoderCount() - position);
     if (error <= Constants.Arm.ARM_TOL) {
       count++;
     } else {
@@ -50,7 +47,6 @@ public class SetArmPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("ENDING SeT ARP POSITION ***********************************" + arm.getArmEncoder());
     // arm.stop();
   }
 

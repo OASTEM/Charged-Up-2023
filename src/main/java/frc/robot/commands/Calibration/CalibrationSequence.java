@@ -7,8 +7,11 @@ package frc.robot.commands.Calibration;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.arm.SetArmPosition;
+import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.manipulator.GrabCone;
+import frc.robot.commands.manipulator.GrabCube;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
@@ -32,25 +35,26 @@ public class CalibrationSequence extends ParallelCommandGroup {
       //TODO Ramp auto so that it doesnt go as fast at the start
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
-        new InstantCommand(arm::resetDefault),
-        new InstantCommand(arm::setArmRampRate),
+        new InstantCommand(arm::configRampRates),
         new InstantCommand(arm::setPivotRampRate),
-        // new InstantCommand(arm::disableArmSoftLimit),
         new CalibrateArm(arm, manipulator),
         new CalibratePivot(arm),
-        // new InstantCommand(arm::resetEncoders),
-        // new InstantCommand(arm::resetSideEncoders),
+        new InstantCommand(arm::resetEncoders),
+        new InstantCommand(arm::resetSideEncoders),
+        new SetPivotPosition(arm, -200)
+        .andThen(new SetArmPosition(arm, 174798)).withTimeout(4),
         // new InstantCommand(arm::enableArmSoftLimit),
-        // new InstantCommand(arm::setArmSoftLimit),
-        // new SetPivotPosition(arm, -180).withTimeout(4)
-        // .andThen(new SetArmPosition(arm, 68))
-        //
-        new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
-        new ArmBottomStartPosition(arm),
+        // new InstantCommand(arm::setArmSoftLimit)
+
+      // new SetArmPosition(arm, 174798)
+
+
+        // new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
+        // new ArmBottomStartPosition(arm),
         new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
         new InstantCommand(arm::setArmSoftLimit).withTimeout(0.1),
-        new GrabCone(manipulator).withTimeout(2)
-        //
+        new GrabCube(manipulator).withTimeout(2)
+        
 
 
 

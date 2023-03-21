@@ -59,7 +59,8 @@ public class CalibratePivot extends CommandBase {
     timer.stop();
     timer.reset();
     timer2.reset();
-    arm.ArmSoftLimit(true);
+    //arm.enableArmSoftLimit();
+    //TODO Reenable soft limits with correct values once ready
     // manipulator.resetEncoders();
     System.out.println("Calibrate pivot done now ***************************");
   }

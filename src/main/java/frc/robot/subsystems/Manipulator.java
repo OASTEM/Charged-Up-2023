@@ -58,7 +58,7 @@ public class Manipulator extends SubsystemBase {
 
     setPID(Constants.openCloseMotor.openClosePID);
 
-    state = 0;
+    state = 1;
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kForward, false);
     openCloseMotor.enableSoftLimit(SoftLimitDirection.kReverse, false);
 
@@ -97,7 +97,7 @@ public class Manipulator extends SubsystemBase {
 
   public void open() {
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.openPosition, CANSparkMax.ControlType.kPosition);
-    // state = 0;
+    state = 1;
     intake(-0.3);
   }
 
@@ -111,21 +111,21 @@ public class Manipulator extends SubsystemBase {
     openCloseMotorEncoder.setPosition(position);
   }
 
-  public void close() {
-    // setPID(Constants.openCloseMotor.openClosePID);
-    if (state == 1) {
-      // openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition,
-      // CANSparkMax.ControlType.kPosition);
-      getCone();
-      state = 2;
-    } else {
-      openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition,
-          CANSparkMax.ControlType.kPosition);
-      state = 1;
-    }
-    System.out.println("CLOSING MOTOR ************************************ : " + state);
-    stopIntake();
-  }
+  // public void close() {
+  //   // setPID(Constants.openCloseMotor.openClosePID);
+  //   if (state == 1) {
+  //     // openCloseMotorPIDController.setReference(Constants.openCloseMotor.conePosition,
+  //     // CANSparkMax.ControlType.kPosition);
+  //     getCone();
+  //     state = 2;
+  //   } else {
+  //     openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition,
+  //         CANSparkMax.ControlType.kPosition);
+  //     state = 1;
+  //   }
+  //   System.out.println("CLOSING MOTOR ************************************ : " + state);
+  //   stopIntake();
+  // }
 
   public void setPID(PID pid) {
     openCloseMotorPIDController.setP(pid.p);
@@ -148,7 +148,9 @@ public class Manipulator extends SubsystemBase {
   }
 
   public void getCube() {
-    openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition, CANSparkMax.ControlType.kPosition);
+      openCloseMotorPIDController.setReference(Constants.openCloseMotor.cubePosition, CANSparkMax.ControlType.kPosition);
+
+    
   }
 
   public double getOCcurrent() {

@@ -13,7 +13,6 @@ public class MoveArmJoystick extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
   private LogitechGamingPad drivePad;
-
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
   // addRequirements(arm);
   // this.arm = arm;
@@ -41,15 +40,16 @@ public class MoveArmJoystick extends CommandBase {
     // }
     // else
     // {
-    arm.setArm(drivePad.getLeftAnalogYAxis() * 0.5);
-    arm.setSide(-drivePad.getRightAnalogXAxis() * 0.2);
+    arm.setSpeed(drivePad.getLeftAnalogYAxis() * 0.5);
+    arm.setSide(-drivePad.getRightAnalogXAxis() * 0.4);
+    System.out.println(drivePad.getRightAnalogXAxis());
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setArmMotorPosition(arm.getArmEncoder());
+    // arm.setArmMotorPosition(arm.getArmEncoder());
     // arm.setSideMotorPosition(arm.getSideEncoder());
     arm.stop();
   }

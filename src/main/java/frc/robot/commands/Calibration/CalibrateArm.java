@@ -1,3 +1,4 @@
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -38,9 +39,8 @@ public class CalibrateArm extends CommandBase {
     timer.reset();
     timer.start();
     timer2.reset();
-    arm.ArmSoftLimit(false);
     manipulator.resetEncoders();
-    arm.setArm(0.2);
+    arm.setSpeed(0.2);
     armDone = false;
     changed = false;
   }
@@ -52,16 +52,13 @@ public class CalibrateArm extends CommandBase {
   public void execute() {
     // System.out.println(arm.getArmCurrent());
     if(timer.get()>0.2 && !changed){
-      // System.out.println("Got to calibrate Arm **************************");
-      // System.out.println(arm.armLimit() +
-      // "******************************************");
-      arm.setArm(-0.2);
+      arm.setSpeed(-0.2);
       timer2.start();
       changed = true;
     }
-    if(timer2.get()>0.2 && arm.getArmCurrent()>=30){
+    if(timer2.get()>0.2 && arm.getCurrent()>=15){
       armDone = true;
-      arm.setArm(0);
+      arm.setSpeed(0);
       System.out.println("GOT TO SECOND TIMER FOR CALIBRATE ARM **********************");
     }
   }
