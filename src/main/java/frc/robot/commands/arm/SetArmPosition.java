@@ -29,8 +29,6 @@ public class SetArmPosition extends CommandBase {
   public void initialize() {
     
     arm.setPosition(position);
-
-    System.out.println("HOWAIDHDAAHIUAGBIJUHIUADHGIUADHIUHOAIUDHOUADHOU");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

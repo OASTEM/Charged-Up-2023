@@ -5,6 +5,7 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.utils.Constants;
 import frc.robot.subsystems.Arm;
@@ -19,8 +20,8 @@ public class ArmBottomStartPosition extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     System.out.println("EXECUTING THE STARTING POSITION IN CALIBRATE********************");
     addCommands(
-        new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION)
-        //    .andThen(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION))// 4sec
+      new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION)
+      .andThen(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION))
     );
   }
 }

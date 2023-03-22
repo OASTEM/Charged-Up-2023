@@ -75,13 +75,14 @@ public class RobotContainer {
   private final JoystickButton padY = new JoystickButton(pad, 4);
   private final JoystickButton rightBumper = new JoystickButton(pad, 6);
   private final JoystickButton leftBumper = new JoystickButton(pad, 5);
-
+  
   private final JoystickButton opPadA = new JoystickButton(opPad, 1);
   private final JoystickButton opPadB = new JoystickButton(opPad, 2);
   private final JoystickButton opPadX = new JoystickButton(opPad, 3);
   private final JoystickButton opPadY = new JoystickButton(opPad, 4);
   private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
   private final JoystickButton opStart = new JoystickButton(opPad, 8);
+  private final JoystickButton opBack = new JoystickButton(opPad, 7);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
 
   /**
@@ -120,7 +121,7 @@ public class RobotContainer {
     // opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
     // opPadY.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION));
     // opPadA.onTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION));
-    opPadX.onTrue(new SetPivotPosition(arm, -175));
+    opPadX.onTrue(new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION));
     opPadB.onTrue(new SetPivotPosition(arm, -52));
     // opPadB.onTrue(new PivotPositionSpeed(arm, -52));
     // opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
@@ -130,7 +131,7 @@ public class RobotContainer {
     // Configure your button bindings here
     // padA.whileTrue(new SetArmPosition(arm, 73));
     opStart.whileTrue(new OpenClaw(manipulator));
-
+    opBack.onTrue(new SetArmPosition(arm, Constants.Arm.FEEDER_HEIGHT));
     // padY.whileTrue(new ArmBottomStartPosition(arm));
     // padA.onTrue(new Driving(driveTrain, 170, 0.00338, 0.00352));
     // padA.onTrue(new DriveStraight(driveTrain, 50));

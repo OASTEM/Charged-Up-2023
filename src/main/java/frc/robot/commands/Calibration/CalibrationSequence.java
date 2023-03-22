@@ -15,6 +15,7 @@ import frc.robot.commands.manipulator.GrabCube;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.utils.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -41,8 +42,8 @@ public class CalibrationSequence extends ParallelCommandGroup {
         new CalibratePivot(arm),
         new InstantCommand(arm::resetEncoders),
         new InstantCommand(arm::resetSideEncoders),
-        new SetPivotPosition(arm, -200)
-        .andThen(new SetArmPosition(arm, 174798)).withTimeout(4),
+        new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION)
+        .andThen(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION)).withTimeout(4),
         // new InstantCommand(arm::enableArmSoftLimit),
         // new InstantCommand(arm::setArmSoftLimit)
 
