@@ -192,6 +192,8 @@ public class Arm extends SubsystemBase {
     // System.out.println("Side Encoder: " + getSideEncoder());
     // SmartDashboard.putNumber("velocity", sideMotorEncoder.getVelocity());
     SmartDashboard.putNumber("Arm Encoder: ", getEncoderCount());
+    SmartDashboard.putNumber("Arm Current", getCurrent());
+    SmartDashboard.putNumber("Arm Voltage", arm.getMotorOutputVoltage());
     SmartDashboard.putNumber("Pivot Encoder", getSideEncoder());
     // System.out.println(getArmCurrent() + " " + armMotor.getBusVoltage());
     
