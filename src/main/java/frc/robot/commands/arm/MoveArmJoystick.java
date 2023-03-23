@@ -6,6 +6,7 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
 
@@ -13,17 +14,18 @@ public class MoveArmJoystick extends CommandBase {
   /** Creates a new MoveArm. */
   private Arm arm;
   private LogitechGamingPad drivePad;
+  private Pivot pivot;
   // public MoveArm(Arm arm, LogitechGamingPad drivePad){
   // addRequirements(arm);
   // this.arm = arm;
   // this.drivePad = drivePad;
   // }
-  public MoveArmJoystick(Arm arm, ShuffleBoard shuffleboard, LogitechGamingPad drivePad) {
+  public MoveArmJoystick(Arm arm, ShuffleBoard shuffleboard, LogitechGamingPad drivePad, Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
+    addRequirements(arm, pivot);
     this.arm = arm;
     this.drivePad = drivePad;
-
+    this.pivot = pivot;
   }
 
   // Called when the command is initially scheduled.
@@ -46,7 +48,7 @@ public class MoveArmJoystick extends CommandBase {
     else{
       arm.setSpeed(drivePad.getLeftAnalogYAxis() * 0.1);
     }
-    arm.setSide(-drivePad.getRightAnalogXAxis() * 0.2);
+    pivot.setSide(-drivePad.getRightAnalogXAxis() * 0.2);
     System.out.println(drivePad.getRightAnalogXAxis());
   }
 

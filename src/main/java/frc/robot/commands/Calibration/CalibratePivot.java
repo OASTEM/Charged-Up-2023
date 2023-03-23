@@ -7,7 +7,7 @@ package frc.robot.commands.Calibration;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Pivot;
 
 public class CalibratePivot extends CommandBase {
   /** Creates a new CalibratePivot. */
@@ -15,12 +15,14 @@ public class CalibratePivot extends CommandBase {
   private boolean pivotDone;
   private Timer timer;
   private Timer timer2;
+  private Pivot pivot;
 
   // private Manipulator manipulator;
-  public CalibratePivot(Arm arm) {
+  public CalibratePivot( Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
-    this.arm = arm;
+    addRequirements(pivot);
+
+    this.pivot = pivot;
     pivotDone = false;
     timer = new Timer();
     timer2 = new Timer();
@@ -33,7 +35,7 @@ public class CalibratePivot extends CommandBase {
     timer.reset();
     timer.start();
     timer2.reset();
-    arm.setSide(-0.1);
+    pivot.setSide(-0.1);
     pivotDone = false;
     System.out.println("***************** Calibrate is starting");
   }
@@ -42,20 +44,19 @@ public class CalibratePivot extends CommandBase {
   @Override
   public void execute() {
     if (timer.get() > .5) {
-      arm.setSide(0.2);
+      pivot.setSide(0.2);
       timer2.start();
     }
-    if (timer2.get() > 0.2 && arm.getSideCurrent() >= 10) { // 7
+    if (timer2.get() > 0.2 && pivot.getSideCurrent() >= 10) { // 7
       pivotDone = true;
-      arm.setSide(0);
+      pivot.setSide(0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.stop();
-    arm.resetSideEncoders();
+    pivot.resetSideEncoders();
     timer.stop();
     timer.reset();
     timer2.reset();

@@ -11,7 +11,6 @@ import frc.robot.utils.Constants;
 public class SetArmPosition extends CommandBase {
   private Arm arm;
   private double position;
-  private int count;
   private double error;
 
   /** Creates a new setArmPosition. */
@@ -20,8 +19,6 @@ public class SetArmPosition extends CommandBase {
     this.arm = arm;
     this.position = position;
     error = 0;
-    count = 0;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -36,9 +33,7 @@ public class SetArmPosition extends CommandBase {
   public void execute() {
     error = Math.abs(arm.getEncoderCount() - position);
     if (error <= Constants.Arm.ARM_TOL) {
-      count++;
     } else {
-      count = 0;
     }
   }
 

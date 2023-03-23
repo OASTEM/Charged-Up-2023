@@ -5,20 +5,20 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.Constants;
 
 public class SetPivotPosition extends CommandBase {
-  private Arm arm;
   private double position;
   private double error;
   private int count;
+  private Pivot pivot;
 
   /** Creates a new setArmPosition. */
-  public SetPivotPosition(Arm arm, double position) {
-    addRequirements(arm);
-    this.arm = arm;
+  public SetPivotPosition(Pivot pivot, double position) {
+    addRequirements(pivot);
     this.position = position;
+    this.pivot = pivot;
     error = 0;
     // timer =
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,16 +28,16 @@ public class SetPivotPosition extends CommandBase {
   @Override
   public void initialize() {
     // if(arm.getArmEncoder()<40 && arm.getSideEncoder() < 2){
-    arm.setSidePID(Constants.Arm.sidePID);
+    pivot.setSidePID(Constants.Arm.sidePID);
     System.out.println("SETING PIVOT POSITION INITIALIZE ***************************");
-    arm.setSideMotorPosition(position);
+    pivot.setSideMotorPosition(position);
     // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    error = Math.abs(arm.getSideEncoder() - position);
+    error = Math.abs(pivot.getSideEncoder() - position);
     if (error <= Constants.Arm.PIVOT_TOL) {
       count++;
     } else {
@@ -48,7 +48,7 @@ public class SetPivotPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.stop();
+    pivot.stop();
   }
 
   // Returns true when the command should end.

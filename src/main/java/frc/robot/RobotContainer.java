@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.utils.Constants;
+import frc.robot.utils.LeftAnalogYAxisMoved;
 // import edu.wpi.first.apriltag.AprilTag;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
@@ -15,7 +16,6 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.NotifierCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
@@ -23,14 +23,10 @@ import frc.robot.commands.Balance;
 import frc.robot.commands.Music;
 import frc.robot.commands.Calibration.CalibrationSequence;
 import frc.robot.commands.arm.MoveArmJoystick;
-import frc.robot.commands.arm.PivotPositionSpeed;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
-import frc.robot.commands.auto.ArmBottomStartPosition;
 import frc.robot.commands.auto.CubeAuto;
 import frc.robot.commands.auto.CubeNoMoveAuto;
-import frc.robot.commands.auto.DriveAuto;
-import frc.robot.commands.auto.Driving;
 import frc.robot.commands.auto.TankBack;
 import frc.robot.commands.auto.tankStraight;
 import frc.robot.commands.manipulator.OpenClaw;
@@ -43,6 +39,7 @@ import frc.robot.subsystems.Arm;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Pivot;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -64,6 +61,7 @@ public class RobotContainer {
   private final Arm arm = new Arm();
   private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard(arm, manipulator);
+  private final Pivot pivot = new Pivot();
   // private final Limelight limelight = new Limelight();
   // Commands
 
@@ -72,10 +70,7 @@ public class RobotContainer {
   private final JoystickButton padA = new JoystickButton(pad, 1);
   private final JoystickButton padB = new JoystickButton(pad, 2);
   private final JoystickButton padX = new JoystickButton(pad, 3);
-  private final JoystickButton padY = new JoystickButton(pad, 4);
   private final JoystickButton rightBumper = new JoystickButton(pad, 6);
-  private final JoystickButton leftBumper = new JoystickButton(pad, 5);
-  
   private final JoystickButton opPadA = new JoystickButton(opPad, 1);
   private final JoystickButton opPadB = new JoystickButton(opPad, 2);
   private final JoystickButton opPadX = new JoystickButton(opPad, 3);
@@ -84,13 +79,12 @@ public class RobotContainer {
   private final JoystickButton opStart = new JoystickButton(opPad, 8);
   private final JoystickButton opBack = new JoystickButton(opPad, 7);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
-  private Trigger leftAnalogYAxis;
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
+    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad, pivot));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -113,31 +107,18 @@ public class RobotContainer {
     padX.whileTrue(new Balance(driveTrain, shuffleboard));
     padB.whileTrue(new tankStraight(driveTrain, 156, .025)); //156
     padA.whileTrue(new TankBack(driveTrain, -36, 0.025)); //-36
-    //padB.whileTrue(new Music(driveTrain));
-    // opPadB.whileTrue(new PivotLeft(arm, shuffleboard));
     rightBumper.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    // opPadX.whileTrue(new PivotRight(arm, shuffleboard));
-    // opPadY.whileTrue(new MoveArm(arm, shuffleboard));
-    // opPadA.whileTrue(new MoveArmUp(arm,shuffleboard));
-    opPadY.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION));
+
+
+    opPadY.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)
+      .until(new LeftAnalogYAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
     opPadA.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION));
-    opPadX.onTrue(new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION));
-    opPadB.onTrue(new SetPivotPosition(arm, -52));
-    // opPadB.onTrue(new PivotPositionSpeed(arm, -52));
-    // opPadX.onTrue(new InstantCommand(manipulator::resetEncoders));
+    opPadX.onTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
+    opPadB.onTrue(new SetPivotPosition(pivot, -52));
     opRightBumper.onTrue(new GrabCone(manipulator));
     opLeftBumper.onTrue(new GrabCube(manipulator));
-    // padA.whileTrue(new AprilTagDetect(limelight));
-    // Configure your button bindings here
-    // padA.whileTrue(new SetArmPosition(arm, 73));
-    opStart.whileTrue(new OpenClaw(manipulator));
-    opBack.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.FEEDER_HEIGHT));
-
-    // padY.whileTrue(new ArmBottomStartPosition(arm));
-    // padA.onTrue(new Driving(driveTrain, 170, 0.00338, 0.00352));
-    // padA.onTrue(new DriveStraight(driveTrain, 50));
-    // padB.whileTrue(new SetPivotPosition(arm,-100));
-
+    opStart.onTrue(new OpenClaw(manipulator));
+    opBack.whileTrue(new SetArmPosition(arm, Constants.Arm.FEEDER_HEIGHT));
   }
 
   /**
@@ -163,9 +144,10 @@ public class RobotContainer {
     // return command;
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
     // return null;
-    return new CubeNoMoveAuto(arm, manipulator, driveTrain, shuffleboard);
+    // return new CubeNoMoveAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
     // return new DriveAuto(driveTrain, shuffleboard);
+    return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
   }
 
@@ -174,7 +156,7 @@ public class RobotContainer {
   }
 
   public Command Calibrate() {
-    return new CalibrationSequence(driveTrain, arm, manipulator);
+    return new CalibrationSequence(driveTrain, arm, manipulator, pivot);
   }
 
 }

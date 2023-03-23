@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
@@ -15,7 +13,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -76,13 +73,11 @@ public class DriveTrain extends SubsystemBase {
 
     // frontL.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
     // frontR.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
-    // backL.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
-    // backR.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
 
-    // frontL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
-    // frontR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
-    // backL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
-    // backR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+
+    frontL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+    frontR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+
 
     // Current Limit comment start
     // frontL.configPeakOutputForward(1);

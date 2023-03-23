@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
-import frc.robot.commands.auto.ArmBottomStartPosition;
-import frc.robot.commands.manipulator.GrabCone;
 import frc.robot.commands.manipulator.GrabCube;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Manipulator;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,11 +24,13 @@ public class CalibrationSequence extends ParallelCommandGroup {
   DriveTrain driveTrain;
   Arm arm;
   Manipulator manipulator;
+  Pivot pivot;
 
-  public CalibrationSequence(DriveTrain driveTrain, Arm arm, Manipulator manipulator) {
+  public CalibrationSequence(DriveTrain driveTrain, Arm arm, Manipulator manipulator, Pivot pivot) {
     this.driveTrain = driveTrain;
     this.arm = arm;
     this.manipulator = manipulator;
+    this.pivot = pivot;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -37,12 +38,12 @@ public class CalibrationSequence extends ParallelCommandGroup {
       new CalibrateDriveTrain(driveTrain),
       new SequentialCommandGroup(
         new InstantCommand(arm::configRampRates),
-        new InstantCommand(arm::setPivotRampRate),
+        new InstantCommand(pivot::setPivotRampRate),
         new CalibrateArm(arm, manipulator),
-        new CalibratePivot(arm),
+        new CalibratePivot( pivot),
         new InstantCommand(arm::resetEncoders),
-        new InstantCommand(arm::resetSideEncoders),
-        new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION)
+        new InstantCommand(pivot::resetSideEncoders),
+        new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION)
         .andThen(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION)).withTimeout(4),
         // new InstantCommand(arm::enableArmSoftLimit),
         // new InstantCommand(arm::setArmSoftLimit)

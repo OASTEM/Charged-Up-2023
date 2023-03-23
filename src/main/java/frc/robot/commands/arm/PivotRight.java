@@ -5,26 +5,26 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.ShuffleBoard;
 
 public class PivotRight extends CommandBase {
   /** Creates a new Pivot. */
-  private Arm arm;
   private ShuffleBoard shuffleboard;
+  private Pivot pivot;
 
-  public PivotRight(Arm arm, ShuffleBoard shuffleboard) {
+  public PivotRight(ShuffleBoard shuffleboard, Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
-    this.arm = arm;
+    addRequirements(pivot);
+    this.pivot = pivot;
     this.shuffleboard = shuffleboard;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setSidePID(shuffleboard.getArmSidePID());
-    arm.setSide(0.4);
+    pivot.setSidePID(shuffleboard.getArmSidePID());
+    pivot.setSide(0.4);
     // arm.setSideVelocity(10000);
     System.out.println("got to pivot right");
   }
@@ -37,7 +37,7 @@ public class PivotRight extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.stop();
+    pivot.stop();
   }
 
   // Returns true when the command should end.

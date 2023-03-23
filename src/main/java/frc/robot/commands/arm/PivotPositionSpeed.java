@@ -6,31 +6,30 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.Constants;
 
 public class PivotPositionSpeed extends CommandBase {
   /** Creates a new PivotPositionSpeed. */
-  private Arm arm;
   private double position;
-  private boolean done;
   private double error;
-  public PivotPositionSpeed(Arm arm, double position) {
+  private Pivot pivot;
+  public PivotPositionSpeed(Arm arm, double position, Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
-    this.arm = arm;
+    addRequirements(pivot);
+    this.pivot = pivot;
     this.position = position;
-    done = false;
     error = 0;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(arm.getSideEncoder()<position){
-      arm.setSide(0.3);
+    if(pivot.getSideEncoder()<position){
+      pivot.setSide(0.3);
     }
     else{
-      arm.setSide(-0.3);
+      pivot.setSide(-0.3);
     }
   }
 
@@ -43,13 +42,13 @@ public class PivotPositionSpeed extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setSide(0);
+    pivot.setSide(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    error = Math.abs(position - arm.getSideEncoder());
+    error = Math.abs(position - pivot.getSideEncoder());
     if(error<=Constants.Arm.PIVOT_THRESH){
       return true;
     }

@@ -6,12 +6,10 @@ package frc.robot.commands.manipulator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Manipulator;
-import frc.robot.utils.LogitechGamingPad;
 
 public class OpenClaw extends CommandBase {
   /** Creates a new OpenClaw. */
   private Manipulator manipulator;
-  private LogitechGamingPad pad;
 
   // private ShuffleBoard shuffleboard;
   public OpenClaw(Manipulator manipulator) {

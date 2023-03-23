@@ -9,18 +9,19 @@ import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.utils.Constants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmBottomStartPosition extends SequentialCommandGroup {
   /** Creates a new ArmBottomStartPosition. */
-  public ArmBottomStartPosition(Arm arm) {
+  public ArmBottomStartPosition(Arm arm, Pivot pivot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     System.out.println("EXECUTING THE STARTING POSITION IN CALIBRATE********************");
     addCommands(
-      new SetPivotPosition(arm, Constants.Arm.PIVOT_START_POSITION)
+      new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION)
       .andThen(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION))
     );
   }

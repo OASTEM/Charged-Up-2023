@@ -13,15 +13,9 @@ import frc.robot.utils.PID;
 
 public class Manipulator extends SubsystemBase {
   /** Creates a new Manipulator. */
-  private CANSparkMax leftMotor;
-  private CANSparkMax rightMotor;
+
   private CANSparkMax openCloseMotor;
 
-  private SparkMaxPIDController leftMotorPIDController;
-  private RelativeEncoder leftMotorEncoder;
-
-  private SparkMaxPIDController rightMotorPIDController;
-  private RelativeEncoder rightMotorEncoder;
 
   private SparkMaxPIDController openCloseMotorPIDController;
   private RelativeEncoder openCloseMotorEncoder;
@@ -32,26 +26,7 @@ public class Manipulator extends SubsystemBase {
   // 2: Cone
 
   public Manipulator() {
-    leftMotor = new CANSparkMax(Constants.CANIDS.LEFTGRABBER_ID, MotorType.kBrushless);
-    rightMotor = new CANSparkMax(Constants.CANIDS.RIGHTGRABBER_ID, MotorType.kBrushless);
     openCloseMotor = new CANSparkMax(Constants.CANIDS.OPENCLOSE_ID, MotorType.kBrushless);
-
-    leftMotor.setInverted(true);
-    rightMotor.setInverted(false);
-
-    // leftMotorPIDController = leftMotor.getPIDController();
-    // leftMotorEncoder = leftMotor.getEncoder();
-
-    // leftMotorPIDController.setP(Constants.Grabber.PID.P);
-    // leftMotorPIDController.setI(Constants.Grabber.PID.I);
-    // leftMotorPIDController.setD(Constants.Grabber.PID.D);
-
-    // rightMotorPIDController = rightMotor.getPIDController();
-    // rightMotorEncoder = rightMotor.getEncoder();
-
-    // rightMotorPIDController.setP(Constants.Grabber.PID.P);
-    // rightMotorPIDController.setI(Constants.Grabber.PID.I);
-    // rightMotorPIDController.setD(Constants.Grabber.PID.D);
 
     openCloseMotorPIDController = openCloseMotor.getPIDController();
     openCloseMotorEncoder = openCloseMotor.getEncoder();
@@ -77,28 +52,17 @@ public class Manipulator extends SubsystemBase {
 
   public void stop() {
     openCloseMotor.stopMotor();
-    leftMotor.stopMotor();
-    rightMotor.stopMotor();
-  }
-
-  public void stopIntake() {
-    leftMotor.stopMotor();
-    rightMotor.stopMotor();
   }
 
   public void setOC(double speed) {
     openCloseMotor.set(speed);
   }
 
-  public void intake(double speed) {
-    leftMotor.set(speed);
-    rightMotor.set(speed);
-  }
 
   public void open() {
     openCloseMotorPIDController.setReference(Constants.openCloseMotor.openPosition, CANSparkMax.ControlType.kPosition);
     state = 1;
-    intake(-0.3);
+    //intake(-0.3);
   }
 
   // public void close
@@ -133,10 +97,6 @@ public class Manipulator extends SubsystemBase {
     openCloseMotorPIDController.setD(pid.d);
   }
 
-  public void setManipulatorVelocity(int velocity) {
-    leftMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
-    rightMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);
-  }
 
   public void setOpenCloseMotor(int velocity) {
     openCloseMotorPIDController.setReference(velocity, CANSparkMax.ControlType.kVelocity);

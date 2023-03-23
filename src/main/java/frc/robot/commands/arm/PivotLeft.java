@@ -6,25 +6,28 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Pivot;
 import frc.robot.utils.ShuffleBoard;
 
 public class PivotLeft extends CommandBase {
   /** Creates a new PivotLeft. */
   private Arm arm;
   private ShuffleBoard shuffleboard;
+  private Pivot pivot;
 
-  public PivotLeft(Arm arm, ShuffleBoard shuffleboard) {
+  public PivotLeft(Arm arm, ShuffleBoard shuffleboard, Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
+    addRequirements(arm, pivot);
     this.arm = arm;
+    this.pivot = pivot;
     this.shuffleboard = shuffleboard;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    arm.setSidePID(shuffleboard.getArmSidePID());
-    arm.setSide(-0.4);
+    pivot.setSidePID(shuffleboard.getArmSidePID());
+    pivot.setSide(-0.4);
     // arm.setSideVelocity(-10000);
   }
 
