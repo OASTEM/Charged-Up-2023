@@ -38,12 +38,19 @@ public class Arm extends SubsystemBase {
     // sideMotor.setSecondaryCurrentLimit(35);
     // armMotor.setSecondaryCurrentLimit(45);
     System.out.println("In Arm Constructor ************");
+    initPIDController(Constants.Arm.upPID);
+    initPIDController(Constants.Arm.downPID);
   }
   
   public void initPIDController( PID pid){
     arm.config_kP(pid.s, pid.p);
     arm.config_kI(pid.s, pid.i);
     arm.config_kD(pid.s, pid.d);
+    //arm.selectProfileSlot(0, 0);
+  }
+
+  public void selectProfile(int id){
+    arm.selectProfileSlot(id, 0);
   }
 
   public void configRampRates(){
@@ -114,7 +121,6 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("Arm Voltage", arm.getMotorOutputVoltage());
     SmartDashboard.putNumber("Arm Motor SPeed", arm.getMotorOutputPercent());
     // AbsoluteEncoder absEncoder;
-
     // absEncoder.getZeroOffset();
 
     // absEncoder.getPosition();

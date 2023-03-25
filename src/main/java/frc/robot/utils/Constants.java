@@ -62,15 +62,15 @@ public final class Constants {
   }
 
   public final static class Arm {
-    public static final PID upPID = new PID(0.013, 0.0000001, 0, 0.00005, 0); // TODO fix these pid values
-    public static final PID downPID = new PID(0.0002, 0.000001, 0.000021, 0, 1);
+    public static final PID upPID = new PID(0.017, 0.0000005, 0, 0.00005, 0); // TODO fix these pid values
+    public static final PID downPID = new PID(0.0102, 0.000000, 0.00, 0, 1);
     public static final PID sidePID = new PID(0.02,0.00000005,0,0, 0);//0.02
     // public static final PID autoSidePID = new PID(0.015, 0.00000001, 0, 0,1);
-    public static final double ARM_SCORING_POSITION = 60000; 
+    public static final double ARM_SCORING_POSITION = 55000; 
     public static final double ARM_SCORING_POSITION_CUBE = 85000;
     public static final double PIVOT_START = -56; 
     public static final double ARM_LIMIT_BOTTOM = 70;
-    public static final double ARM_START_POSITION = 150000;
+    public static final double ARM_START_POSITION = 164000;  //1600000
     public static final double PIVOT_START_POSITION = -200; //
     public static final double PIVOT_OPEN_LOOP_RATE = 0.75;// .5 //0.75
     public static final double PIVOT_CLOSED_LOOP_RATE = 0.75; // 0.75
@@ -80,7 +80,7 @@ public final class Constants {
     public static final double ARM_TOL = 3500;
     public static final double PIVOT_TOL = 4; //1
     public static final double PIVOT_THRESH = 1;
-    public static final double FEEDER_HEIGHT = 75000;
+    public static final double FEEDER_HEIGHT = 70000;
     public final static class SoftStop {
       public static final float ARM_UP = (float) 3000;
       public static final float ARM_DOWN = 175000;

@@ -10,7 +10,7 @@ import frc.robot.utils.LeftAnalogYAxisMoved;
 // import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.LogitechGamingPad;
 //import frc.robot.utils.ShuffleBoard;
-
+import frc.robot.utils.RightAnalogXAxisMoved;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
@@ -111,14 +111,14 @@ public class RobotContainer {
 
 
     opPadY.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)
-      .until(new LeftAnalogYAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
+      .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
     opPadA.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION));
     opPadX.onTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
     opPadB.onTrue(new SetPivotPosition(pivot, -52));
     opRightBumper.onTrue(new GrabCone(manipulator));
     opLeftBumper.onTrue(new GrabCube(manipulator));
     opStart.onTrue(new OpenClaw(manipulator));
-    opBack.whileTrue(new SetArmPosition(arm, Constants.Arm.FEEDER_HEIGHT));
+    opBack.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.FEEDER_HEIGHT));
   }
 
   /**

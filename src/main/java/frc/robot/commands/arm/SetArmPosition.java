@@ -24,7 +24,14 @@ public class SetArmPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    if(arm.getEncoderCount()<=position){
+      arm.selectProfile(1);;
+      System.out.println("Down PID****************************************************");
+    }
+    else{
+      arm.selectProfile(0);
+      System.out.println("Up PID****************************************************");
+    }
     arm.setPosition(position);
   }
 
