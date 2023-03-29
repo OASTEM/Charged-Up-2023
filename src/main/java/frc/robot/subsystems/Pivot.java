@@ -57,6 +57,7 @@ public class Pivot extends SubsystemBase {
   }
 
   public void setSide(double speed) {
+    //System.out.println("SET SIDE TO" + speed);
     sideMotor.set(speed);
   }
 

@@ -351,6 +351,11 @@ public class DriveTrain extends SubsystemBase {
     return kinematics;
   }
 
+  public void RemoveDriveTrainRampRate(){
+    frontL.configOpenloopRamp(0);
+    frontR.configOpenloopRamp(0);
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("NavX X", getXAngle());

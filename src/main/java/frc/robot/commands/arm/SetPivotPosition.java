@@ -49,15 +49,12 @@ public class SetPivotPosition extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     pivot.stop();
+    System.out.println("ENDING");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (Math.abs(position - arm.getSideEncoder()) < 2) {
-    // return true;
-    // } else return false;
-    // return false;
     return (count > 10);
   }
 }

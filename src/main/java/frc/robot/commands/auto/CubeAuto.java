@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Balance;
 import frc.robot.commands.arm.SetArmPosition;
@@ -33,8 +34,8 @@ public class CubeAuto extends SequentialCommandGroup {
         .andThen(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)).withTimeout(1),
       new tankStraight(driveTrain, 156, 0.025).withTimeout(3).alongWith(new SetPivotPosition(pivot, -200)), //0.00588, 0.00652
       new TankBack(driveTrain, -36, 0.025),
-      //new Driving(driveTrain, -98, 0.00688, 0.00352).withTimeout(2.5),
-      new Balance(driveTrain, shuffleboard)
+      new Balance(driveTrain, shuffleboard),
+      new InstantCommand(driveTrain::RemoveDriveTrainRampRate)
     );
   }
 }

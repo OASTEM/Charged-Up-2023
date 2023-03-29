@@ -23,6 +23,7 @@ import frc.robot.commands.Balance;
 import frc.robot.commands.Music;
 import frc.robot.commands.Calibration.CalibrationSequence;
 import frc.robot.commands.arm.MoveArmJoystick;
+import frc.robot.commands.arm.MovePivotJoystick;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.CubeAuto;
@@ -84,7 +85,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad, pivot));
+    arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
+    pivot.setDefaultCommand(new MovePivotJoystick(shuffleboard, opPad, pivot));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -114,8 +116,8 @@ public class RobotContainer {
       .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
     opPadA.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION)
       .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad)));
-    opPadX.onTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
-    opPadB.onTrue(new SetPivotPosition(pivot, -52));
+    opPadX.whileTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
+    opPadB.whileTrue(new SetPivotPosition(pivot, -52));
     opRightBumper.onTrue(new GrabCone(manipulator));
     opLeftBumper.onTrue(new GrabCube(manipulator));
     opStart.onTrue(new OpenClaw(manipulator));

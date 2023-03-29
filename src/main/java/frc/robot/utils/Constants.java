@@ -48,7 +48,7 @@ public final class Constants {
     public static final int CRUISE_VELOCITY = 7000; // max is around 21500
     public static final int ACCELERATION = 3500;
     public static final int ERROR_THRESHOLD = 500;
-    public static final double OPEN_LOOP_RAMP = 1;
+    public static final double OPEN_LOOP_RAMP = 1; //1
     public static final double CLOSED_LOOP_RAMP = .5;
     public static final double ANGLE_TOLERANCE = .5;
     public static final boolean DEBUG = false;

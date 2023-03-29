@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
@@ -28,7 +29,8 @@ public class CubeNoMoveAuto extends SequentialCommandGroup {
       new GrabCube(manipulator).raceWith(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION).withTimeout(2)
       .andThen(new SetPivotPosition(pivot, Constants.Arm.CUBE_AUTO_PIVOT).withTimeout(2.5))),
       new SetArmPosition(arm,Constants.Arm.ARM_SCORING_POSITION_CUBE).withTimeout(1),
-      new OpenClaw(manipulator).withTimeout(0.1)
+      new OpenClaw(manipulator).withTimeout(0.1),
+      new InstantCommand(driveTrain::RemoveDriveTrainRampRate)
     );
   }
 }

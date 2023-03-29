@@ -10,20 +10,16 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
 
-public class MoveArmJoystick extends CommandBase {
+public class MovePivotJoystick extends CommandBase {
   /** Creates a new MoveArm. */
-  private Arm arm;
   private LogitechGamingPad drivePad;
-  // public MoveArm(Arm arm, LogitechGamingPad drivePad){
-  // addRequirements(arm);
-  // this.arm = arm;
-  // this.drivePad = drivePad;
-  // }
-  public MoveArmJoystick(Arm arm, ShuffleBoard shuffleboard, LogitechGamingPad drivePad) {
+  private Pivot pivot;
+
+  public MovePivotJoystick(ShuffleBoard shuffleboard, LogitechGamingPad drivePad, Pivot pivot) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
-    this.arm = arm;
+    addRequirements(pivot);
     this.drivePad = drivePad;
+    this.pivot = pivot;
   }
 
   // Called when the command is initially scheduled.
@@ -34,22 +30,31 @@ public class MoveArmJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // if(Math.abs(drivePad.getLeftAnalogYAxis()) <= 0.1){
+    // arm.setArmMotorPosition(arm.getArmEncoder());
+    // }
+    // else
+    // {
+    if(drivePad.getDPad() > -1){
+      if(drivePad.checkDPad(2)){
+        pivot.setSide(0.14);
+      }
+      else if(drivePad.checkDPad(6)){
+        pivot.setSide(-0.14);
+      }
 
 
-    if(Math.abs(drivePad.getLeftAnalogYAxis()) <= .05){
-      arm.setPosition(arm.getEncoderCount());
     }
+
     else{
-      arm.setSpeed(drivePad.getLeftAnalogYAxis() * 0.28);
-    }
+    pivot.setSide(-drivePad.getRightAnalogXAxis() * 0.35
+    );
+  }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // arm.setArmMotorPosition(arm.getArmEncoder());
-    // arm.setSideMotorPosition(arm.getSideEncoder());
-    arm.stop();
   }
 
   // Returns true when the command should end.
