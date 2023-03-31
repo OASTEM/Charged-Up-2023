@@ -40,7 +40,7 @@ public class TankBack extends CommandBase {
   public void execute() {
     error = heading - driveTrain.getZAngle();
     distance = Math.abs(goal - driveTrain.getRightEncoderCount());
-    driveTrain.tankDrive(-.6 - kP * error, -.6 + kP * error);
+    driveTrain.tankDrive(-.45 - kP * error, -.45 + kP * error);
     System.out.println(driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount()));
     if(driveTrain.getRightEncoderCount()<=goal && driveTrain.getLeftEncoderCount()<=goal){
       done = true;

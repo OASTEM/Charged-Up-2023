@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +29,8 @@ public class Arm extends SubsystemBase {
 
     arm.configPeakOutputForward(1);
     arm.configPeakOutputReverse(-1);
+
+    // arm.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, 2));
 
     initPIDController(Constants.Arm.upPID);
 

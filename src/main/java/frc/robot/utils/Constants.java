@@ -71,12 +71,12 @@ public final class Constants {
     public static final double PIVOT_START = -56; 
     public static final double ARM_LIMIT_BOTTOM = 70;
     public static final double ARM_START_POSITION = 164000;  //1600000
-    public static final double PIVOT_START_POSITION = -204; //
+    public static final double PIVOT_START_POSITION = -208; //
     public static final double PIVOT_OPEN_LOOP_RATE = 0.75;// .5 //0.75
     public static final double PIVOT_CLOSED_LOOP_RATE = 0.75; // 0.75
     public static final double ARM_OPEN_LOOP_RATE = 1; // .25
     public static final double ARM_CLOSED_LOOP_RATE = 1;
-    public static final double CUBE_AUTO_PIVOT = -68;
+    public static final double CUBE_AUTO_PIVOT = -79;
     public static final double ARM_TOL = 3500;
     public static final double PIVOT_TOL = 4; //1
     public static final double PIVOT_THRESH = 1;

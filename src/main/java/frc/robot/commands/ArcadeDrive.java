@@ -28,7 +28,6 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     leftPad = drivePad.getLeftAnalogYAxis();
     rightPad = -drivePad.getRightAnalogXAxis();
-
     if (driveTrain.getSlowMode()) {
       driveTrain.arcadeDrive((rightPad * -Constants.DriveTrain.SLOW_MODE),
           (leftPad * -Constants.DriveTrain.SLOW_MODE));
@@ -36,6 +35,7 @@ public class ArcadeDrive extends CommandBase {
     } else {
       driveTrain.arcadeDrive((rightPad * -Constants.DriveTrain.REGULAR_MODE_TURN),
           (leftPad * -Constants.DriveTrain.REGULAR_MODE));
+
       SmartDashboard.putBoolean("Slow Mode: ", false);
     }
 

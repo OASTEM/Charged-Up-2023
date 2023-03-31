@@ -78,9 +78,9 @@ public class Balance extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     driveTrain.stop();
-    p = SmartDashboard.getNumber("PBal", 0.021);
-    i = SmartDashboard.getNumber("IBal", 0.001);
-    d = SmartDashboard.getNumber("DBal", 0.0025);
+    p = SmartDashboard.getNumber("PBal", 0.021);  //0.01
+    i = SmartDashboard.getNumber("IBal", 0.001); //0.001
+    d = SmartDashboard.getNumber("DBal", 0.0025); //0.0025
     balancePID = new PID(p, i, d, 0);
   }
 

@@ -32,7 +32,7 @@ public class CubeNoBalance extends SequentialCommandGroup {
       new SetArmPosition(arm,Constants.Arm.ARM_SCORING_POSITION_CUBE).withTimeout(1),
       new OpenClaw(manipulator).withTimeout(0.1)
         .andThen(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)).withTimeout(1),
-      new tankStraight(driveTrain, 156, 0.025).withTimeout(3).alongWith(new SetPivotPosition(pivot, -200)), //0.00588, 0.00652
+      new tankStraight(driveTrain, 120, 0.025).withTimeout(3).alongWith(new SetPivotPosition(pivot, -200)), //0.00588, 0.00652
       new InstantCommand(driveTrain::RemoveDriveTrainRampRate)
     );
   }

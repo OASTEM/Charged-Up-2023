@@ -155,7 +155,7 @@ public class RobotContainer {
     // return new DriveAuto(driveTrain, shuffleboard);
     // return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
-    return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
+    return new CubeNoBalance(arm, manipulator, driveTrain, shuffleboard, pivot);
   }
 
   public Command Music() {
