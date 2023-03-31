@@ -40,7 +40,7 @@ public class MoveArmJoystick extends CommandBase {
       arm.setPosition(arm.getEncoderCount());
     }
     else{
-      arm.setSpeed(drivePad.getLeftAnalogYAxis() * 0.28);
+      arm.setSpeed(drivePad.getLeftAnalogYAxis() * 0.3);
     }
   }
 

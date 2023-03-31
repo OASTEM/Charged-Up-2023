@@ -84,8 +84,16 @@ public class Arm extends SubsystemBase {
     return arm.getSelectedSensorVelocity();
   }
 
-
+  // start of changed code
+  public boolean allowPivot() {
+      if (getEncoderCount() > 130000){ // whatever the value is for below drivetrain frame
+        return false;
+      }
+    return true;
+   }
   
+  // end of changed code
+
 
   // Stop
   public void stop() {

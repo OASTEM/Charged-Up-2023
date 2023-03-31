@@ -27,6 +27,7 @@ import frc.robot.commands.arm.MovePivotJoystick;
 import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.CubeAuto;
+import frc.robot.commands.auto.CubeNoBalance;
 import frc.robot.commands.auto.CubeNoMoveAuto;
 import frc.robot.commands.auto.DriveOutAndBalance;
 import frc.robot.commands.auto.TankBack;
@@ -87,7 +88,7 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad));
-    pivot.setDefaultCommand(new MovePivotJoystick(shuffleboard, opPad, pivot));
+    pivot.setDefaultCommand(new MovePivotJoystick(shuffleboard, opPad, pivot, arm));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -154,7 +155,7 @@ public class RobotContainer {
     // return new DriveAuto(driveTrain, shuffleboard);
     // return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
-    return new CubeNoMoveAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
+    return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
   }
 
   public Command Music() {

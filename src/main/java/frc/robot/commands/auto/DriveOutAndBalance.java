@@ -27,8 +27,8 @@ public class DriveOutAndBalance extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new tankStraight(driveTrain, 156, 0.025).withTimeout(3).alongWith(new SetPivotPosition(pivot, -200)), //0.00588, 0.00652
-      new TankBack(driveTrain, -36, 0.025),
+      //new tankStraight(driveTrain, 156, 0.025).withTimeout(3).alongWith(new SetPivotPosition(pivot, -200)), //0.00588, 0.00652 //Goal 156
+      new TankBack(driveTrain, -70, 0.025),   //-36
       new Balance(driveTrain, shuffleboard),
       new InstantCommand(driveTrain::RemoveDriveTrainRampRate)
     );

@@ -93,6 +93,7 @@ public class Pivot extends SubsystemBase {
     sideMotor.stopMotor();
   }
 
+
   public void enableArmSoftLimit() {
     // arm.configForwardSoftLimitEnable(true, 0);
     // arm.configReverseSoftLimitEnable(true, 0);

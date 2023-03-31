@@ -14,12 +14,15 @@ public class MovePivotJoystick extends CommandBase {
   /** Creates a new MoveArm. */
   private LogitechGamingPad drivePad;
   private Pivot pivot;
+  private Arm arm;
 
-  public MovePivotJoystick(ShuffleBoard shuffleboard, LogitechGamingPad drivePad, Pivot pivot) {
+  public MovePivotJoystick(ShuffleBoard shuffleboard, LogitechGamingPad drivePad, Pivot pivot, Arm arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(pivot);
     this.drivePad = drivePad;
     this.pivot = pivot;
+    this.arm = arm;
+
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +38,10 @@ public class MovePivotJoystick extends CommandBase {
     // }
     // else
     // {
+    if (!arm.allowPivot() ){
+      return;
+    }
+    
     if(drivePad.getDPad() > -1){
       if(drivePad.checkDPad(2)){
         pivot.setSide(0.14);

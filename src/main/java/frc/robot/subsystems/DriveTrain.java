@@ -58,13 +58,14 @@ public class DriveTrain extends SubsystemBase {
     backL.configFactoryDefault();
     backR.configFactoryDefault();
 
+
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
     backR.setNeutralMode(NeutralMode.Brake);
     backL.setNeutralMode(NeutralMode.Brake);
 
-    backL.follow(frontL);
-    backR.follow(frontR);
+    // backL.follow(frontL);
+    // backR.follow(frontR);
     frontL.setInverted(true);
     backL.setInverted(true);
 
@@ -77,6 +78,8 @@ public class DriveTrain extends SubsystemBase {
 
     frontL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
     frontR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+    backL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+    backR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
 
 
     // Current Limit comment start
@@ -127,18 +130,26 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("y number", y);
     frontL.set(ControlMode.PercentOutput, y - x);
     frontR.set(ControlMode.PercentOutput, y + x);
+    backL.set(ControlMode.PercentOutput, y - x);
+    backR.set(ControlMode.PercentOutput, y + x);
   }
 
   public void setLeftPID(int slot_id, double p, double i, double d){
     frontL.config_kP(slot_id, p);
     frontL.config_kI(slot_id, i);
     frontL.config_kD(slot_id, d);
+    backL.config_kP(slot_id, p);
+    backL.config_kI(slot_id, i);
+    backL.config_kD(slot_id, d);
   }
 
   public void setRightPID(int slot_id, double p, double i, double d){
     frontR.config_kP(slot_id, p);
     frontR.config_kI(slot_id, i);
     frontR.config_kD(slot_id, d);
+    backR.config_kP(slot_id, p);
+    backR.config_kI(slot_id, i);
+    backR.config_kD(slot_id, d);
   }
 
   public boolean getSlowMode() {
@@ -156,19 +167,25 @@ public class DriveTrain extends SubsystemBase {
   public void tankDrive(double left, double right) {
     frontL.set(ControlMode.PercentOutput, left);
     frontR.set(ControlMode.PercentOutput, right);
+    backL.set(ControlMode.PercentOutput, left);
+    backR.set(ControlMode.PercentOutput, right);
   }
 
   public void setLeftSpeed(double speed) {
     frontL.set(ControlMode.PercentOutput, speed);
+    backL.set(ControlMode.PercentOutput, speed);
   }
 
   public void setRightSpeed(double speed) {
     frontR.set(ControlMode.PercentOutput, speed);
+    backR.set(ControlMode.PercentOutput, speed);
   }
 
   public void stop() {
     frontL.set(ControlMode.PercentOutput, 0.0);
     frontR.set(ControlMode.PercentOutput, 0.0);
+    backL.set(ControlMode.PercentOutput, 0.0);
+    backR.set(ControlMode.PercentOutput, 0.0);
   }
 
   public double getLeftEncoderCount() {
@@ -204,6 +221,8 @@ public class DriveTrain extends SubsystemBase {
   public void resetEncoders() {
     frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
     frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    backL.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    backR.getSensorCollection().setIntegratedSensorPosition(0, 0);
     // frontL.getSensorCollection().setQuadraturePosition(0, 0);
     // frontR.getSensorCollection().setQuadraturePosition(0, 0);
   }
@@ -235,6 +254,8 @@ public class DriveTrain extends SubsystemBase {
   public void setPosition(double pos) {
     frontL.set(ControlMode.MotionMagic, pos);
     frontR.set(ControlMode.MotionMagic, pos);
+    backL.set(ControlMode.MotionMagic, pos);
+    backR.set(ControlMode.MotionMagic, pos);
   }
 
   // public void setPID(PID pid) {
@@ -318,6 +339,8 @@ public class DriveTrain extends SubsystemBase {
     System.out.println(left + "  " + right + " OUTPUT");
     frontL.set(ControlMode.PercentOutput, left);
     frontR.set(ControlMode.PercentOutput, right);
+    backL.set(ControlMode.PercentOutput, left);
+    backR.set(ControlMode.PercentOutput, right);
   }
 
   public void reset() {
@@ -354,6 +377,8 @@ public class DriveTrain extends SubsystemBase {
   public void RemoveDriveTrainRampRate(){
     frontL.configOpenloopRamp(0);
     frontR.configOpenloopRamp(0);
+    backL.configOpenloopRamp(0);
+    backR.configOpenloopRamp(0);
   }
 
   @Override
