@@ -28,6 +28,7 @@ import frc.robot.commands.arm.SetArmPosition;
 import frc.robot.commands.arm.SetPivotPosition;
 import frc.robot.commands.auto.CubeAuto;
 import frc.robot.commands.auto.CubeNoMoveAuto;
+import frc.robot.commands.auto.DriveOutAndBalance;
 import frc.robot.commands.auto.TankBack;
 import frc.robot.commands.auto.tankStraight;
 import frc.robot.commands.manipulator.OpenClaw;
@@ -151,8 +152,9 @@ public class RobotContainer {
     // return new CubeNoMoveAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new StraightAuto(driveTrain, arm, manipulator, shuffleboard);
     // return new DriveAuto(driveTrain, shuffleboard);
-    return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
+    // return new CubeAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
     // return new PreloadNoMove(driveTrain, arm, manipulator, shuffleboard);
+    return new CubeNoMoveAuto(arm, manipulator, driveTrain, shuffleboard, pivot);
   }
 
   public Command Music() {

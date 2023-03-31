@@ -47,8 +47,7 @@ public class MovePivotJoystick extends CommandBase {
     }
 
     else{
-    pivot.setSide(-drivePad.getRightAnalogXAxis() * 0.35
-    );
+    pivot.setSide(-drivePad.getRightAnalogXAxis() * 0.35);
   }
   }
 
