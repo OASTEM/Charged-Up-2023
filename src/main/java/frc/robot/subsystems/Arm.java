@@ -30,7 +30,7 @@ public class Arm extends SubsystemBase {
     arm.configPeakOutputForward(1);
     arm.configPeakOutputReverse(-1);
 
-    // arm.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, 2));
+    // arm.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 8, 8, 2));
 
     initPIDController(Constants.Arm.upPID);
 
