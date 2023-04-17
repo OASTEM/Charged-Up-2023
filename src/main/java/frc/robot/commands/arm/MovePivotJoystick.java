@@ -38,7 +38,8 @@ public class MovePivotJoystick extends CommandBase {
     // }
     // else
     // {
-    if (!arm.allowPivot() ){
+    if (!arm.allowPivot() && drivePad.getDPad()==-1){
+      pivot.setSide(0);
       return;
     }
     
@@ -49,8 +50,6 @@ public class MovePivotJoystick extends CommandBase {
       else if(drivePad.checkDPad(6)){
         pivot.setSide(-0.14);
       }
-
-
     }
 
     else{

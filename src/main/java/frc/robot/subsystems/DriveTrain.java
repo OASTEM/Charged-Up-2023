@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
@@ -61,6 +63,8 @@ public class DriveTrain extends SubsystemBase {
 
     frontR.setNeutralMode(NeutralMode.Brake);
     frontL.setNeutralMode(NeutralMode.Brake);
+    backR.setNeutralMode(NeutralMode.Brake);
+    backL.setNeutralMode(NeutralMode.Brake);
 
 
     frontL.setInverted(true);
@@ -81,21 +85,15 @@ public class DriveTrain extends SubsystemBase {
     // frontR.configPeakOutputForward(1);
     // frontR.configPeakOutputReverse(-1);
 
-    // SupplyCurrentLimitConfiguration currentLimit = new
-    // SupplyCurrentLimitConfiguration();
-    // currentLimit.currentLimit = 40;
-    // currentLimit.enable = true;
-    // currentLimit.triggerThresholdCurrent = 40;
-    // currentLimit.triggerThresholdTime = 2;
-    // frontL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
-    // 40, 2), 0);
-    // frontL.configSupplyCurrentLimit(currentLimit, 0);
-    // frontR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40,
-    // 40, 2), 0);
-    // frontR.configSupplyCurrentLimit(currentLimit, 0);
+    SupplyCurrentLimitConfiguration currentLimit = new SupplyCurrentLimitConfiguration(false, 37, 37, 2);
+    frontL.configSupplyCurrentLimit(currentLimit, 0);
+    frontR.configSupplyCurrentLimit(currentLimit, 0);
+    backL.configSupplyCurrentLimit(currentLimit, 0);
+    backR.configSupplyCurrentLimit(currentLimit, 0);
 
     // frontL.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
-    // frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
+    //
+     frontL.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // frontR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // frontR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
 
@@ -113,8 +111,9 @@ public class DriveTrain extends SubsystemBase {
     // backR.configMotionCruiseVelocity(Constants.DriveTrain.CRUISE_VELOCITY);
     // backR.configMotionAcceleration(Constants.DriveTrain.ACCELERATION);
     // this.setPID(Constants.DriveTrain.PID);
-    backL.follow(frontL);
-    backR.follow(frontR);
+  
+    // backL.follow(frontL);
+    // backR.follow(frontR);
     resetEncoders();
 
   }
@@ -124,6 +123,8 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("y number", y);
     frontL.set(ControlMode.PercentOutput, y - x);
     frontR.set(ControlMode.PercentOutput, y + x);
+    backL.set(ControlMode.PercentOutput, y - x);
+    backR.set(ControlMode.PercentOutput, y + x);
   }
 
   public void setLeftPID(int slot_id, double p, double i, double d){
@@ -206,6 +207,8 @@ public class DriveTrain extends SubsystemBase {
     // frontL.getSensorCollection().setQuadraturePosition(0, 0);
     // frontR.getSensorCollection().setQuadraturePosition(0, 0);
   }
+
+
 
   public void printEncoders() {
     System.out.println("Left: " + getLeftEncoderCount());
@@ -357,6 +360,22 @@ public class DriveTrain extends SubsystemBase {
     backR.configOpenloopRamp(0);
   }
 
+  public void runFrontL(){
+    frontL.set(ControlMode.PercentOutput, 1);
+  }
+
+  public void runFrontR(){
+    frontR.set(ControlMode.PercentOutput, 1);
+  }
+
+  public void runBackL(){
+    backL.set(ControlMode.PercentOutput, 1);
+  }
+
+  public void runBackR(){
+    backR.set(ControlMode.PercentOutput, 1);
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("NavX X", getXAngle());
@@ -370,5 +389,25 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("DriveTrain R Encoder", getRightEncoderCount());
     // SmartDashboard.putNumber("FrontL Current", frontL.getSupplyCurrent());
     // SmartDashboard.putNumber("FrontR Current", frontR.getSupplyCurrent());
+    
+    SmartDashboard.putNumber("FrontL", frontL.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("BackL", backL.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("FrontR", frontR.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("BackR", backR.getSelectedSensorVelocity());
+
+    SmartDashboard.putNumber("In Current FL", frontL.getSupplyCurrent());
+    SmartDashboard.putNumber("In Current BL", backL.getSupplyCurrent());
+    SmartDashboard.putNumber("In Current FR", frontR.getSupplyCurrent());
+    SmartDashboard.putNumber("In Current BR", backR.getSupplyCurrent());
+
+    SmartDashboard.putNumber("Out Current FL", frontL.getStatorCurrent());
+    SmartDashboard.putNumber("Out Current BL", backL.getStatorCurrent());
+    SmartDashboard.putNumber("Out Current FR", frontR.getStatorCurrent());
+    SmartDashboard.putNumber("Out Current BR", backR.getStatorCurrent());
+
+    SmartDashboard.putNumber("FL V", frontL.getMotorOutputVoltage());
+    SmartDashboard.putNumber(" BL V", backL.getMotorOutputVoltage());
+    SmartDashboard.putNumber("FR V", frontR.getMotorOutputVoltage());
+    SmartDashboard.putNumber("BR V", backR.getMotorOutputVoltage());
   }
 }

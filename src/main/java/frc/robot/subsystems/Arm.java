@@ -89,7 +89,7 @@ public class Arm extends SubsystemBase {
 
   // start of changed code
   public boolean allowPivot() {
-      if (getEncoderCount() > 130000){ // whatever the value is for below drivetrain frame
+      if (getEncoderCount() > 140000){ // whatever the value is for below drivetrain frame
         return false;
       }
     return true;
