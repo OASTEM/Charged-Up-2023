@@ -14,12 +14,14 @@ import frc.robot.utils.RightAnalogXAxisMoved;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
+import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.Music;
 import frc.robot.commands.Calibration.CalibrationSequence;
 import frc.robot.commands.arm.MoveArmJoystick;
@@ -55,6 +57,7 @@ public class RobotContainer {
   // Controllers
   LogitechGamingPad pad = new LogitechGamingPad(0);
   LogitechGamingPad opPad = new LogitechGamingPad(1);
+  Joystick joystick = new Joystick(2);
 
   // Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
@@ -83,7 +86,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    // driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    driveTrain.setDefaultCommand(new JoystickDrive(driveTrain, joystick));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad, pivot));
     // Configure the trigger bindings
     configureBindings();
@@ -110,12 +114,12 @@ public class RobotContainer {
     rightBumper.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
 
 
-    opPadY.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)
-      .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
-    opPadA.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION)
-      .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad)));
-    opPadX.onTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
-    opPadB.onTrue(new SetPivotPosition(pivot, -52));
+    // opPadY.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_SCORING_POSITION)
+    //   .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad))); //, new MoveArmJoystick(arm, shuffleboard, opPad, pivot)
+    // opPadA.toggleOnTrue(new SetArmPosition(arm, Constants.Arm.ARM_START_POSITION)
+    //   .until(new LeftAnalogYAxisMoved(opPad)).until(new RightAnalogXAxisMoved(opPad)));
+    // opPadX.onTrue(new SetPivotPosition(pivot, Constants.Arm.PIVOT_START_POSITION));
+    // opPadB.onTrue(new SetPivotPosition(pivot, -52));
     opRightBumper.onTrue(new GrabCone(manipulator));
     opLeftBumper.onTrue(new GrabCube(manipulator));
     opStart.onTrue(new OpenClaw(manipulator));

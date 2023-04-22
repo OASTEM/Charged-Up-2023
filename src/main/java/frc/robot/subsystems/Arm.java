@@ -40,6 +40,7 @@ public class Arm extends SubsystemBase {
     System.out.println("In Arm Constructor ************");
     initPIDController(Constants.Arm.upPID);
     initPIDController(Constants.Arm.downPID);
+    setArmSoftLimit();
   }
   
   public void initPIDController( PID pid){
@@ -84,7 +85,12 @@ public class Arm extends SubsystemBase {
     return arm.getSelectedSensorVelocity();
   }
 
-
+  public boolean allowPivot(){
+    if(getEncoderCount() > 130000){
+      return false;
+    }
+    return true;
+  }
   
 
   // Stop
@@ -93,8 +99,8 @@ public class Arm extends SubsystemBase {
   }
 
   public void enableArmSoftLimit() {
-    // arm.configForwardSoftLimitEnable(true, 0);
-    // arm.configReverseSoftLimitEnable(true, 0);
+    arm.configForwardSoftLimitEnable(true, 0);
+    arm.configReverseSoftLimitEnable(true, 0);
     System.out.println("Enableing soft limit ******************************************");
   }
 
