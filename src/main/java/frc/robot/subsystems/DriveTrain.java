@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
 import frc.robot.utils.PID;
@@ -46,7 +47,7 @@ public class DriveTrain extends SubsystemBase {
 
 
   public DriveTrain() {
-
+    navX.reset();
     // frontR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
     // frontL = new TalonSRX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
     // backR = new TalonSRX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
@@ -268,6 +269,9 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic(){
     pose = odometry.update(getHeading(), getLeftEncoderCount(), getRightEncoderCount());
+    SmartDashboard.putNumber("Yaw Z Angle", navX.getAngle());
+    SmartDashboard.putNumber("Roll Angle", navX.getRoll());
+    SmartDashboard.putNumber("Pitch Angle", navX.getPitch());
     //printEncoders();
     //System.out.println(navX.getAngle());
   }

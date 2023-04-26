@@ -20,12 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Balance;
-import frc.robot.commands.CloseClaw;
-import frc.robot.commands.OpenClaw;
-import frc.robot.commands.openCloseJoystick;
 // import frc.robot.commands.Balance;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Manipulator;
 
 
 /**
@@ -43,7 +39,6 @@ public class RobotContainer {
   //Subsytems
   private final DriveTrain driveTrain = new DriveTrain();
   //private final Arm arm = new Arm();
-  private final Manipulator manipulator = new Manipulator();
   //private final Manipulator manipulator = new Manipulator();
   private final ShuffleBoard shuffleboard = new ShuffleBoard();
   //private final Limelight limelight = new Limelight();
@@ -60,7 +55,7 @@ public class RobotContainer {
   private final JoystickButton leftBumper = new JoystickButton(pad, 5);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-  //  driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+  //driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
     // manipulator.setDefaultCommand(new openCloseJoystick(manipulator, pad));
    //arm.setDefaultCommand(new MoveArm(arm, pad));
     // Configure the trigger bindings
@@ -79,12 +74,8 @@ public class RobotContainer {
   private void configureBindings() {
     padA.whileTrue(new Balance(driveTrain));
     padX.onTrue(new InstantCommand(driveTrain::toggleSlowMode));
-    padY.whileTrue(new CloseClaw(manipulator));
     // padB.whileTrue(new OpenClaw(manipulator));
-    padB.onTrue(new InstantCommand(manipulator::resetEncoders));
     // rightBumper.onTrue(new InstantCommand(manipulator::resetEncoders));
-    rightBumper.onTrue(new InstantCommand(manipulator::close));
-    leftBumper.onTrue(new InstantCommand(manipulator::open));
 
     // padB.whileTrue(new CloseClaw(manipulator));
 
