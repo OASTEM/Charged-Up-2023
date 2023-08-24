@@ -1,10 +1,16 @@
 package frc.robot.subsystems;
 
+import javax.swing.text.Position;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,13 +24,14 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants;
+import frc.robot.utils.PID;
 
 public class DriveTrain extends SubsystemBase {
   private boolean slowModeOn;
-  private TalonFX frontR = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT);
-  private TalonFX frontL = new TalonFX(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT);
-  private TalonFX backR = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT);
-  private TalonFX backL = new TalonFX(Constants.CANIDS.DRIVETRAIN_BACK_LEFT);
+  private CANSparkMax frontR = new CANSparkMax(Constants.CANIDS.DRIVETRAIN_FRONT_RIGHT, MotorType.kBrushless);
+  private CANSparkMax frontL = new CANSparkMax(Constants.CANIDS.DRIVETRAIN_FRONT_LEFT, MotorType.kBrushless);
+  private CANSparkMax backR = new CANSparkMax(Constants.CANIDS.DRIVETRAIN_BACK_RIGHT, MotorType.kBrushless);
+  private CANSparkMax backL = new CANSparkMax(Constants.CANIDS.DRIVETRAIN_BACK_LEFT, MotorType.kBrushless);
 
   Orchestra orchestraFrontR;
   Orchestra orchestraFrontL;
@@ -53,15 +60,15 @@ public class DriveTrain extends SubsystemBase {
     orchestraBackR = new Orchestra();
     orchestraBackL = new Orchestra();
 
-    frontL.configFactoryDefault();
-    frontR.configFactoryDefault();
-    backL.configFactoryDefault();
-    backR.configFactoryDefault();
+    frontL.restoreFactoryDefaults();
+    frontR.restoreFactoryDefaults();
+    backL.restoreFactoryDefaults();
+    backR.restoreFactoryDefaults();
 
-    frontR.setNeutralMode(NeutralMode.Brake);
-    frontL.setNeutralMode(NeutralMode.Brake);
-    backR.setNeutralMode(NeutralMode.Brake);
-    backL.setNeutralMode(NeutralMode.Brake);
+    frontR.setIdleMode(IdleMode.kBrake);
+    frontL.setIdleMode(IdleMode.kBrake);
+    backR.setIdleMode(IdleMode.kBrake);
+    backL.setIdleMode(IdleMode.kBrake);
 
     backL.follow(frontL);
     backR.follow(frontR);
@@ -75,8 +82,8 @@ public class DriveTrain extends SubsystemBase {
     // frontR.configClosedloopRamp(Constants.DriveTrain.CLOSED_LOOP_RAMP);
 
 
-    frontL.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
-    frontR.configOpenloopRamp(Constants.DriveTrain.OPEN_LOOP_RAMP);
+    frontL.setOpenLoopRampRate(Constants.DriveTrain.OPEN_LOOP_RAMP);
+    frontR.setOpenLoopRampRate(Constants.DriveTrain.OPEN_LOOP_RAMP);
 
 
     // Current Limit comment start
@@ -125,20 +132,32 @@ public class DriveTrain extends SubsystemBase {
   public void arcadeDrive(double x, double y) {
     SmartDashboard.putNumber("X number", x);
     SmartDashboard.putNumber("y number", y);
-    frontL.set(ControlMode.PercentOutput, y - x);
-    frontR.set(ControlMode.PercentOutput, y + x);
+    frontL.set(y - x);
+    frontR.set(y + x);
   }
 
-  public void setLeftPID(int slot_id, double p, double i, double d){
-    frontL.config_kP(slot_id, p);
-    frontL.config_kI(slot_id, i);
-    frontL.config_kD(slot_id, d);
+  // public void setLeftPID(int slot_id, double p, double i, double d){
+  //   frontL.config_kP(slot_id, p);
+  //   frontL.config_kI(slot_id, i);
+  //   frontL.config_kD(slot_id, d);
+  // }
+
+  // public void setRightPID(int slot_id, double p, double i, double d){
+  //   frontR.config_kP(slot_id, p);
+  //   frontR.config_kI(slot_id, i);
+  //   frontR.config_kD(slot_id, d);
+  // }
+
+  public void setRightPID(PID pid) {
+    rightPIDController.setP(pid.p);
+    rightPIDController.setI(pid.i);
+    rightPIDController.setD(pid.d);
   }
 
-  public void setRightPID(int slot_id, double p, double i, double d){
-    frontR.config_kP(slot_id, p);
-    frontR.config_kI(slot_id, i);
-    frontR.config_kD(slot_id, d);
+  public void setLeftPID(PID pid) {
+    leftPIDController.setP(pid.p);
+    leftPIDController.setI(pid.i);
+    leftPIDController.setD(pid.d);
   }
 
   public boolean getSlowMode() {
@@ -154,30 +173,35 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDrive(double left, double right) {
-    frontL.set(ControlMode.PercentOutput, left);
-    frontR.set(ControlMode.PercentOutput, right);
+    frontL.set(left);
+    frontR.set(right);
   }
 
   public void setLeftSpeed(double speed) {
-    frontL.set(ControlMode.PercentOutput, speed);
+    frontL.set(speed);
   }
 
   public void setRightSpeed(double speed) {
-    frontR.set(ControlMode.PercentOutput, speed);
+    frontR.set(speed);
   }
 
+  // public void stop() {
+  //   frontL.set(ControlMode.PercentOutput, 0.0);
+  //   frontR.set(ControlMode.PercentOutput, 0.0);
+  // }
+
   public void stop() {
-    frontL.set(ControlMode.PercentOutput, 0.0);
-    frontR.set(ControlMode.PercentOutput, 0.0);
+    frontL.stopMotor();
+    frontR.stopMotor();
   }
 
   public double getLeftEncoderCount() {
-    return frontL.getSelectedSensorPosition();
+    return frontL.getEncoder().getPosition();
 
   }
 
   public double getRightEncoderCount() {
-    return frontR.getSelectedSensorPosition();
+    return frontR.getEncoder().getPosition();
 
   }
 
@@ -202,8 +226,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void resetEncoders() {
-    frontL.getSensorCollection().setIntegratedSensorPosition(0, 0);
-    frontR.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    frontL.getEncoder().setPosition(0);
+    frontR.getEncoder().setPosition(0);
     // frontL.getSensorCollection().setQuadraturePosition(0, 0);
     // frontR.getSensorCollection().setQuadraturePosition(0, 0);
   }
@@ -233,8 +257,8 @@ public class DriveTrain extends SubsystemBase {
   // }
 
   public void setPosition(double pos) {
-    frontL.set(ControlMode.MotionMagic, pos);
-    frontR.set(ControlMode.MotionMagic, pos);
+    frontL.set(pos);
+    frontR.set(pos);
   }
 
   // public void setPID(PID pid) {
@@ -249,53 +273,53 @@ public class DriveTrain extends SubsystemBase {
   // frontR.config_kF(pid.s, pid.f);
   // }
 
-  public void loadMusic() {
-    orchestraFrontR.loadMusic("fight song.chrp");
-    orchestraFrontL.loadMusic("fight song.chrp");
-    orchestraBackR.loadMusic("fight song.chrp");
-    orchestraBackL.loadMusic("fight song.chrp");
-  }
+  // public void loadMusic() {
+  //   orchestraFrontR.loadMusic("fight song.chrp");
+  //   orchestraFrontL.loadMusic("fight song.chrp");
+  //   orchestraBackR.loadMusic("fight song.chrp");
+  //   orchestraBackL.loadMusic("fight song.chrp");
+  // }
 
-  public void addInstruments() {
-    orchestraFrontL.addInstrument(frontL);
-    orchestraBackL.addInstrument(backL);
-    orchestraFrontR.addInstrument(frontR);
-    orchestraBackR.addInstrument(backR);
-  }
+  // public void addInstruments() {
+  //   orchestraFrontL.addInstrument(frontL);
+  //   orchestraBackL.addInstrument(backL);
+  //   orchestraFrontR.addInstrument(frontR);
+  //   orchestraBackR.addInstrument(backR);
+  // }
 
-  public void playMusic() {
-    orchestraFrontL.play();
-    orchestraBackR.play();
-    orchestraBackL.play();
-    orchestraFrontR.play();
-  }
+  // public void playMusic() {
+  //   orchestraFrontL.play();
+  //   orchestraBackR.play();
+  //   orchestraBackL.play();
+  //   orchestraFrontR.play();
+  // }
 
-  public boolean playFrontL() {
-    orchestraFrontL.play();
-    return true;
-  }
+  // public boolean playFrontL() {
+  //   orchestraFrontL.play();
+  //   return true;
+  // }
 
-  public boolean playFrontR() {
-    orchestraFrontR.play();
-    return true;
-  }
+  // public boolean playFrontR() {
+  //   orchestraFrontR.play();
+  //   return true;
+  // }
 
-  public boolean playBackL() {
-    orchestraBackL.play();
-    return true;
-  }
+  // public boolean playBackL() {
+  //   orchestraBackL.play();
+  //   return true;
+  // }
 
-  public boolean playBackR() {
-    orchestraBackR.play();
-    return true;
-  }
+  // public boolean playBackR() {
+  //   orchestraBackR.play();
+  //   return true;
+  // }
 
-  public void stopMusic() {
-    orchestraFrontL.stop();
-    orchestraBackR.stop();
-    orchestraFrontR.stop();
-    orchestraBackL.stop();
-  }
+  // public void stopMusic() {
+  //   orchestraFrontL.stop();
+  //   orchestraBackR.stop();
+  //   orchestraFrontR.stop();
+  //   orchestraBackL.stop();
+  // }
 
   public double getZAngle() {
     return navX.getAngle();
@@ -314,10 +338,16 @@ public class DriveTrain extends SubsystemBase {
     return pose;
   }
 
+  // public void setOutput(double left, double right) {
+  //   System.out.println(left + "  " + right + " OUTPUT");
+  //   frontL.set(ControlMode.PercentOutput, left);
+  //   frontR.set(ControlMode.PercentOutput, right);
+  // }
+
   public void setOutput(double left, double right) {
     System.out.println(left + "  " + right + " OUTPUT");
-    frontL.set(ControlMode.PercentOutput, left);
-    frontR.set(ControlMode.PercentOutput, right);
+    frontL.set(left);
+    frontR.set(right);
   }
 
   public void reset() {
@@ -328,11 +358,19 @@ public class DriveTrain extends SubsystemBase {
     return Rotation2d.fromDegrees(-navX.getAngle());
   }
 
+  // public DifferentialDriveWheelSpeeds getSpeeds() {
+  //   System.out.println("GOT SPEED");
+  //   return new DifferentialDriveWheelSpeeds(
+  //       frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60,
+  //       frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
+  // }
+
   public DifferentialDriveWheelSpeeds getSpeeds() {
     System.out.println("GOT SPEED");
     return new DifferentialDriveWheelSpeeds(
-        frontL.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60,
-        frontR.getSelectedSensorVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
+        frontL.getEncoder().getVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60,
+        frontR.getEncoder().getVelocity() * 7.31 * 2 * Math.PI * Units.inchesToMeters(4) / 60);
+        
   }
 
   public SimpleMotorFeedforward getFeedForward() {
