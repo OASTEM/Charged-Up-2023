@@ -86,8 +86,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
-    driveTrain.setDefaultCommand(new JoystickDrive(driveTrain, joystick));
+    driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, pad));
+    // driveTrain.setDefaultCommand(new JoystickDrive(driveTrain, joystick));
     arm.setDefaultCommand(new MoveArmJoystick(arm, shuffleboard, opPad, pivot));
     // Configure the trigger bindings
     configureBindings();
