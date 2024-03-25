@@ -31,6 +31,7 @@ public final class Constants {
     public static final int LEFTGRABBER_ID = 5;
     public static final int RIGHTGRABBER_ID = 4;
     public static final int OPENCLOSE_ID = 3;
+    
 
   }
 
@@ -92,7 +93,7 @@ public final class Constants {
   }
 
   public final static class openCloseMotor {
-    public static final PID openClosePID = new PID(0.06, 0.0000, 0, 0.00001); // 0.06
+    public static final PID openClosePID = new PID(0.04, 0.0000, 0, 0.00001); // 0.06
     public static final double conePosition = -25;
     public static final double cubePosition = -11;
     public static final double openPosition = 0;

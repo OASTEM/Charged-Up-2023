@@ -53,7 +53,9 @@ public class CalibrationSequence extends ParallelCommandGroup {
 
         // new InstantCommand(arm::disableArmSoftLimit).withTimeout(0.1),
         // new ArmBottomStartPosition(arm),
-        new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
+        // new InstantCommand(arm::enableArmSoftLimit).withTimeout(0.1),
+        new InstantCommand(pivot::setArmSoftLimit),
+        new InstantCommand(pivot::enableArmSoftLimit),
         new InstantCommand(arm::setArmSoftLimit).withTimeout(0.1),
         new GrabCube(manipulator).withTimeout(2)
         

@@ -22,25 +22,24 @@ public class CalibrateDriveTrain extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrain.addInstruments();
-    driveTrain.loadMusic();
+    // driveTrain.addInstruments();
+    // driveTrain.loadMusic();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((driveTrain.playBackL() && driveTrain.playFrontL() && driveTrain.playBackR()
-        && driveTrain.playFrontR()) == false) {
-      System.out.println("Drivetrain issue");
-      driveTrainDone = true;
+    // if ((driveTrain.playBackL() && driveTrain.playFrontL() && driveTrain.playBackR()
+    //     && driveTrain.playFrontR()) == false) {
+    //   System.out.println("Drivetrain issue");
+    //   driveTrainDone = true;
       // Play another sound to signify drivetrain error
     }
-  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stopMusic();
+    // driveTrain.stopMusic();
     driveTrain.resetEncoders();
   }
 
